@@ -1,0 +1,16 @@
+﻿  CModel.cpp
+c:\users\ohs80200\desktop\hal\malti\malti\shader.h(8): fatal error C1083: include ファイルを開けません。'WICTextureLoader.h':No such file or directory
+  DatFile.cpp
+c:\users\ohs80200\desktop\hal\malti\malti\shader.h(8): fatal error C1083: include ファイルを開けません。'WICTextureLoader.h':No such file or directory
+  DDSTextureLoader.cpp
+c:\users\ohs80200\desktop\hal\malti\malti\ddstextureloader.cpp(17): fatal error C1083: include ファイルを開けません。'DDSTextureLoader.h':No such file or directory
+  dx11util.cpp
+c:\users\ohs80200\desktop\hal\malti\malti\shader.h(8): fatal error C1083: include ファイルを開けません。'WICTextureLoader.h':No such file or directory
+  game.cpp
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+c:\users\ohs80200\desktop\hal\malti\malti\shader.h(8): fatal error C1083: include ファイルを開けません。'WICTextureLoader.h':No such file or directory
+  Shader.cpp
+c:\users\ohs80200\desktop\hal\malti\malti\shader.cpp(2): fatal error C1083: include ファイルを開けません。'DirectXTex.h':No such file or directory
+  WICTextureLoader.cpp
+c:\users\ohs80200\desktop\hal\malti\malti\wictextureloader.cpp(27): fatal error C1083: include ファイルを開けません。'WICTextureLoader.h':No such file or directory
+  コードを生成中...

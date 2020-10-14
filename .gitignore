@@ -30,3 +30,11 @@
 *.exe
 *.out
 *.app
+
+*.pdb
+*.idb
+*.lik
+*.suo
+*.db
+*.ipch
+/malti.tlog
