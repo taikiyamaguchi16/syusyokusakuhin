@@ -1,5 +1,106 @@
-﻿  object.cpp
-c:\users\ohs80200\desktop\malti\malti\object.cpp(238): warning C4101: 'axisZ': ローカル変数は 1 度も使われていません。
-c:\users\ohs80200\desktop\malti\malti\object.cpp(237): warning C4101: 'axisY': ローカル変数は 1 度も使われていません。
-c:\users\ohs80200\desktop\malti\malti\object.cpp(236): warning C4101: 'axisX': ローカル変数は 1 度も使われていません。
-  malti.vcxproj -> C:\Users\ohs80200\Desktop\malti\x64\Debug\malti.exe
+﻿FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\ohs80200\Desktop\syusaku\x64\Debug\3dsphereps.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\ohs80200\Desktop\syusaku\x64\Debug\3dspherevs.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\ohs80200\Desktop\syusaku\x64\Debug\ps.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\ohs80200\Desktop\syusaku\x64\Debug\psline.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\ohs80200\Desktop\syusaku\x64\Debug\psskydome.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\ohs80200\Desktop\syusaku\x64\Debug\psvscommon.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\ohs80200\Desktop\syusaku\x64\Debug\vs.cso
+FXC : warning X4717: Effects deprecated for D3DCompiler_47
+  
+  compilation object save succeeded; see C:\Users\ohs80200\Desktop\syusaku\x64\Debug\vsline.cso
+  Bullet.cpp
+  Camera.cpp
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  CBox.cpp
+  CCollider.cpp
+  CDirectXGraphics.cpp
+  CEnemy.cpp
+  CModel.cpp
+  CObject2D.cpp
+  CPhysx.cpp
+  DatFile.cpp
+  DatFileLoader.cpp
+  DDSTextureLoader.cpp
+  dx11mathutil.cpp
+c:\users\ohs80200\desktop\syusaku\malti\dx11mathutil.cpp(741): warning C4101: 'rotateMat_': ローカル変数は 1 度も使われていません。
+  dx11util.cpp
+  game.cpp
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+c:\users\ohs80200\desktop\syusaku\malti\game.cpp(152): warning C4101: 'sphere2': ローカル変数は 1 度も使われていません。
+c:\users\ohs80200\desktop\syusaku\malti\game.cpp(146): warning C4101: 'SkyDome': ローカル変数は 1 度も使われていません。
+c:\users\ohs80200\desktop\syusaku\malti\game.cpp(150): warning C4101: 'enemy': ローカル変数は 1 度も使われていません。
+  ImGuiControl.cpp
+  ImCurveEdit.cpp
+  ImGradient.cpp
+  imgui.cpp
+  ImGuizmo.cpp
+  コードを生成中...
+  コンパイル中...
+  imgui_demo.cpp
+  imgui_draw.cpp
+  imgui_impl_dx11.cpp
+  imgui_impl_win32.cpp
+  imgui_widgets.cpp
+  ImSequencer.cpp
+  main.cpp
+  MeshRenderer.cpp
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  object.cpp
+c:\users\ohs80200\desktop\syusaku\malti\object.cpp(238): warning C4101: 'axisZ': ローカル変数は 1 度も使われていません。
+c:\users\ohs80200\desktop\syusaku\malti\object.cpp(237): warning C4101: 'axisY': ローカル変数は 1 度も使われていません。
+c:\users\ohs80200\desktop\syusaku\malti\object.cpp(236): warning C4101: 'axisX': ローカル変数は 1 度も使われていません。
+  Player.cpp
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+c:\users\ohs80200\desktop\syusaku\malti\player.cpp(143): warning C4101: '_vy': ローカル変数は 1 度も使われていません。
+  Scene.cpp
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+  Shader.cpp
+  Sphere.cpp
+c:\users\ohs80200\desktop\syusaku\malti\sphere.cpp(63): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+c:\users\ohs80200\desktop\syusaku\malti\sphere.cpp(67): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
+  Title.cpp
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+c:\users\ohs80200\desktop\syusaku\malti\title.cpp(107): warning C4101: 'SubCamera': ローカル変数は 1 度も使われていません。
+c:\users\ohs80200\desktop\syusaku\malti\title.cpp(105): warning C4101: 'SkyDome': ローカル変数は 1 度も使われていません。
+  WICTextureLoader.cpp
+  コードを生成中...
+PhysXCharacterKinematic_static_64.lib(CctBoxController.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctBoxController.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXCharacterKinematic_static_64.lib(CctCapsuleController.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctCapsuleController.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXCharacterKinematic_static_64.lib(CctCharacterController.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctCharacterController.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXCharacterKinematic_static_64.lib(CctCharacterControllerCallbacks.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctCharacterControllerCallbacks.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXCharacterKinematic_static_64.lib(CctCharacterControllerManager.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctCharacterControllerManager.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXCharacterKinematic_static_64.lib(CctController.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctController.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXCharacterKinematic_static_64.lib(CctObstacleContext.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctObstacleContext.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXCharacterKinematic_static_64.lib(CctSweptBox.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctSweptBox.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXCharacterKinematic_static_64.lib(CctSweptCapsule.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctSweptCapsule.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXCharacterKinematic_static_64.lib(CctSweptVolume.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctSweptVolume.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXExtensions_static_64.lib(ExtCpuWorkerThread.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtCpuWorkerThread.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXExtensions_static_64.lib(ExtDefaultCpuDispatcher.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtDefaultCpuDispatcher.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXExtensions_static_64.lib(ExtDefaultErrorCallback.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtDefaultErrorCallback.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXExtensions_static_64.lib(ExtRigidBodyExt.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtRigidBodyExt.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXExtensions_static_64.lib(ExtSimpleFactory.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtSimpleFactory.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXExtensions_static_64.lib(ExtTriangleMeshExt.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtTriangleMeshExt.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxProfileEventImpl.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxProfileEventImpl.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvd.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvd.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdDataStream.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdDataStream.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdDefaultSocketTransport.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdDefaultSocketTransport.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdImpl.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdImpl.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdMemClient.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdMemClient.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdObjectModelMetaData.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdObjectModelMetaData.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdObjectRegistrar.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdObjectRegistrar.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdProfileZoneClient.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdProfileZoneClient.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+  malti.vcxproj -> C:\Users\ohs80200\Desktop\syusaku\x64\Debug\malti.exe
