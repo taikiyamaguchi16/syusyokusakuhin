@@ -1,8 +1,10 @@
 #pragma once
 #include "object.h"
 
+using namespace Dix;
 class CPlayer : public CComponent
 {
+	sp< CTransform > sp1;
 	CTransform* m_pos = nullptr;
 	CRigidbody* m_rb = nullptr;
 	physx::PxBoxController* m_controller;

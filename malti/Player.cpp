@@ -4,7 +4,7 @@
 #include "Scene.h"
 #include "MeshRenderer.h"
 #include "Bullet.h"
-
+using namespace Dix;
 void CPlayer::Start()
 {
 	SetName();
@@ -12,11 +12,12 @@ void CPlayer::Start()
 		m_pos = Holder->GetComponent<CTransform>();
 	
 	m_rb = Holder->GetComponent<CRigidbody>();
-	//m_controller = CPhysx::CreateCapsuleController();
 
 	//m_rb->SetRigid(m_controller->getActor());
 	//CPhysx::SetActor(m_rb->GetRigidDynamic());
 	//m_rb->SetActor(CPhysx::GetActor());
+
+	sp1.SetPtr(m_pos = Holder->GetComponent<CTransform>());
 
 }
 

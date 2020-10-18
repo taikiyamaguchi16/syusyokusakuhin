@@ -12,14 +12,14 @@
 #include "imGui/imgui_impl_dx11.h"
 #include  "imGui/ImGuizmo.h" 
 
-
+#include "dixsmartptr.h"
 #include<memory>
 #include "PxPhysicsAPI.h"
 
 #define		SCREEN_X		1920
 #define		SCREEN_Y		1080
 #define		FULLSCREEN      0
-
+using namespace Dix;
 
 enum class GEOMETRYTYPE {
 	BOX = 0,
@@ -39,7 +39,6 @@ class  CObject;
 class CComponent
 {
 protected:
-	
 public:
 	std::string m_name="No name";
 	CComponent() {}
@@ -72,16 +71,15 @@ class CObject final
 
 	bool m_life = true;
 public:
-	std::list<CComponent*> m_ComponentList;
+	std::list<sp<CComponent>> m_ComponentList;
 	CObject() {}
-	~CObject() {
+	virtual ~CObject() {
 		for (auto itr = m_ComponentList.begin(); itr != m_ComponentList.end(); itr++) {
-			delete (*itr);
+			(*itr).Clear();
 		}
 		m_ComponentList.clear();
 
 	} 
-	//std::list<CComponent*> ComponentList;
 
 	void Update();
 	void LateUpdate();
@@ -99,24 +97,40 @@ public:
 			if (buff != nullptr)
 				return buff;
 		}*/
-		for (const auto& com : m_ComponentList) {
-			T* buff = dynamic_cast<T*>(com);
+		for (auto com : m_ComponentList) {
+			T* buff = dynamic_cast<T*>(com.GetPtr());
 			if (buff != nullptr)
 				return buff;
 		}
 		return nullptr;
 	}
 
+	template<class T>
+	T* GetWeakComponent()
+	{
+		/*for (auto itr = m_ComponentList.begin(); itr != m_ComponentList.end(); itr++) {
+			T* buff = dynamic_cast<T*>(itr->get());
+			if (buff != nullptr)
+				return buff;
+		}*/
+		for (auto com : m_ComponentList) {
+			wp<T>_wp1(com);
+			if (_wp1 != nullptr)
+				return _wp1;
+		}
+		return nullptr;
+	}
 	//オブジェクトが持っているコンポーネントを追加
 	template<class T>
 	T* AddComponent()
 	{
 		//std::shared_ptr<T> buff = std::make_shared<T>();
-		
 	    T* buff = new T();
 		buff->Holder = this;
 		//m_ComponentList.emplace_back(std::make_shared<T>(buff));
-		m_ComponentList.emplace_back(buff);
+		sp<CComponent>work_sp;
+		work_sp.SetPtr(buff);
+		m_ComponentList.emplace_back(work_sp);
 		buff->Start();
 		return buff;
 	}

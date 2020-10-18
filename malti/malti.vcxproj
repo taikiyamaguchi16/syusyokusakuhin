@@ -196,6 +196,7 @@
     <ClInclude Include="CPhysx.h" />
     <ClInclude Include="DatFile.h" />
     <ClInclude Include="DatFileLoader.h" />
+    <ClInclude Include="dixsmartptr.h" />
     <ClInclude Include="dx11mathutil.h" />
     <ClInclude Include="DX11Settransform.h" />
     <ClInclude Include="DX11util.h" />
