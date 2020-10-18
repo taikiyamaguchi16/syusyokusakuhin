@@ -43,8 +43,8 @@ void CMeshRenderer::LoadModel(const char * filename, const char * vsfile, const 
 
 
 void CMeshRenderer::Draw(){
-	if (m_pos == nullptr)
-		m_pos = Holder->GetComponent<CTransform>();
+	if (!m_pos.IsExist())
+		m_pos = Holder->GetWeakComponent<CTransform>();
 	//•`‰æ‰Â”\ó‘Ô‚È‚ç
 	if (m_active) {
 

@@ -10,6 +10,10 @@
 #include <sstream>
 #include <DirectXMath.h>
 
+#include "dixsmartptr.h"
+
+using namespace Dix;
+
 class CObject;
 class CGame;
 class CComponent;
@@ -46,7 +50,12 @@ public:
 	template<typename T>
 	inline void HierarchyDraw(T* scene_) {
 		//=======================================ヒエラルキーの描画=========================================================
-		std::list<CObject*>obj_s = scene_->GetObjList();
+		//std::list<wp<CObject>>obj_s = scene_->GetObjList();
+		std::list<wp<CObject>>obj_s;
+		for (auto item : scene_->GetObjList()) {
+			wp<CObject>_ob(item);
+			obj_s.emplace_back(_ob);
+		}
 
 		std::vector<CObject*>camera_s = scene_->GetCameraObjects();
 		ImGui::SetNextWindowPos(ImVec2(0, 150), ImGuiCond_None);
@@ -75,7 +84,7 @@ public:
 			const char* TitleName = str.c_str();
 			if (ImGui::Button(TitleName)) {
 				//クリックされたオブジェクトのアドレスを代入
-				scene_->SetActiveObj(com);
+				scene_->SetActiveObj(com.GetPtr());	//一時しのぎ変える！！！！！！！！！！！！！！！！！！！
 			}
 		}
 		for (auto com : camera_s) {

@@ -48,7 +48,7 @@ bool CGame::Init()
 void CGame::UnInit()
 {
 	for (auto item : m_obj_list) {
-		delete item;
+		item.Clear();
 	}
 	m_obj_list.clear();
 	for (auto came : m_subCameras) {
@@ -72,7 +72,7 @@ void CGame::Update()
 	for (auto item = m_obj_list.begin(); item != m_obj_list.end();) {
 		(*item)->Update();
 		if (!(*item)->GetLife()) {
-			delete *item;
+			item->Clear();
 			item = m_obj_list.erase(item);
 			continue;
 		}
@@ -220,7 +220,7 @@ void CGame::AddObjects()
 	AirPlane->SetTag(std::string("Player"));
 	m_obj_list.emplace_back(AirPlane);
 
-	_camera->SetTrackingObj(_trans);
+	_camera->SetTrackingObj(AirPlane->GetWeakComponent<CTransform>());
 
 	//enemy = new CObject;
 	//enemy->AddComponent<CTransform>();

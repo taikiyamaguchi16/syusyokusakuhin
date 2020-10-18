@@ -2,8 +2,8 @@
 #include "object.h"
 class CCamera :public CComponent
 {
-	CTransform* m_pos = nullptr;
-	CTransform* m_trackingObj = nullptr;
+	wp<CTransform> m_pos;
+	wp<CTransform> m_trackingObj;
 	
 	bool m_freeCameraFg = true;
 	bool m_trackingFg;
@@ -103,7 +103,7 @@ public:
 		m_up = up;
 	}
 
-	inline void SetTrackingObj(CTransform* target_) {
+	inline void SetTrackingObj(wp<CTransform> target_) {
 		m_trackingObj = target_;
 	}
 

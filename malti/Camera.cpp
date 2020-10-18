@@ -4,8 +4,8 @@
 void CCamera::Start()
 {
 	m_name = "Camera";
-	if (m_pos == nullptr)
-		m_pos = Holder->GetComponent<CTransform>();
+	if (!m_pos.IsExist())
+		m_pos = Holder->GetWeakComponent<CTransform>();
 
 	Init(1.0f, 10000.0f, XM_PIDIV2, SCREEN_X, SCREEN_Y, m_eye, m_lookat, m_up);
 	m_pos->SetPos(XMFLOAT3(0, 0, -30.0f));
@@ -17,7 +17,7 @@ void CCamera::Update()
 	//設定されたオブジェクトに追尾
 	if (m_trackingFg) {
 		
-		if (m_trackingObj != nullptr) {
+		if (m_trackingObj.IsExist()) {
 			//UpdateSphereCamera(XMFLOAT3(m_trackingObj->m_mat._41, m_trackingObj->m_mat._42, m_trackingObj->m_mat._43), m_elevation, m_azimuth);
 
 			CCamera::SetLookat(m_trackingObj->GetDirectPos());

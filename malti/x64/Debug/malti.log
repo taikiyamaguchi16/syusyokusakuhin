@@ -1,36 +1,13 @@
-﻿  Bullet.cpp
-  Camera.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  CBox.cpp
-  CCollider.cpp
-  CEnemy.cpp
-  CObject2D.cpp
-  CPhysx.cpp
-  dx11util.cpp
+﻿  dx11util.cpp
   game.cpp
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
 c:\users\ohs80200\desktop\syusaku\malti\game.cpp(152): warning C4101: 'sphere2': ローカル変数は 1 度も使われていません。
 c:\users\ohs80200\desktop\syusaku\malti\game.cpp(146): warning C4101: 'SkyDome': ローカル変数は 1 度も使われていません。
 c:\users\ohs80200\desktop\syusaku\malti\game.cpp(150): warning C4101: 'enemy': ローカル変数は 1 度も使われていません。
   ImGuiControl.cpp
-  main.cpp
-  MeshRenderer.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
   object.cpp
-c:\users\ohs80200\desktop\syusaku\malti\object.cpp(238): warning C4101: 'axisZ': ローカル変数は 1 度も使われていません。
-c:\users\ohs80200\desktop\syusaku\malti\object.cpp(237): warning C4101: 'axisY': ローカル変数は 1 度も使われていません。
-c:\users\ohs80200\desktop\syusaku\malti\object.cpp(236): warning C4101: 'axisX': ローカル変数は 1 度も使われていません。
-  Player.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\users\ohs80200\desktop\syusaku\malti\player.cpp(144): warning C4101: '_vy': ローカル変数は 1 度も使われていません。
-  Scene.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Sphere.cpp
-c:\users\ohs80200\desktop\syusaku\malti\sphere.cpp(63): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-c:\users\ohs80200\desktop\syusaku\malti\sphere.cpp(67): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-  Title.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\users\ohs80200\desktop\syusaku\malti\title.cpp(107): warning C4101: 'SubCamera': ローカル変数は 1 度も使われていません。
-c:\users\ohs80200\desktop\syusaku\malti\title.cpp(105): warning C4101: 'SkyDome': ローカル変数は 1 度も使われていません。
+c:\users\ohs80200\desktop\syusaku\malti\object.cpp(239): warning C4101: 'axisZ': ローカル変数は 1 度も使われていません。
+c:\users\ohs80200\desktop\syusaku\malti\object.cpp(238): warning C4101: 'axisY': ローカル変数は 1 度も使われていません。
+c:\users\ohs80200\desktop\syusaku\malti\object.cpp(237): warning C4101: 'axisX': ローカル変数は 1 度も使われていません。
   コードを生成中...
   malti.vcxproj -> C:\Users\ohs80200\Desktop\syusaku\x64\Debug\malti.exe

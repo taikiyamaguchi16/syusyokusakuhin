@@ -106,7 +106,7 @@ public:
 	}
 
 	template<class T>
-	T* GetWeakComponent()
+	wp<T> GetWeakComponent()
 	{
 		/*for (auto itr = m_ComponentList.begin(); itr != m_ComponentList.end(); itr++) {
 			T* buff = dynamic_cast<T*>(itr->get());
@@ -115,10 +115,10 @@ public:
 		}*/
 		for (auto com : m_ComponentList) {
 			wp<T>_wp1(com);
-			if (_wp1 != nullptr)
+			if (_wp1.IsExist() != NULL)
 				return _wp1;
 		}
-		return nullptr;
+		return NULL;
 	}
 	//オブジェクトが持っているコンポーネントを追加
 	template<class T>
@@ -193,7 +193,8 @@ class CRigidbody;
 
 class CTransform final : public CComponent
 {
-	CRigidbody* m_rb;
+	//CRigidbody* m_rb;
+	wp<CRigidbody>m_rb;
 	XMFLOAT3 m_scale;
 
 	physx::PxTransform* m_trans = new physx::PxTransform();
@@ -239,7 +240,7 @@ public:
 	void LateUpdate()override;
 	void MoveForward(XMFLOAT3 vec_);
 	void Draw()override;
-	inline void SetRigidbody(CRigidbody* rb_) {
+	inline void SetRigidbody(wp<CRigidbody> rb_) {
 		m_rb = rb_;
 	}
 
@@ -262,8 +263,8 @@ public:
 
 class CRigidbody final:public CComponent
 {
-	CTransform* m_transform;
-
+	//CTransform* m_transform;
+	wp<CTransform> m_transform;
 	physx::PxRigidDynamic*		   m_rigidDynamic = nullptr;
 	physx::PxRigidStatic*          m_rigidStatic = nullptr;
 	physx::PxRigidActor*		   m_actor = nullptr;

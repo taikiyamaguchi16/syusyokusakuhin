@@ -7,7 +7,8 @@
 class Scene
 {
 protected:
-	std::list<CObject*> m_obj_list;
+	//std::list<CObject*> m_obj_list;
+	std::list<sp<CObject>> m_obj_list;
 	CObject* m_mainCamera;
 	std::vector<CObject*>m_subCameras;
 	CObject* m_activeCamera;
@@ -19,13 +20,19 @@ public:
 	virtual void MainLoop() = 0;
 	virtual void Update() = 0;
 	virtual void Draw() = 0;
-	inline  std::list<CObject*> GetObjList() {
+	/*inline  std::list<CObject*> GetObjList() {
+		return m_obj_list;
+	}*/
+	inline  std::list<sp<CObject>> GetObjList() {
+	
 		return m_obj_list;
 	}
 	std::vector<CObject*> GetCameraObjects() {
 		return m_subCameras;
 	}
-	inline void AddObject(CObject* _o) { m_obj_list.emplace_back(_o); }
+	inline void AddObject(CObject* _o) { 
+		sp<CObject>_s(_o);
+		m_obj_list.emplace_back(_s); }
 };
 
 

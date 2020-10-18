@@ -8,16 +8,15 @@ using namespace Dix;
 void CPlayer::Start()
 {
 	SetName();
-	if (m_pos == nullptr)
-		m_pos = Holder->GetComponent<CTransform>();
+	if (m_pos.IsExist() == NULL)
+		m_pos = Holder->GetWeakComponent<CTransform>();
 	
-	m_rb = Holder->GetComponent<CRigidbody>();
+	m_rb = Holder->GetWeakComponent<CRigidbody>();
 
 	//m_rb->SetRigid(m_controller->getActor());
 	//CPhysx::SetActor(m_rb->GetRigidDynamic());
 	//m_rb->SetActor(CPhysx::GetActor());
 
-	sp1.SetPtr(m_pos = Holder->GetComponent<CTransform>());
 
 }
 
@@ -75,7 +74,7 @@ void CPlayer::Move()
 	}
 	//---------------------------------------------------------------------------------------
 	//“ü—Í‚³‚ê‚½ê‡
-		if (m_rb != nullptr) {
+		if (m_rb.IsExist()) {
 			if (m_rb->GetRigidDynamic() != nullptr) {
 				if (m_pos->m_angle.x < -40.0f) {
 					m_pos->m_angle.x = -40.0f;

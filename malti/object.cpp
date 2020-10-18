@@ -41,7 +41,7 @@ void CTransform::Update()
 	DX11MtxTranslation(m_trans->p, positionMatrix);
 	DX11MtxRotation(m_angle, rotMatrix);
 	//Rigidbodyがついている場合
-	if (m_rb != nullptr) {
+	if (m_rb.IsExist()) {
 
 		DX11MtxMultiply(m_mat, scaleMatrix, velcityMatrix, rotMatrix, positionMatrix);
 
@@ -50,7 +50,7 @@ void CTransform::Update()
 		DX11MtxMultiply(m_mat, scaleMatrix, rotMatrix, positionMatrix);
 	}
 
-	if (m_rb != nullptr) {
+	if (m_rb.IsExist()) {
 		if (m_rb->GetRigidDynamic() != nullptr || m_rb->GetRigidStatic() != nullptr) {
 			XMFLOAT4X4 workmat;
 			//シェイプから行列を取り出す場合はこっち
@@ -215,7 +215,8 @@ void CTransform::ImGuiDraw()
 {
 	ImGui::DragFloat3(u8"座標", &m_trans->p.x, true);
 	ImGui::DragFloat3(u8"角度", &m_angle.x, true);
-	if (m_rb != nullptr) {
+	//if (m_rb != nullptr) {
+	if(m_rb.IsExist()){
 		if (m_rb->GetRigidDynamic() != nullptr) {
 			XMFLOAT4X4 rot;
 			DX11MtxIdentity(rot);
@@ -250,7 +251,7 @@ void CTransform::SetQuat(XMFLOAT4X4 & rotateMat_)
 
 	// クオータニオンから行列を作成
 	//DX11MtxFromQt(rotateMat_, tempqt3);
-	if (m_rb != nullptr) {
+	if (m_rb.IsExist()) {
 		if (m_rb->GetRigidDynamic() != NULL) {
 			m_trans->q = physx::PxQuat(qt.x, qt.y, qt.z, qt.w);
 		}
@@ -269,8 +270,9 @@ CRigidbody::~CRigidbody()
 void CRigidbody::Start()
 {
 	m_usegravity = true;
-	m_transform = Holder->GetComponent<CTransform>();
-	m_transform->SetRigidbody(this);
+	m_transform = Holder->GetWeakComponent<CTransform>();
+	wp<CRigidbody>wark_wp = Holder->GetWeakComponent<CRigidbody>();
+	m_transform->SetRigidbody(wark_wp);
 	m_name = "Rigidbody";
 }
 

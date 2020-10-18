@@ -19,7 +19,7 @@ bool Title::Init()
 void Title::UnInit()
 {
 	for (auto item : m_obj_list) {
-		delete item;
+		item.Clear();
 	}
 	m_obj_list.clear();
 	for (auto came : m_subCameras) {
@@ -42,7 +42,8 @@ void Title::Update()
 	for (auto item = m_obj_list.begin(); item != m_obj_list.end();) {
 		(*item)->Update();
 		if (!(*item)->GetLife()) {
-			delete *item;
+			//delete item;
+			item->Clear();
 			item = m_obj_list.erase(item);
 			continue;
 		}

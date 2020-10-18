@@ -7,11 +7,13 @@
 
 class CMeshRenderer final:public CComponent
 {
+	//================クラス内で完結しているのでスマートポインタ化しない=====================
 	static inline CSphere* m_sphere = nullptr;
 	static inline CBox*    m_box = nullptr;
+	//=======================================================================================
 	float m_radius=1;
 
-	CTransform* m_pos = nullptr;
+	wp<CTransform> m_pos;
 	bool m_active = true;
 	//球やボックスなどのシンプルなメッシュの描画する用のフラグ
 	bool m_defaultMeshsMode = true;

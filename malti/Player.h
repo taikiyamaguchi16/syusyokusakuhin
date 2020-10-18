@@ -4,9 +4,8 @@
 using namespace Dix;
 class CPlayer : public CComponent
 {
-	sp< CTransform > sp1;
-	CTransform* m_pos = nullptr;
-	CRigidbody* m_rb = nullptr;
+	wp<CTransform> m_pos;
+	wp<CRigidbody> m_rb;
 	physx::PxBoxController* m_controller;
 
 	XMFLOAT3 m_zikuX, m_zikuY, m_zikuZ;
