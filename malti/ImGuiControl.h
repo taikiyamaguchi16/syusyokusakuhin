@@ -57,7 +57,12 @@ public:
 			obj_s.emplace_back(_ob);
 		}
 
-		std::vector<CObject*>camera_s = scene_->GetCameraObjects();
+		//std::vector<CObject*>camera_s = scene_->GetCameraObjects();
+		std::vector<wp<CObject>>camera_s;
+		for (auto item : scene_->GetCameraObjects()) {
+			wp<CObject>_ob(item);
+			camera_s.emplace_back(_ob);
+		}
 		ImGui::SetNextWindowPos(ImVec2(0, 150), ImGuiCond_None);
 		ImGui::SetNextWindowSize(ImVec2(280, 600), ImGuiCond_None);
 
@@ -84,7 +89,7 @@ public:
 			const char* TitleName = str.c_str();
 			if (ImGui::Button(TitleName)) {
 				//クリックされたオブジェクトのアドレスを代入
-				scene_->SetActiveObj(com.GetPtr());	//一時しのぎ変える！！！！！！！！！！！！！！！！！！！
+				scene_->SetActiveObj(com);	//一時しのぎ変える！！！！！！！！！！！！！！！！！！！
 			}
 		}
 		for (auto com : camera_s) {
@@ -147,7 +152,7 @@ public:
 		//======================================================================================================================================
 	}
 
-	void InspectorDraw(CObject* obj_,std::list<CComponent*> &coms_);
+	void InspectorDraw(wp<CObject> obj_,std::list<CComponent*> &coms_);
 
 	void ConsoleDraw();
 

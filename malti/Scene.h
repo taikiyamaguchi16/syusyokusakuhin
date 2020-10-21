@@ -9,9 +9,11 @@ class Scene
 protected:
 	//std::list<CObject*> m_obj_list;
 	std::list<sp<CObject>> m_obj_list;
-	CObject* m_mainCamera;
-	std::vector<CObject*>m_subCameras;
-	CObject* m_activeCamera;
+	//CObject* m_mainCamera;
+	sp<CObject>m_mainCamera;
+	std::vector<sp<CObject>>m_subCameras;
+	wp<CObject> m_activeCamera;
+	wp<CObject> m_active_obj;
 public:
 	virtual ~Scene() {}
 
@@ -27,19 +29,24 @@ public:
 	
 		return m_obj_list;
 	}
-	std::vector<CObject*> GetCameraObjects() {
+	std::vector<sp<CObject>> GetCameraObjects() {
 		return m_subCameras;
 	}
 	inline void AddObject(CObject* _o) { 
 		sp<CObject>_s(_o);
-		m_obj_list.emplace_back(_s); }
+		m_obj_list.emplace_back(_s); 
+	}
+
+	inline void SetActiveObj(wp<CObject>obj_) {
+		m_active_obj = obj_;
+	}
 };
 
 
 class SceneManager 
 {
 private:
-	Scene* m_activeScene;
+	sp<Scene> m_activeScene;
 
 	ID3D11Buffer*	m_vertexbuffer = nullptr;	// 頂点バッファ
 	ID3D11Buffer*	m_idxbuffer = nullptr;		// インデックスバッファ	
@@ -62,7 +69,7 @@ public:
 	ID3D11ShaderResourceView* m_srv = nullptr;	// SRV
 	bool m_frameAdvanceFg = false;			//コマ送り
 	int m_fpsCount;							//オブジェクト毎にFPSを変えるための変数
-	float m_fps = 60.0;						//全体のFPS
+	float m_fps = 144.0f;						//全体のFPS
 	SceneManager(){}
 	
 	bool Init(HINSTANCE hinst, HWND hwnd, int width, int height, bool fullscreen);
@@ -77,9 +84,9 @@ public:
 		return &instance;
 	}
 
-	inline void ChangeScene(Scene* replacementScene_)
+	inline void ChangeScene(sp<Scene> replacementScene_)
 	{
-		delete m_activeScene;
+		m_activeScene.Clear();
 		m_activeScene = replacementScene_;
 		m_activeScene->Update();
 	}

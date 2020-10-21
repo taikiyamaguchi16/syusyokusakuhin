@@ -22,7 +22,7 @@ ImGuiControl::~ImGuiControl()
 }
 
 
-void ImGuiControl::InspectorDraw(CObject * obj_, std::list<CComponent*>& coms_)
+void ImGuiControl::InspectorDraw(wp<CObject> obj_, std::list<CComponent*>& coms_)
 {
 	//オブジェクトの名前を書くよう
 	std::string str = obj_->GetName();

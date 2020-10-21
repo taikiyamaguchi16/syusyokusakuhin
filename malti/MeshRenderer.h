@@ -10,6 +10,7 @@ class CMeshRenderer final:public CComponent
 	//================クラス内で完結しているのでスマートポインタ化しない=====================
 	static inline CSphere* m_sphere = nullptr;
 	static inline CBox*    m_box = nullptr;
+	static inline int m_meshr_render_cnt = 0;
 	//=======================================================================================
 	float m_radius=1;
 
@@ -27,14 +28,22 @@ class CMeshRenderer final:public CComponent
 	float m_color[4] = { 255.0f,255.0f,255.0f,255.0f };
 public:
 	~CMeshRenderer() { 
-		if (m_sphere != nullptr) {
-			m_sphere->Exit();
-			delete m_sphere;
+		m_meshr_render_cnt--;
+		if (m_meshr_render_cnt == 0) {
+			m_onceInitFg = true;
+			if (m_sphere != nullptr) {
+				m_sphere->Exit();
+				delete m_sphere;
+			}
+			if (m_box != nullptr) {
+				m_box->Exit();
+				delete m_box;
+			}
+			///m_models["TIE_Fighter"]->Uninit();
+		//	delete m_models["TIE_Fighter"];
+		//	m_models.clear();
 		}
-		if (m_box != nullptr) {
-			m_box->Exit();
-			delete m_box;
-		}
+		
 	}
 	void Start()override;
 	//void Update()override;

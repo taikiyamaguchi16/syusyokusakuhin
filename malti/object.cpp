@@ -265,6 +265,7 @@ CRigidbody::~CRigidbody()
 	CPhysx::DeleteActor(m_actor);
 	m_actor->release();
 	m_material->release();
+	
 }
 
 void CRigidbody::Start()
@@ -278,7 +279,7 @@ void CRigidbody::Start()
 
 void CRigidbody::InitDynamic()
 {
-	m_material = CPhysx::GetPhysics()->createMaterial(0.6f, 0.6f, 0.6f);
+	m_material = CPhysx::GetPhysics()->createMaterial(0.2f, 0.2f, 0.5f);
 	//physx::PxVec3 boxSize = physx::PxVec3(1.f, 1.f, 1.f);
 	physx::PxVec3 boxSize = m_transform->GetScale();
 	CCollider* col;
@@ -292,6 +293,7 @@ void CRigidbody::InitDynamic()
 		CPhysx::SetActor(m_rigidDynamic);
 		m_rigidDynamic->setMass(m_mass);
 		m_actor = CPhysx::GetActor();
+		m_rigidDynamic->setAngularDamping(0.f);
 
 		//大きさにあったコライダーの取り付け
 		col = Holder->AddComponent<CBoxCollider>();
@@ -309,6 +311,7 @@ void CRigidbody::InitDynamic()
 		CPhysx::SetActor(m_rigidDynamic);
 		m_rigidDynamic->setMass(m_mass);
 		m_actor = CPhysx::GetActor();
+		m_rigidDynamic->setAngularDamping(0.f);
 
 		col = Holder->AddComponent<CSphereCollider>();
 		col->Init();
@@ -327,7 +330,7 @@ void CRigidbody::InitDynamic()
 
 void CRigidbody::InitStatic()
 {
-	m_material = CPhysx::GetPhysics()->createMaterial(0.6f, 0.6f, 0.6f);
+	m_material = CPhysx::GetPhysics()->createMaterial(0.2f, 0.2f, 0.5f);
 	//physx::PxVec3 boxSize = physx::PxVec3(1.f, 1.f, 1.f);
 	physx::PxVec3 boxSize = m_transform->GetScale();
 	CCollider* col;
@@ -396,6 +399,8 @@ void CRigidbody::ImGuiDraw()
 	if (m_rigidDynamic != NULL) {
 		physx::PxVec3 speed = m_rigidDynamic->getLinearVelocity();
 		ImGui::Text(u8"速度 x:%.3f  y:%.3f  z:%.3f", speed.x, speed.y, speed.z);
+		speed = m_rigidDynamic->getAngularVelocity();
+		ImGui::Text(u8"角速度 x:%.3f  y:%.3f  z:%.3f", speed.x, speed.y, speed.z);
 	}
 	if (ImGui::Checkbox(u8"トリガーにする", &m_trigger)) {
 		if (m_trigger) {

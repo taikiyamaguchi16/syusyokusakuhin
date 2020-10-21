@@ -6,12 +6,10 @@
 #include "CObject2D.h"
 
 
-CObject2D* cc;
 CCamera* _camaa;
 
 bool Title::Init()
 {
-	cc = new CObject2D();
 	AddObjects();
 	return true;
 }
@@ -23,10 +21,9 @@ void Title::UnInit()
 	}
 	m_obj_list.clear();
 	for (auto came : m_subCameras) {
-		delete came;
+		came.Clear();
 	}
 	m_subCameras.clear();
-	delete cc;
 }
 
 void Title::MainLoop()
@@ -37,7 +34,6 @@ void Title::MainLoop()
 
 void Title::Update()
 {
-	cc->Update();
 	CDirectInput::GetInstance().GetKeyBuffer();			// キー入力取得
 	for (auto item = m_obj_list.begin(); item != m_obj_list.end();) {
 		(*item)->Update();
@@ -54,27 +50,17 @@ void Title::Update()
 		item2->Update();
 	}
 
-	if (CDirectInput::GetInstance().CheckKeyBufferTrigger(DIK_RETURN)) {
-		cc->c_fg = true;
-	}
-	if (cc->CountUp()) {
-		SceneManager::GetInstance()->ChangeScene(new CGame());
+	if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_L)) {
+		// レンダリング後処理
+		DX11AfterRender();
+		SceneManager::GetInstance()->ChangeScene(sp<Scene>(new CGame()));
 	}
 	CDirectInput::GetInstance().GetMouseState();
 }
 
 void Title::Draw()
 {
-	// ビューポートを設定
-	D3D11_VIEWPORT vp;
-	vp.Width = (FLOAT)SCREEN_X;
-	vp.Height = (FLOAT)SCREEN_Y;
-	vp.MinDepth = 0.0f;
-	vp.MaxDepth = 1.0f;
-	vp.TopLeftX = 0;
-	vp.TopLeftY = 0;
 
-	GetDX11DeviceContext()->RSSetViewports(1, &vp);
 	// ターゲットバッファクリア	
 	float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; //red,green,blue,alpha
 
@@ -87,9 +73,7 @@ void Title::Draw()
 
 	
 	//==========================================================================================================
-	cc->Update();
-	cc->m_cameraMtx = _camaa->GetCameraMatrix();
-	cc->Draw();
+
 	for (int i = 0; i < 1; i++) {
 		for (auto item : m_obj_list) {
 			item->Draw();
@@ -102,10 +86,10 @@ void Title::Draw()
 
 void Title::AddObjects()
 {
-	CObject* AirPlane;
-	CObject* SkyDome;
-	CObject* CameraObj;
-	CObject* SubCamera;
+	sp<CObject> AirPlane;
+	sp<CObject> SkyDome;
+	sp<CObject> CameraObj;
+	sp<CObject> SubCamera;
 
 	float _plane = 600.0f;
 	float _color[4] = { 255.0f,255.0f,255.0f,255.0f };
@@ -120,27 +104,21 @@ void Title::AddObjects()
 	//==========================================================================================
 
 
-	CameraObj = new CObject;
+	CameraObj.SetPtr(new CObject);
 	CameraObj->AddComponent<CTransform>();
 	_camaa = _camera = CameraObj->AddComponent<CCamera>();
 	CameraObj->SetName(std::string("Camera"));
 	CameraObj->SetTag(std::string("Camera"));
+
 	m_subCameras.emplace_back(CameraObj);
 	_camera->SetMainCameraFg(true);
 
 
-	AirPlane = new CObject;
+	AirPlane.SetPtr(new CObject);
 	_trans = AirPlane->AddComponent<CTransform>();
 	_trans->SetPos(XMFLOAT3(60.0f, 100.0f, 0));
-	/*_rigid = AirPlane->AddComponent<CRigidbody>();
-	_rigid->SetBoxSize(XMFLOAT3(3.0f, 3.0f, 3.0f));
-	_rigid->SetMass(0.1f);*/
 	AirPlane->SetMyFps(60);
-	/*_render = AirPlane->AddComponent<CMeshRenderer>();
-	_render->BoxInit(XMFLOAT3(3.0f, 3.0f, 3.0f));
-	_rigid->InitDynamic();
-
-	AirPlane->AddComponent<CSphereCollider>();*/
+	
 	AirPlane->SetName(std::string("AirPlane"));
 	AirPlane->SetTag(std::string("Player"));
 	m_obj_list.emplace_back(AirPlane);

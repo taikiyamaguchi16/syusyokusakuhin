@@ -10,13 +10,14 @@ void CMeshRenderer::Start()
 	m_name = "CMeshRenderer";
 	//m_model.Init("assets/X-Wing.x.dat", "shader/vs.fx", "shader/ps.fx");
 	//ˆê“x‚¾‚¯“Ç‚Ýž‚ÝŽÀs
+	m_meshr_render_cnt++;
 	if (m_onceInitFg) {
 		
 		////¡‚¾‚¯
 		//m_models["X-Wing"].Init("assets/X-Wing.x.dat", "shader/vs.fx", "shader/ps.fx");
-		m_models["TIE_Fighter"] = new CModel();
+		//m_models["TIE_Fighter"] = new CModel();
 
-		m_models["TIE_Fighter"]->Init("assets/TIE_Fighter.x.dat", "shader/vs.fx", "shader/ps.fx");
+		//m_models["TIE_Fighter"]->Init("assets/TIE_Fighter.x.dat", "shader/vs.fx", "shader/ps.fx");
 	
 		//m_models["skydome"].Init("assets/skydome.x.dat", "shader/vs.fx", "shader/ps.fx");
 

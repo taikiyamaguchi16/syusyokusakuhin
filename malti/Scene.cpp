@@ -104,7 +104,7 @@ bool SceneManager::Init(HINSTANCE hinst, HWND hwnd, int width, int height, bool 
 	TurnOnAlphablend();
 
 
-	m_activeScene = new CGame();
+	m_activeScene = sp<Scene>(new CGame());
 	return	true;
 }
 

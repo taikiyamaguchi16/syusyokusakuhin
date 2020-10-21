@@ -3,7 +3,7 @@
 
 class Title :public Scene
 {
-	CObject* m_active_obj = nullptr;
+	
 public:
 	Title() { Init(); }
 	~Title() { UnInit(); }

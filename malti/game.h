@@ -12,8 +12,7 @@
 
 class CGame final:public Scene
 {
-	CObject* m_active_obj = nullptr;
-
+	
 	//ID3D11Buffer*	m_vertexbuffer = nullptr;	// 頂点バッファ
 	//ID3D11Buffer*	m_idxbuffer = nullptr;		// インデックスバッファ	
 	//ID3D11Buffer*	m_cbuffer = nullptr;		// 定数バッファ	
@@ -38,10 +37,6 @@ public:
 	void MainLoop()override;
 	void Draw()override;
 
-	template<typename T>
-	inline void SetActiveObj(T* obj_) {
-		m_active_obj = obj_;
-	}
 	
 	inline void CreateObject(std::string str_) {
 		CObject* obj = new CObject;

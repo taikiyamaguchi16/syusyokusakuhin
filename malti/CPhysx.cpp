@@ -42,6 +42,7 @@ void CPhysx::Init()
 
 	// PVD setting
 	PxPvdSceneClient* pvdClient = m_scene->getScenePvdClient();
+	//コールバック関数を呼ぶタイミング
 	if (pvdClient)
 	{
 		pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, true);
@@ -63,8 +64,8 @@ void CPhysx::UnInit()
 
 	
 
-	/*m_foundation->release();
-	m_foundation = nullptr;*/
+	m_foundation->release();
+	m_foundation = nullptr;
 	
 
 	/*m_pvd->release();

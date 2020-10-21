@@ -39,12 +39,12 @@ class  CObject;
 class CComponent
 {
 protected:
+
 public:
 	std::string m_name="No name";
 	CComponent() {}
 	virtual ~CComponent() {}
 	CObject *Holder;
-	//std::shared_ptr<CObject> Holder;
 	virtual void Start() {}
 	virtual void Update() {}
 	virtual void LateUpdate(){}
@@ -202,10 +202,7 @@ class CTransform final : public CComponent
 public:
 	~CTransform() {delete m_trans; }
 	XMFLOAT3 m_angle;
-	
-
 	XMFLOAT4X4 m_mat;
-
 
 	CTransform* m_parent = nullptr;
 	std::list<CTransform*>m_child_list;
@@ -304,6 +301,6 @@ public:
 	inline physx::PxRigidDynamic* GetRigidDynamic() {return m_rigidDynamic; }
 	inline physx::PxRigidStatic* GetRigidStatic() { return m_rigidStatic; }
 
-	inline const physx::PxMaterial* GetMaterial()const { return m_material; }
+	inline physx::PxMaterial* GetMaterial()const { return m_material; }
 	//============================================アクセサ=======================================================================
 };

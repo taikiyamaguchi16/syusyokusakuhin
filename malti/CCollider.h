@@ -36,6 +36,7 @@ public:
 	inline void SetName()override {
 		m_name = "BoxCollider";
 	}
+	~CBoxCollider();
 };
 
 class CSphereCollider :public CCollider
@@ -53,5 +54,5 @@ public:
 	inline void SetName()override {
 		m_name = "SphereCollider";
 	}
-	
+	~CSphereCollider();
 };

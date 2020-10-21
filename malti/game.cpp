@@ -52,10 +52,10 @@ void CGame::UnInit()
 	}
 	m_obj_list.clear();
 	for (auto came : m_subCameras) {
-		delete came;
+		came.Clear();
 	}
 	m_subCameras.clear();
-	delete m_mainCamera;
+	m_mainCamera.Clear();
 }
 
 void CGame::Update()
@@ -113,7 +113,13 @@ void CGame::Update()
 		m_activeCamera = m_subCameras[0];
 	}
 
-	CPhysx::StepPhysics(60.0f);
+
+	if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_H)) {
+		// レンダリング後処理
+		DX11AfterRender();
+		SceneManager::GetInstance()->ChangeScene(sp<Scene>(new Title()));
+	}
+	CPhysx::StepPhysics(144.0f);
 
 	CDirectInput::GetInstance().GetMouseState();
 }
@@ -132,8 +138,9 @@ void CGame::Draw()
 	for (auto item : m_obj_list) {
 		item->Draw();
 	}
-
-	m_activeCamera->Draw();
+	if (m_activeCamera.IsExist()) {
+		m_activeCamera->Draw();
+	}
 
 	// レンダリング後処理
 	DX11AfterRender();
@@ -142,26 +149,31 @@ void CGame::Draw()
 
 void CGame::AddObjects()
 {
-	CObject* AirPlane;
+	/*CObject* AirPlane;
 	CObject* SkyDome;
 	CObject* CameraObj;
-	CObject* SubCamera;
+	CObject* SubCamera;*/
 
-	CObject* enemy;
-	CObject* sphere;
-	CObject* sphere2;
-	CObject* box;
-	CObject* box2;
-	CObject* box3;
-	CObject* box4;
-	CObject* box5;
+	sp<CObject> AirPlane;
+	sp<CObject> SkyDome;
+	sp<CObject> CameraObj;
+	sp<CObject> SubCamera;
+
+	sp<CObject> enemy;
+	sp<CObject> sphere;
+	sp<CObject> sphere2;
+	sp<CObject> box;
+	sp<CObject> box2;
+	sp<CObject> box3;
+	sp<CObject> box4;
+	sp<CObject> box5;
 
 	float _plane = 600.0f;
 	float _color[4] = { 255.0f,255.0f,255.0f,255.0f };
 
-	m_Components.emplace_back(createInstance<CPlayer>());
+	/*m_Components.emplace_back(createInstance<CPlayer>());
 	m_Components.emplace_back(createInstance<CRigidbody>());
-	m_Components.emplace_back(createInstance<CMeshRenderer>());
+	m_Components.emplace_back(createInstance<CMeshRenderer>());*/
 
 	for (auto item : m_Components) {
 		item->SetName();
@@ -184,7 +196,7 @@ void CGame::AddObjects()
 	m_obj_list.emplace_back(SkyDome);
 */
 
-	SubCamera = new CObject;
+	SubCamera.SetPtr(new CObject);
 	SubCamera->AddComponent<CTransform>();
 	_cama = SubCamera->AddComponent<CCamera>();
 	SubCamera->AddComponent<CLight>();
@@ -193,22 +205,25 @@ void CGame::AddObjects()
 	m_subCameras.emplace_back(SubCamera);
 
 
-	CameraObj = new CObject;
+	CameraObj.SetPtr(new CObject);
 	CameraObj->AddComponent<CTransform>();
 	_camera = CameraObj->AddComponent<CCamera>();
 	CameraObj->AddComponent<CLight>();
 	CameraObj->SetName(std::string("Camera"));
 	CameraObj->SetTag(std::string("Camera"));
-	m_mainCamera = CameraObj;
+	sp<CObject>wark(CameraObj);
+	m_mainCamera = wark;
 	_camera->SetMainCameraFg(true);
-	m_activeCamera = CameraObj;
+
+	wp<CObject>wark_weak(CameraObj);
+	m_activeCamera = wark_weak;
 
 
-	AirPlane = new CObject;
+	AirPlane.SetPtr(new CObject);
 	_trans = AirPlane->AddComponent<CTransform>();
-	_trans->SetPos(XMFLOAT3(60.0f, 100.0f, 0));
+	_trans->SetPos(XMFLOAT3(0.0f, 100.0f, 0));
 	_rigid = AirPlane->AddComponent<CRigidbody>();
-	_rigid->SetMass(0.1f);
+	_rigid->SetMass(1.1f);
 	AirPlane->AddComponent<CPlayer>();
 	AirPlane->SetMyFps(60);
 	_render = AirPlane->AddComponent<CMeshRenderer>();
@@ -232,9 +247,9 @@ void CGame::AddObjects()
 	//m_obj_list.emplace_back(enemy);
 
 
-	sphere = new CObject;
+	sphere.SetPtr(new CObject);
 	_trans = sphere->AddComponent<CTransform>();
-	_trans->SetPos(XMFLOAT3(15.0f, 20.0f, 0.0f));
+	_trans->SetPos(XMFLOAT3(5.0f, 20.0f, 0.0f));
 	_trans->SetScale(XMFLOAT3(5.f, 5.f,5.f ));
 	_rigid = sphere->AddComponent<CRigidbody>();
 	_render = sphere->AddComponent<CMeshRenderer>();
@@ -259,7 +274,7 @@ void CGame::AddObjects()
 	m_obj_list.emplace_back(sphere2);*/
 
 
-	box = new CObject;
+	box.SetPtr(new CObject);
 	_trans = box->AddComponent<CTransform>();
 	_trans->SetPos(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	_rigid = box->AddComponent<CRigidbody>();
@@ -274,7 +289,7 @@ void CGame::AddObjects()
 
 
 
-	box2 = new CObject;
+	box2.SetPtr(new CObject);
 	_trans = box2->AddComponent<CTransform>();
 	_trans->SetPos(XMFLOAT3(_plane / 2.0f, _plane / 2.0f, .0f));
 	_rigid = box2->AddComponent<CRigidbody>();
@@ -288,7 +303,7 @@ void CGame::AddObjects()
 	m_obj_list.emplace_back(box2);
 
 
-	box3 = new CObject;
+	box3.SetPtr(new CObject);
 	_trans = box3->AddComponent<CTransform>();
 	_trans->SetPos(XMFLOAT3(-_plane / 2.0f, _plane / 2.0f, .0f));
 	_rigid = box3->AddComponent<CRigidbody>();
@@ -302,7 +317,7 @@ void CGame::AddObjects()
 	m_obj_list.emplace_back(box3);
 
 
-	box4 = new CObject;
+	box4.SetPtr(new CObject);
 	_trans = box4->AddComponent<CTransform>();
 	_trans->SetPos(XMFLOAT3(0.0f, _plane / 2.0f, _plane / 2.0f));
 	_rigid = box4->AddComponent<CRigidbody>();
@@ -316,7 +331,7 @@ void CGame::AddObjects()
 	m_obj_list.emplace_back(box4);
 
 
-	box5 = new CObject;
+	box5.SetPtr(new CObject);
 	_trans = box5->AddComponent<CTransform>();
 	_trans->SetPos(XMFLOAT3(0.0f, _plane / 2.0f, -_plane / 2.0f));
 	_rigid = box5->AddComponent<CRigidbody>();
@@ -330,5 +345,6 @@ void CGame::AddObjects()
 	m_obj_list.emplace_back(box5);
 
 
-	m_active_obj = AirPlane;
+	wp<CObject>wark_weak_ptr(AirPlane);
+	m_active_obj = wark_weak_ptr;
 }

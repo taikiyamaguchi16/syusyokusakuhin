@@ -65,6 +65,8 @@ void CBoxCollider::ImGuiDraw()
 void CBoxCollider::Init()
 {
 	CCollider::Init();
+	const physx::PxMaterial* mmm = m_rb->GetMaterial();
+	float  ss = mmm->getRestitution();
 	m_shape = CPhysx::GetPhysics()->createShape(physx::PxBoxGeometry(m_transform->GetScale() / 2.f),*m_rb->GetMaterial(), true);
 
 	PxShape* shapes[128];
@@ -72,13 +74,18 @@ void CBoxCollider::Init()
 	const PxU32 nbShapes = m_rb->GetActor()->getNbShapes();
 	m_rb->GetActor()->getShapes(shapes, nbShapes);
 	m_rb->GetActor()->detachShape(*shapes[0]);
-
 	m_rb->GetActor()->attachShape(*m_shape);
 	m_box = new CBox();
 	m_box->Init(XMFLOAT3(1.f, 1.f, 1.f));
 	
 
 	m_shape->setFlag(PxShapeFlag::eVISUALIZATION, false);
+}
+
+CBoxCollider::~CBoxCollider()
+{
+	m_box->Exit();
+	m_shape->release();
 }
 
 void CSphereCollider::Start()
@@ -102,6 +109,12 @@ void CSphereCollider::Init()
 
 	m_sphere = new CSphere();
 	m_sphere->Init(1.f);
+}
+
+CSphereCollider::~CSphereCollider()
+{
+	m_sphere->Exit();
+	m_shape->release();
 }
 
 void CSphereCollider::Draw()

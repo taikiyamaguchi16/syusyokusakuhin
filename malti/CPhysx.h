@@ -80,19 +80,21 @@ public:
 	}
 	//„‘Ì‚Ì¶¬
 	[[nodiscard]]inline static PxRigidDynamic* createDynamic(const PxTransform& t, const PxGeometry& geometry, PxMaterial* material) {
-		PxRigidDynamic* dynamic = PxCreateDynamic(*m_physics, t, geometry, *material, 10.0f);
+		//Pxreal‚Í–§“x
+		PxRigidDynamic* dynamic = PxCreateDynamic(*m_physics, t, geometry, *material,1.f);
 		return dynamic;
 	}
 	
-	inline static void StepPhysics(float fps_) {
-		m_scene->simulate(1.0f / fps_);
-		m_scene->fetchResults(true);
-	}
-
+	
 	[[nodiscard]]inline static PxRigidStatic* createStatic(const PxTransform& t, const PxGeometry& geometry, PxMaterial* material)
 	{
 		PxRigidStatic* static_actor = PxCreateStatic(*m_physics, t, geometry, *material);
 		return static_actor;
+	}
+
+	inline static void StepPhysics(float fps_) {
+		m_scene->simulate(1.0f / fps_);
+		m_scene->fetchResults(true);
 	}
 
 	inline static void SetActor(PxRigidDynamic* actor_) {

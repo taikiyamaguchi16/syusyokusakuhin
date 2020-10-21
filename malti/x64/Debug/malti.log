@@ -1,13 +1,5 @@
-﻿  dx11util.cpp
-  game.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\users\ohs80200\desktop\syusaku\malti\game.cpp(152): warning C4101: 'sphere2': ローカル変数は 1 度も使われていません。
-c:\users\ohs80200\desktop\syusaku\malti\game.cpp(146): warning C4101: 'SkyDome': ローカル変数は 1 度も使われていません。
-c:\users\ohs80200\desktop\syusaku\malti\game.cpp(150): warning C4101: 'enemy': ローカル変数は 1 度も使われていません。
-  ImGuiControl.cpp
-  object.cpp
+﻿  object.cpp
 c:\users\ohs80200\desktop\syusaku\malti\object.cpp(239): warning C4101: 'axisZ': ローカル変数は 1 度も使われていません。
 c:\users\ohs80200\desktop\syusaku\malti\object.cpp(238): warning C4101: 'axisY': ローカル変数は 1 度も使われていません。
 c:\users\ohs80200\desktop\syusaku\malti\object.cpp(237): warning C4101: 'axisX': ローカル変数は 1 度も使われていません。
-  コードを生成中...
   malti.vcxproj -> C:\Users\ohs80200\Desktop\syusaku\x64\Debug\malti.exe
