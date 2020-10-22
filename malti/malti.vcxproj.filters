@@ -40,6 +40,12 @@
     <Filter Include="ソース ファイル\ImGui\3DGuizmo">
       <UniqueIdentifier>{f48ce7bf-57d1-4547-b31f-b0d47f9aa804}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Physx">
+      <UniqueIdentifier>{e2bbbef3-1653-43f9-8ebb-155b39209595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ImGui\other">
+      <UniqueIdentifier>{ab0285f1-0681-4996-9829-9dc42258ff90}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -56,24 +62,6 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>ソース ファイル\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="imGui\imgui.cpp">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imGui\imgui_demo.cpp">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imGui\imgui_draw.cpp">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imGui\imgui_impl_dx11.cpp">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imGui\imgui_impl_win32.cpp">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="imGui\imgui_widgets.cpp">
-      <Filter>ソース ファイル\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
@@ -117,9 +105,6 @@
     <ClCompile Include="WICTextureLoader.cpp">
       <Filter>ソース ファイル\Draw</Filter>
     </ClCompile>
-    <ClCompile Include="CPhysx.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="CBox.cpp">
       <Filter>ソース ファイル\Component</Filter>
     </ClCompile>
@@ -147,6 +132,27 @@
     <ClCompile Include="CCollider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="CPhysx.cpp">
+      <Filter>ソース ファイル\Physx</Filter>
+    </ClCompile>
+    <ClCompile Include="imGui\imgui.cpp">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClCompile>
+    <ClCompile Include="imGui\imgui_demo.cpp">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClCompile>
+    <ClCompile Include="imGui\imgui_draw.cpp">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClCompile>
+    <ClCompile Include="imGui\imgui_impl_dx11.cpp">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClCompile>
+    <ClCompile Include="imGui\imgui_impl_win32.cpp">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClCompile>
+    <ClCompile Include="imGui\imgui_widgets.cpp">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Exception.h">
@@ -169,30 +175,6 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>ソース ファイル\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="imGui\imconfig.h">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imGui\imgui.h">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imGui\imgui_impl_dx11.h">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imGui\imgui_impl_win32.h">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imGui\imgui_internal.h">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imGui\imstb_rectpack.h">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imGui\imstb_textedit.h">
-      <Filter>ソース ファイル\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="imGui\imstb_truetype.h">
-      <Filter>ソース ファイル\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>ソース ファイル\Scene</Filter>
@@ -239,9 +221,6 @@
     <ClInclude Include="CLight.h">
       <Filter>ソース ファイル\Component</Filter>
     </ClInclude>
-    <ClInclude Include="CPhysx.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="CBox.h">
       <Filter>ソース ファイル\Component</Filter>
     </ClInclude>
@@ -277,6 +256,33 @@
     </ClInclude>
     <ClInclude Include="dixsmartptr.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CPhysx.h">
+      <Filter>ソース ファイル\Physx</Filter>
+    </ClInclude>
+    <ClInclude Include="imGui\imconfig.h">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClInclude>
+    <ClInclude Include="imGui\imgui.h">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClInclude>
+    <ClInclude Include="imGui\imgui_impl_dx11.h">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClInclude>
+    <ClInclude Include="imGui\imgui_impl_win32.h">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClInclude>
+    <ClInclude Include="imGui\imgui_internal.h">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClInclude>
+    <ClInclude Include="imGui\imstb_rectpack.h">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClInclude>
+    <ClInclude Include="imGui\imstb_textedit.h">
+      <Filter>ソース ファイル\ImGui\other</Filter>
+    </ClInclude>
+    <ClInclude Include="imGui\imstb_truetype.h">
+      <Filter>ソース ファイル\ImGui\other</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

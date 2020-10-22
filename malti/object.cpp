@@ -279,7 +279,7 @@ void CRigidbody::Start()
 
 void CRigidbody::InitDynamic()
 {
-	m_material = CPhysx::GetPhysics()->createMaterial(0.2f, 0.2f, 0.5f);
+	m_material = CPhysx::GetPhysics()->createMaterial(0.5f, 0.5f, 0.f);
 	//physx::PxVec3 boxSize = physx::PxVec3(1.f, 1.f, 1.f);
 	physx::PxVec3 boxSize = m_transform->GetScale();
 	CCollider* col;
@@ -292,9 +292,14 @@ void CRigidbody::InitDynamic()
 
 		CPhysx::SetActor(m_rigidDynamic);
 		m_rigidDynamic->setMass(m_mass);
-		m_actor = CPhysx::GetActor();
-		m_rigidDynamic->setAngularDamping(0.f);
+		//========-こいつらつけるといい感じなる(回転とかが)なんでかは不明
+		m_rigidDynamic->setMassSpaceInertiaTensor(PxVec3(0.f));
+		m_rigidDynamic->setMassSpaceInertiaTensor(PxVec3(1.f, 1.f, 1.f));
 
+		m_actor = CPhysx::GetActor();
+		m_rigidDynamic->setAngularDamping(0.4f);
+
+		//m_rigidDynamic->setAngularVelocity(physx::PxVec3(0, 0, 1.f));
 		//大きさにあったコライダーの取り付け
 		col = Holder->AddComponent<CBoxCollider>();
 		col->Init();
@@ -310,8 +315,12 @@ void CRigidbody::InitDynamic()
 
 		CPhysx::SetActor(m_rigidDynamic);
 		m_rigidDynamic->setMass(m_mass);
+		m_rigidDynamic->setMassSpaceInertiaTensor(PxVec3(1.f, 1.f, 1.f));
+
 		m_actor = CPhysx::GetActor();
-		m_rigidDynamic->setAngularDamping(0.f);
+
+		m_rigidDynamic->setAngularDamping(0.4f);
+		//m_rigidDynamic->setAngularVelocity(physx::PxVec3(0, 0, 0.1f));
 
 		col = Holder->AddComponent<CSphereCollider>();
 		col->Init();
@@ -330,10 +339,11 @@ void CRigidbody::InitDynamic()
 
 void CRigidbody::InitStatic()
 {
-	m_material = CPhysx::GetPhysics()->createMaterial(0.2f, 0.2f, 0.5f);
+	m_material = CPhysx::GetPhysics()->createMaterial(0.5f, 0.5f, 0.0f);
 	//physx::PxVec3 boxSize = physx::PxVec3(1.f, 1.f, 1.f);
 	physx::PxVec3 boxSize = m_transform->GetScale();
 	CCollider* col;
+	PxRigidBody* atta;
 	switch (m_geometryType)
 	{
 	case GEOMETRYTYPE::BOX:
@@ -372,7 +382,10 @@ void CRigidbody::InitStatic()
 
 void CRigidbody::Update()
 {
-	
+	if (m_rigidDynamic != nullptr) {
+		//m_rigidDynamic->setAngularVelocity(physx::PxVec3(0, 0, 1.f));
+		m_rigidDynamic->wakeUp();
+	}
 }
 
 void CRigidbody::LateUpdate()

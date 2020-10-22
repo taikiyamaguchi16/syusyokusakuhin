@@ -5,9 +5,9 @@
 void CCollider::Start()
 {
 	//rigidbody‚ª‚È‚¢‚ÆˆÙíI—¹‚·‚é
-	m_rb = Holder->GetComponent<CRigidbody>();
-	assert(m_rb != nullptr);
-	m_transform= Holder->GetComponent<CTransform>();
+	m_rb = Holder->GetWeakComponent<CRigidbody>();
+	assert(m_rb.IsExist());
+	m_transform= Holder->GetWeakComponent<CTransform>();
 
 	SetName();
 }
@@ -80,6 +80,7 @@ void CBoxCollider::Init()
 	
 
 	m_shape->setFlag(PxShapeFlag::eVISUALIZATION, false);
+	m_shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
 }
 
 CBoxCollider::~CBoxCollider()

@@ -8,7 +8,7 @@ PxPhysics* CPhysx::m_physics = nullptr;
 PxDefaultCpuDispatcher* CPhysx::m_dispatcher = nullptr;
 PxScene* CPhysx::m_scene = nullptr;
 PxPvd* CPhysx::m_pvd = nullptr;
-PxControllerManager* CPhysx::m_controllerManager = nullptr;
+//PxControllerManager* CPhysx::m_controllerManager = nullptr;
 CSimulationEventCallback* CPhysx::m_eventCallbac;
 //PxSimulationFilterShader CPhysx::m_filterFlag;
 //CSimulationFilterCallback* CPhysx::m_filterCallbac;
@@ -32,12 +32,12 @@ void CPhysx::Init()
 
 	//sceneDesc.filterShader = PxDefaultSimulationFilterShader;
 	sceneDesc.filterShader = TestFilterShader;
-	sceneDesc.filterCallback= m_filterCallbac;
+	//sceneDesc.filterCallback= m_filterCallbac;
 
 	m_scene = m_physics->createScene(sceneDesc);
 	m_eventCallbac = new CSimulationEventCallback();
 	m_scene->setSimulationEventCallback(m_eventCallbac);
-	m_controllerManager = PxCreateControllerManager(*m_scene);
+	//m_controllerManager = PxCreateControllerManager(*m_scene);
 
 
 	// PVD setting
@@ -59,7 +59,6 @@ void CPhysx::UnInit()
 	m_physics->release();
 	m_physics = nullptr;
 
-	m_controllerManager->release();
 	//m_controllerManager = nullptr;
 
 	
@@ -75,27 +74,27 @@ void CPhysx::UnInit()
 	delete m_eventCallbac;
 }
 
-PxBoxController * CPhysx::CreateCapsuleController()
-{
-	PxBoxControllerDesc desc;
-	desc.slopeLimit = 2.0f;
-	desc.stepOffset = 2.0f;
-	desc.position.x = 0.0f;
-	desc.position.y = 100.0f;
-	desc.position.z = 0.0f;
-	desc.material= GetPhysics()->createMaterial(0.5f, 0.5f, 0.6f);
-
-	desc.halfHeight = 1.5f;
-	desc.halfSideExtent = 1.5f;
-	desc.halfForwardExtent = 1.5f;
-	desc.upDirection = physx::PxVec3(0.0f, 1.0f, 0.0f);
-
-	PxController* c = m_controllerManager->createController(desc);
-	
-	PxBoxController* as = (PxBoxController*)c;
-
-	return as;
-}
+//PxBoxController * CPhysx::CreateCapsuleController()
+//{
+//	PxBoxControllerDesc desc;
+//	desc.slopeLimit = 2.0f;
+//	desc.stepOffset = 2.0f;
+//	desc.position.x = 0.0f;
+//	desc.position.y = 100.0f;
+//	desc.position.z = 0.0f;
+//	desc.material= GetPhysics()->createMaterial(0.5f, 0.5f, 0.6f);
+//
+//	desc.halfHeight = 1.5f;
+//	desc.halfSideExtent = 1.5f;
+//	desc.halfForwardExtent = 1.5f;
+//	desc.upDirection = physx::PxVec3(0.0f, 1.0f, 0.0f);
+//
+//	PxController* c = m_controllerManager->createController(desc);
+//	
+//	PxBoxController* as = (PxBoxController*)c;
+//
+//	return as;
+//}
 
 PxFilterFlags TestFilterShader(PxFilterObjectAttributes attributes0, PxFilterData filterData0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, PxPairFlags & pairFlags, const void* constantBlock,PxU32 constantBlockSize)
 {

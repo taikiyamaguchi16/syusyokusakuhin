@@ -221,10 +221,10 @@ void CGame::AddObjects()
 
 	AirPlane.SetPtr(new CObject);
 	_trans = AirPlane->AddComponent<CTransform>();
-	_trans->SetPos(XMFLOAT3(0.0f, 100.0f, 0));
+	_trans->SetPos(XMFLOAT3(0.0f, 100.0f, 20.0f));
 	_rigid = AirPlane->AddComponent<CRigidbody>();
 	_rigid->SetMass(1.1f);
-	AirPlane->AddComponent<CPlayer>();
+	//AirPlane->AddComponent<CPlayer>();
 	AirPlane->SetMyFps(60);
 	_render = AirPlane->AddComponent<CMeshRenderer>();
 	_trans->SetScale(XMFLOAT3(30.f, 30.f, 30.f));
@@ -250,10 +250,10 @@ void CGame::AddObjects()
 	sphere.SetPtr(new CObject);
 	_trans = sphere->AddComponent<CTransform>();
 	_trans->SetPos(XMFLOAT3(5.0f, 20.0f, 0.0f));
-	_trans->SetScale(XMFLOAT3(5.f, 5.f,5.f ));
+	_trans->SetScale(XMFLOAT3(9.f, 9.f,9.f ));
 	_rigid = sphere->AddComponent<CRigidbody>();
 	_render = sphere->AddComponent<CMeshRenderer>();
-	_render->SphereInit(3.0f);
+	_render->SphereInit(9.0f);
 	_rigid->SetGeometryType(GEOMETRYTYPE::SPHERE);
 	_rigid->InitDynamic();
 	sphere->SetName(std::string("sphere"));

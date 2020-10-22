@@ -1,5 +1,2 @@
-﻿  object.cpp
-c:\users\ohs80200\desktop\syusaku\malti\object.cpp(239): warning C4101: 'axisZ': ローカル変数は 1 度も使われていません。
-c:\users\ohs80200\desktop\syusaku\malti\object.cpp(238): warning C4101: 'axisY': ローカル変数は 1 度も使われていません。
-c:\users\ohs80200\desktop\syusaku\malti\object.cpp(237): warning C4101: 'axisX': ローカル変数は 1 度も使われていません。
+﻿  CCollider.cpp
   malti.vcxproj -> C:\Users\ohs80200\Desktop\syusaku\x64\Debug\malti.exe

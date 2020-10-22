@@ -6,8 +6,8 @@
 class CCollider :public CComponent
 {
 protected:
-	CRigidbody* m_rb = nullptr;
-	CTransform* m_transform = nullptr;
+	wp<CRigidbody> m_rb;
+	wp<CTransform> m_transform;
 	XMFLOAT3 m_ofset;
 	XMFLOAT3 m_scale;
 	XMFLOAT3 m_angle;

@@ -60,8 +60,7 @@ class CPhysx final
 	static PxScene*                m_scene;			//•¨—‹óŠÔ
 	static PxPvd*                  m_pvd;
 
-	
-	static PxControllerManager*   m_controllerManager;
+
 	static CSimulationEventCallback* m_eventCallbac;
 	static inline PxSimulationFilterShader m_filterFlag;
 	static inline CSimulationFilterCallback* m_filterCallbac;
@@ -127,7 +126,7 @@ public:
 		return actors.back();
 	}
 
-	[[nodiscard]]static PxBoxController* CreateCapsuleController();
+	//[[nodiscard]]static PxBoxController* CreateCapsuleController();
 
 	inline static void DeleteActor(PxRigidActor* _a) { m_scene->removeActor(*_a); }
 };
