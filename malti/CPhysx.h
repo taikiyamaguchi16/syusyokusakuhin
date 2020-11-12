@@ -26,13 +26,13 @@ PxFilterFlags TestFilterShader(
 
 class CSimulationEventCallback :public PxSimulationEventCallback {
 public:
-	void onConstraintBreak(PxConstraintInfo * 	constraints, PxU32 	count){}
-	void onContact(const PxContactPairHeader& pairHeader, const PxContactPair * pairs, PxU32 nbPairs){}
+	void onConstraintBreak(PxConstraintInfo * 	constraints, PxU32 	count)override {}
+	void onContact(const PxContactPairHeader& pairHeader, const PxContactPair * pairs, PxU32 nbPairs)override;
 	//fechresultのタイミングでイベントが発生するので強制的にスリーブにした場合OnSleepになるわけではない
-	void onSleep(PxActor ** actors,PxU32 count){}
-	void onWake(PxActor ** 	actors, PxU32 count) {}
-	void onTrigger(PxTriggerPair* pairs, PxU32 count);
-	void onAdvance(const PxRigidBody *const * bodyBuffer, const PxTransform * poseBuffer, const PxU32 count) {}
+	void onSleep(PxActor ** actors,PxU32 count)override {}
+	void onWake(PxActor ** 	actors, PxU32 count)override {}
+	void onTrigger(PxTriggerPair* pairs, PxU32 count)override;
+	void onAdvance(const PxRigidBody *const * bodyBuffer, const PxTransform * poseBuffer, const PxU32 count)override {}
 };
 
 class CSimulationFilterCallback :public PxSimulationFilterCallback {
@@ -64,6 +64,8 @@ class CPhysx final
 	static CSimulationEventCallback* m_eventCallbac;
 	static inline PxSimulationFilterShader m_filterFlag;
 	static inline CSimulationFilterCallback* m_filterCallbac;
+
+	static inline float m_time = 0.f;
 public:
 	static PxPhysics*              m_physics;		//デバイスのようなもの
 	CPhysx(const CPhysx&) = delete;
@@ -91,13 +93,21 @@ public:
 		return static_actor;
 	}
 
-	inline static void StepPhysics(float fps_) {
-		m_scene->simulate(1.0f / fps_);
-		m_scene->fetchResults(true);
+	inline static void StepPhysics(float _fps) {
+		for (int i = 0; i < 2; i++)
+		{
+			m_scene->simulate(1.f / _fps);
+			m_scene->fetchResults(true);
+		}
+	/*	m_scene->collide(1.0f / _fps);
+		m_scene->fetchCollision();
+		m_scene->advance();
+		m_scene->fetchResults();*/
 	}
 
-	inline static void SetActor(PxRigidDynamic* actor_) {
-		m_scene->addActor(*actor_);
+	inline static void SetActor(PxRigidDynamic* _actor) {
+		_actor->setRigidBodyFlag(PxRigidBodyFlag::eENABLE_CCD, true);
+		m_scene->addActor(*_actor);
 	}
 
 	inline static void SetActor(PxRigidStatic* actor_) {

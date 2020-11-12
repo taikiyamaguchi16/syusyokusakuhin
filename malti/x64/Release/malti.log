@@ -1,55 +1,15 @@
-﻿  Bullet.cpp
-  CBox.cpp
-  CCollider.cpp
-  CEnemy.cpp
-  CObject2D.cpp
-  CPhysx.cpp
-  Camera.cpp
+﻿  game.cpp
   c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  ImGuiControl.cpp
-  MeshRenderer.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Player.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\users\ohs80200\desktop\syusaku\malti\player.cpp(143): warning C4101: '_vy': ローカル変数は 1 度も使われていません。
-  Scene.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  Sphere.cpp
-c:\users\ohs80200\desktop\syusaku\malti\sphere.cpp(63): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-c:\users\ohs80200\desktop\syusaku\malti\sphere.cpp(67): warning C4244: '=': 'double' から 'float' への変換です。データが失われる可能性があります。
-  Title.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\users\ohs80200\desktop\syusaku\malti\title.cpp(108): warning C4101: 'SubCamera': ローカル変数は 1 度も使われていません。
-c:\users\ohs80200\desktop\syusaku\malti\title.cpp(106): warning C4101: 'SkyDome': ローカル変数は 1 度も使われていません。
-  dx11util.cpp
-  game.cpp
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-  main.cpp
-  object.cpp
-c:\users\ohs80200\desktop\syusaku\malti\object.cpp(239): warning C4101: 'axisZ': ローカル変数は 1 度も使われていません。
-c:\users\ohs80200\desktop\syusaku\malti\object.cpp(238): warning C4101: 'axisY': ローカル変数は 1 度も使われていません。
-c:\users\ohs80200\desktop\syusaku\malti\object.cpp(237): warning C4101: 'axisX': ローカル変数は 1 度も使われていません。
   コード生成しています。
-  447 of 3352 functions (13.3%) were compiled, the rest were copied from previous compilation.
-    353 functions were new in current compilation
-    85 functions had inline decision re-evaluated but remain unchanged
+  1 of 3278 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    3 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
-PhysXCharacterKinematic_static_64.lib(CctBoxController.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctBoxController.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-PhysXCharacterKinematic_static_64.lib(CctCapsuleController.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctCapsuleController.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-PhysXCharacterKinematic_static_64.lib(CctCharacterController.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctCharacterController.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-PhysXCharacterKinematic_static_64.lib(CctCharacterControllerCallbacks.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctCharacterControllerCallbacks.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-PhysXCharacterKinematic_static_64.lib(CctCharacterControllerManager.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctCharacterControllerManager.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-PhysXCharacterKinematic_static_64.lib(CctController.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctController.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-PhysXCharacterKinematic_static_64.lib(CctObstacleContext.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctObstacleContext.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-PhysXCharacterKinematic_static_64.lib(CctSweptBox.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctSweptBox.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-PhysXCharacterKinematic_static_64.lib(CctSweptCapsule.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctSweptCapsule.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-PhysXCharacterKinematic_static_64.lib(CctSweptVolume.obj) : warning LNK4099: PDB 'PhysXCharacterKinematic_static_64.pdb' が 'PhysXCharacterKinematic_static_64.lib(CctSweptVolume.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXCharacterKinematic_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 PhysXExtensions_static_64.lib(ExtCpuWorkerThread.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtCpuWorkerThread.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 PhysXExtensions_static_64.lib(ExtDefaultCpuDispatcher.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtDefaultCpuDispatcher.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 PhysXExtensions_static_64.lib(ExtDefaultErrorCallback.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtDefaultErrorCallback.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 PhysXExtensions_static_64.lib(ExtRigidBodyExt.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtRigidBodyExt.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 PhysXExtensions_static_64.lib(ExtSimpleFactory.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtSimpleFactory.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
-PhysXExtensions_static_64.lib(ExtTriangleMeshExt.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtTriangleMeshExt.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 PhysXPvdSDK_static_64.lib(PxProfileEventImpl.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxProfileEventImpl.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 PhysXPvdSDK_static_64.lib(PxPvd.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvd.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 PhysXPvdSDK_static_64.lib(PxPvdDataStream.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdDataStream.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。

@@ -119,6 +119,7 @@ void CGame::Update()
 		DX11AfterRender();
 		SceneManager::GetInstance()->ChangeScene(sp<Scene>(new Title()));
 	}
+	
 	CPhysx::StepPhysics(144.0f);
 
 	CDirectInput::GetInstance().GetMouseState();
@@ -168,7 +169,7 @@ void CGame::AddObjects()
 	sp<CObject> box4;
 	sp<CObject> box5;
 
-	float _plane = 600.0f;
+	float _plane = 100.0f;
 	float _color[4] = { 255.0f,255.0f,255.0f,255.0f };
 
 	/*m_Components.emplace_back(createInstance<CPlayer>());
@@ -221,21 +222,22 @@ void CGame::AddObjects()
 
 	AirPlane.SetPtr(new CObject);
 	_trans = AirPlane->AddComponent<CTransform>();
-	_trans->SetPos(XMFLOAT3(0.0f, 100.0f, 20.0f));
+	_trans->SetPos(XMFLOAT3(0.0f, 60.0f, 0.0f));
 	_rigid = AirPlane->AddComponent<CRigidbody>();
-	_rigid->SetMass(1.1f);
-	//AirPlane->AddComponent<CPlayer>();
+	_rigid->SetMass(10.f);
 	AirPlane->SetMyFps(60);
 	_render = AirPlane->AddComponent<CMeshRenderer>();
-	_trans->SetScale(XMFLOAT3(30.f, 30.f, 30.f));
-	_render->BoxInit(XMFLOAT3(3.0f, 3.0f, 3.0f));
+	_trans->SetScale(XMFLOAT3(3.f, 3.f, 3.f));
+	_render->BoxInit();
+	//_render->SphereInit();
+	//_rigid->SetGeometryType(GEOMETRYTYPE::SPHERE);
 	_rigid->InitDynamic();
 
 	AirPlane->SetName(std::string("AirPlane"));
 	AirPlane->SetTag(std::string("Player"));
 	m_obj_list.emplace_back(AirPlane);
 
-	_camera->SetTrackingObj(AirPlane->GetWeakComponent<CTransform>());
+	//_camera->SetTrackingObj(AirPlane->GetWeakComponent<CTransform>());
 
 	//enemy = new CObject;
 	//enemy->AddComponent<CTransform>();
@@ -247,18 +249,18 @@ void CGame::AddObjects()
 	//m_obj_list.emplace_back(enemy);
 
 
-	sphere.SetPtr(new CObject);
-	_trans = sphere->AddComponent<CTransform>();
-	_trans->SetPos(XMFLOAT3(5.0f, 20.0f, 0.0f));
-	_trans->SetScale(XMFLOAT3(9.f, 9.f,9.f ));
-	_rigid = sphere->AddComponent<CRigidbody>();
-	_render = sphere->AddComponent<CMeshRenderer>();
-	_render->SphereInit(9.0f);
-	_rigid->SetGeometryType(GEOMETRYTYPE::SPHERE);
-	_rigid->InitDynamic();
-	sphere->SetName(std::string("sphere"));
-	sphere->SetTag(std::string("Default"));
-	m_obj_list.emplace_back(sphere);
+	//sphere.SetPtr(new CObject);
+	//_trans = sphere->AddComponent<CTransform>();
+	//_trans->SetPos(XMFLOAT3(0.0f, 30.0f, 0.0f));
+	//_trans->SetScale(XMFLOAT3(5.f, 5.f,5.f ));
+	//_rigid = sphere->AddComponent<CRigidbody>();
+	//_render = sphere->AddComponent<CMeshRenderer>();
+	//_render->SphereInit(9.0f);
+	//_rigid->SetGeometryType(GEOMETRYTYPE::SPHERE);
+	//_rigid->InitDynamic();
+	//sphere->SetName(std::string("sphere"));
+	//sphere->SetTag(std::string("Default"));
+	//m_obj_list.emplace_back(sphere);
 
 
 	/*sphere2 = new CObject;
@@ -280,6 +282,7 @@ void CGame::AddObjects()
 	_rigid = box->AddComponent<CRigidbody>();
 	_render = box->AddComponent<CMeshRenderer>();
 	//_rigid->SetBoxSize(XMFLOAT3(_plane, 5.0f, _plane));
+	_render->BoxInit();
 	_trans->SetScale(XMFLOAT3(_plane, 5.0f, _plane));
 	_render->SetColor(255.0f, 0.0f, 0.0f, 255.0f);
 	_rigid->InitStatic();
@@ -294,7 +297,7 @@ void CGame::AddObjects()
 	_trans->SetPos(XMFLOAT3(_plane / 2.0f, _plane / 2.0f, .0f));
 	_rigid = box2->AddComponent<CRigidbody>();
 	_render = box2->AddComponent<CMeshRenderer>();
-	//_rigid->SetBoxSize(XMFLOAT3(5.0f, _plane, _plane));
+	_render->BoxInit();
 	_trans->SetScale(XMFLOAT3(5.0f, _plane, _plane));
 	_render->SetColor(0.0f, 255.0f, 0.0f, 255.0f);
 	_rigid->InitStatic();
@@ -308,7 +311,7 @@ void CGame::AddObjects()
 	_trans->SetPos(XMFLOAT3(-_plane / 2.0f, _plane / 2.0f, .0f));
 	_rigid = box3->AddComponent<CRigidbody>();
 	_render = box3->AddComponent<CMeshRenderer>();
-	//_rigid->SetBoxSize(XMFLOAT3(5.0f, _plane, _plane));
+	_render->BoxInit();
 	_trans->SetScale(XMFLOAT3(5.0f, _plane, _plane));
 	_render->SetColor(0.0f, 0.0f, 255.0f, 255.0f);
 	_rigid->InitStatic();
@@ -322,7 +325,7 @@ void CGame::AddObjects()
 	_trans->SetPos(XMFLOAT3(0.0f, _plane / 2.0f, _plane / 2.0f));
 	_rigid = box4->AddComponent<CRigidbody>();
 	_render = box4->AddComponent<CMeshRenderer>();
-	//_rigid->SetBoxSize(XMFLOAT3(_plane, _plane, 5.0f));
+	_render->BoxInit();
 	_trans->SetScale(XMFLOAT3(_plane, _plane, 5.0f));
 	_render->SetColor(255.0f, 255.0f, 0.0f, 255.0f);
 	_rigid->InitStatic();
@@ -336,7 +339,7 @@ void CGame::AddObjects()
 	_trans->SetPos(XMFLOAT3(0.0f, _plane / 2.0f, -_plane / 2.0f));
 	_rigid = box5->AddComponent<CRigidbody>();
 	_render = box5->AddComponent<CMeshRenderer>();
-	//_rigid->SetBoxSize(XMFLOAT3(_plane, _plane, 5.0f));
+	_render->BoxInit();
 	_trans->SetScale(XMFLOAT3(_plane, _plane, 5.0f));
 	_render->SetColor(255.0f, 0.0f, 255.0f, 255.0f);
 	_rigid->InitStatic();

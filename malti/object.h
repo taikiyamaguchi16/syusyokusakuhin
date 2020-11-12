@@ -260,7 +260,6 @@ public:
 
 class CRigidbody final:public CComponent
 {
-	//CTransform* m_transform;
 	wp<CTransform> m_transform;
 	physx::PxRigidDynamic*		   m_rigidDynamic = nullptr;
 	physx::PxRigidStatic*          m_rigidStatic = nullptr;
@@ -272,7 +271,7 @@ class CRigidbody final:public CComponent
 	float m_mass = 1.0f;
 
 	bool m_trigger = false;
-	bool m_simulation = true;
+	bool m_simulation = false;
 	//FilterGroup::Enum m_layer = FilterGroup::eDEFAULT;
 public:
 	~CRigidbody();
@@ -303,4 +302,6 @@ public:
 
 	inline physx::PxMaterial* GetMaterial()const { return m_material; }
 	//============================================アクセサ=======================================================================
+
+	void OnCollisionEnter(CObject* col)override;
 };

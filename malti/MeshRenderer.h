@@ -60,12 +60,12 @@ public:
 		return new CMeshRenderer();
 	}
 
-	inline void SphereInit(float r_) {
+	inline void SphereInit() {
 		m_defaultMeshsMode = true;
 		m_meshtype = GEOMETRYTYPE::SPHERE;
 	}
 
-	inline void BoxInit(XMFLOAT3 s_) {
+	inline void BoxInit() {
 		m_defaultMeshsMode = true;
 		m_meshtype = GEOMETRYTYPE::BOX;
 	}

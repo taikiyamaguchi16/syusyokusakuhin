@@ -234,9 +234,9 @@ void CTransform::ImGuiDraw()
 
 void CTransform::SetQuat(XMFLOAT4X4 & rotateMat_)
 {
-	XMFLOAT4 axisX;
+	/*XMFLOAT4 axisX;
 	XMFLOAT4 axisY;
-	XMFLOAT4 axisZ;
+	XMFLOAT4 axisZ;*/
 
 	// X軸を取り出す
 	
@@ -279,8 +279,7 @@ void CRigidbody::Start()
 
 void CRigidbody::InitDynamic()
 {
-	m_material = CPhysx::GetPhysics()->createMaterial(0.5f, 0.5f, 0.f);
-	//physx::PxVec3 boxSize = physx::PxVec3(1.f, 1.f, 1.f);
+	m_material = CPhysx::GetPhysics()->createMaterial(0.6f, 0.6f, 0.f);
 	physx::PxVec3 boxSize = m_transform->GetScale();
 	CCollider* col;
 	switch (m_geometryType)
@@ -292,17 +291,15 @@ void CRigidbody::InitDynamic()
 
 		CPhysx::SetActor(m_rigidDynamic);
 		m_rigidDynamic->setMass(m_mass);
-		//========-こいつらつけるといい感じなる(回転とかが)なんでかは不明
-		m_rigidDynamic->setMassSpaceInertiaTensor(PxVec3(0.f));
+		
+		m_rigidDynamic->setCMassLocalPose(physx::PxTransform(PxVec3(0.f)));
 		m_rigidDynamic->setMassSpaceInertiaTensor(PxVec3(1.f, 1.f, 1.f));
 
 		m_actor = CPhysx::GetActor();
-		m_rigidDynamic->setAngularDamping(0.4f);
 
-		//m_rigidDynamic->setAngularVelocity(physx::PxVec3(0, 0, 1.f));
 		//大きさにあったコライダーの取り付け
 		col = Holder->AddComponent<CBoxCollider>();
-		col->Init();
+		//col->Init();
 		break;
 	case GEOMETRYTYPE::CAPSILE:
 
@@ -315,22 +312,38 @@ void CRigidbody::InitDynamic()
 
 		CPhysx::SetActor(m_rigidDynamic);
 		m_rigidDynamic->setMass(m_mass);
-		m_rigidDynamic->setMassSpaceInertiaTensor(PxVec3(1.f, 1.f, 1.f));
-
+		//m_rigidDynamic->setCMassLocalPose(physx::PxTransform(PxVec3(0.f,1.f,0.f)));
+		m_rigidDynamic->setMassSpaceInertiaTensor(PxVec3(1.f));
+		
 		m_actor = CPhysx::GetActor();
 
-		m_rigidDynamic->setAngularDamping(0.4f);
-		//m_rigidDynamic->setAngularVelocity(physx::PxVec3(0, 0, 0.1f));
 
 		col = Holder->AddComponent<CSphereCollider>();
-		col->Init();
+		//col->Init();
 		break;
 	default:
 		break;
 	}
 
-	
+	//初期時点のシェイプを削除
+	PxShape* shapes[128];
+	const PxU32 nbShapes = m_actor->getNbShapes();
+	m_actor->getShapes(shapes, nbShapes);
+	m_actor->detachShape(*shapes[0]);
+
+
 	m_actor->setActorFlag(physx::PxActorFlag::eVISUALIZATION, false);
+	m_rigidDynamic->setRigidBodyFlag(PxRigidBodyFlag::eENABLE_CCD, true);
+	m_rigidDynamic->setRigidBodyFlag(PxRigidBodyFlag::eENABLE_SPECULATIVE_CCD, true);
+
+	m_rigidDynamic->setSleepThreshold(0.5f);
+	//めり込みや不自然な挙動の抑制の数値　左が挙動　右がめり込み　
+	//デフォルト値　1,4
+	m_rigidDynamic->setSolverIterationCounts(4, 4);
+
+	m_rigidDynamic->setAngularDamping(0.4f);
+	m_rigidDynamic->setLinearDamping(0.3f);
+	
 
 	USERDATA* use = new USERDATA();
 	use->obj = Holder;
@@ -339,11 +352,8 @@ void CRigidbody::InitDynamic()
 
 void CRigidbody::InitStatic()
 {
-	m_material = CPhysx::GetPhysics()->createMaterial(0.5f, 0.5f, 0.0f);
-	//physx::PxVec3 boxSize = physx::PxVec3(1.f, 1.f, 1.f);
+	m_material = CPhysx::GetPhysics()->createMaterial(0.6f, 0.6f, 0.f);
 	physx::PxVec3 boxSize = m_transform->GetScale();
-	CCollider* col;
-	PxRigidBody* atta;
 	switch (m_geometryType)
 	{
 	case GEOMETRYTYPE::BOX:
@@ -354,8 +364,8 @@ void CRigidbody::InitStatic()
 		CPhysx::SetActor(m_rigidStatic);
 		m_actor = CPhysx::GetStaticActor();
 
-		col = Holder->AddComponent<CBoxCollider>();
-		col->Init();
+		Holder->AddComponent<CBoxCollider>();
+		//col->Init();
 		break;
 	case GEOMETRYTYPE::CAPSILE:
 
@@ -369,12 +379,18 @@ void CRigidbody::InitStatic()
 		CPhysx::SetActor(m_rigidStatic);
 		m_actor = CPhysx::GetStaticActor();
 
-		col = Holder->AddComponent<CSphereCollider>();
-		col->Init();
+		Holder->AddComponent<CSphereCollider>();
+		//col->Init();
 		break;
 	default:
 		break;
 	}
+
+	//初期時点のシェイプを削除
+	PxShape* shapes[128];
+	const PxU32 nbShapes = m_actor->getNbShapes();
+	m_actor->getShapes(shapes, nbShapes);
+	m_actor->detachShape(*shapes[0]);
 
 	m_actor->setActorFlag(physx::PxActorFlag::eVISUALIZATION, false);
 	m_actor->userData = new USERDATA();
@@ -383,15 +399,14 @@ void CRigidbody::InitStatic()
 void CRigidbody::Update()
 {
 	if (m_rigidDynamic != nullptr) {
-		//m_rigidDynamic->setAngularVelocity(physx::PxVec3(0, 0, 1.f));
-		m_rigidDynamic->wakeUp();
+		//m_rigidDynamic->wakeUp();
 	}
 }
 
 void CRigidbody::LateUpdate()
 {
 	if (m_rigidDynamic != nullptr) {
-		//QuaternionToEulerAngles();
+		//回転のために
 		CTransform* _tra = Holder->GetComponent<CTransform>();
 		_tra->GetTrans().q = m_rigidDynamic->getGlobalPose().q;
 
@@ -414,6 +429,12 @@ void CRigidbody::ImGuiDraw()
 		ImGui::Text(u8"速度 x:%.3f  y:%.3f  z:%.3f", speed.x, speed.y, speed.z);
 		speed = m_rigidDynamic->getAngularVelocity();
 		ImGui::Text(u8"角速度 x:%.3f  y:%.3f  z:%.3f", speed.x, speed.y, speed.z);
+		ImGui::DragFloat(u8"質量", &m_mass);
+		if (m_mass < 0.f)
+		{
+			m_mass = 0.1f;
+		}
+		m_rigidDynamic->setMass(m_mass);
 	}
 	if (ImGui::Checkbox(u8"トリガーにする", &m_trigger)) {
 		if (m_trigger) {
@@ -444,11 +465,20 @@ void CRigidbody::ImGuiDraw()
 
 		}
 	}
-	if (ImGui::Checkbox(u8"シミュレーションする", &m_simulation))
+	if (ImGui::Checkbox(u8"キネマティック", &m_simulation))
 	{
-		m_actor->setActorFlag(PxActorFlag::eDISABLE_SIMULATION, !m_simulation);
+		m_rigidDynamic->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, m_simulation);
+	}
+	if (ImGui::Button(u8"コライダーの追加"))
+	{
+		Holder->AddComponent<CBoxCollider>();
 	}
 	for (FilterGroup::Layer num : {FilterGroup::eDEFAULT, FilterGroup::eENEMY, FilterGroup::eFLOOR, FilterGroup::ePLAYER}) {
 
 	}
+}
+
+void CRigidbody::OnCollisionEnter(CObject * col)
+{
+
 }

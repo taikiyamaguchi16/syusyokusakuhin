@@ -21,6 +21,7 @@ void CCollider::Init()
 void CBoxCollider::Start()
 {
 	CCollider::Start();
+	Init();
 }
 
 void CBoxCollider::Draw()
@@ -60,6 +61,9 @@ void CBoxCollider::ImGuiDraw()
 	ImGui::DragFloat3(u8"オフセット", &m_ofset.x, true);
 	physx::PxVec3 Scale = physx::PxVec3(m_scale.x*m_transform->GetScale().x, m_scale.y*m_transform->GetScale().y, m_scale.z*m_transform->GetScale().z);
 	m_shape->setGeometry(physx::PxBoxGeometry(Scale / 2.f));
+	physx::PxTransform work_trans = m_shape->getLocalPose();
+	work_trans.p = physx::PxVec3(m_ofset.x, m_ofset.y, m_ofset.z);
+	m_shape->setLocalPose(work_trans);
 }
 
 void CBoxCollider::Init()
@@ -69,24 +73,26 @@ void CBoxCollider::Init()
 	float  ss = mmm->getRestitution();
 	m_shape = CPhysx::GetPhysics()->createShape(physx::PxBoxGeometry(m_transform->GetScale() / 2.f),*m_rb->GetMaterial(), true);
 
-	PxShape* shapes[128];
-	//シェイプの数取得
-	const PxU32 nbShapes = m_rb->GetActor()->getNbShapes();
-	m_rb->GetActor()->getShapes(shapes, nbShapes);
-	m_rb->GetActor()->detachShape(*shapes[0]);
+	m_shape->setRestOffset(0.f);
+	m_shape->setContactOffset(0.01f);
 	m_rb->GetActor()->attachShape(*m_shape);
 	m_box = new CBox();
 	m_box->Init(XMFLOAT3(1.f, 1.f, 1.f));
 	
 
 	m_shape->setFlag(PxShapeFlag::eVISUALIZATION, false);
-	m_shape->setFlag(PxShapeFlag::eSIMULATION_SHAPE, true);
+
 }
 
 CBoxCollider::~CBoxCollider()
 {
 	m_box->Exit();
 	m_shape->release();
+}
+
+void CBoxCollider::OnCollisionEnter(CObject * col)
+{
+	
 }
 
 void CSphereCollider::Start()
@@ -155,6 +161,7 @@ void CSphereCollider::ImGuiDraw()
 	ImGui::DragFloat3(u8"オフセット", &m_ofset.x, true);
 	
 	m_shape->setGeometry(physx::PxSphereGeometry(m_radius*m_transform->GetScale().x));
-
-
+	physx::PxTransform work_trans = m_shape->getLocalPose();
+	work_trans.p = physx::PxVec3(m_ofset.x, m_ofset.y, m_ofset.z);
+	m_shape->setLocalPose(work_trans);
 }

@@ -22,24 +22,26 @@ void CPhysx::Init()
 	PxPvdTransport* transport = PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
 	m_pvd->connect(*transport, PxPvdInstrumentationFlag::eALL);
 
+
 	m_physics = PxCreatePhysics(PX_PHYSICS_VERSION, *m_foundation, PxTolerancesScale(), true, m_pvd);
 
 	// Scene setting
+	
 	PxSceneDesc sceneDesc(m_physics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.81f, 0.0f);          // Right-hand coordinate system, Y-UP.
 	m_dispatcher = PxDefaultCpuDispatcherCreate(1);         // The number of worker threads is one.
 	sceneDesc.cpuDispatcher = m_dispatcher;
-
+	sceneDesc.broadPhaseType = PxBroadPhaseType::eABP;
+	//連続衝突検知ON
+	sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;
+	
 	//sceneDesc.filterShader = PxDefaultSimulationFilterShader;
 	sceneDesc.filterShader = TestFilterShader;
-	//sceneDesc.filterCallback= m_filterCallbac;
+	sceneDesc.filterCallback= m_filterCallbac;
 
 	m_scene = m_physics->createScene(sceneDesc);
 	m_eventCallbac = new CSimulationEventCallback();
 	m_scene->setSimulationEventCallback(m_eventCallbac);
-	//m_controllerManager = PxCreateControllerManager(*m_scene);
-
-
 	// PVD setting
 	PxPvdSceneClient* pvdClient = m_scene->getScenePvdClient();
 	//コールバック関数を呼ぶタイミング
@@ -49,6 +51,7 @@ void CPhysx::Init()
 		pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
 		pvdClient->setScenePvdFlag(PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
 	}
+
 }
 
 void CPhysx::UnInit()
@@ -67,51 +70,31 @@ void CPhysx::UnInit()
 	m_foundation = nullptr;
 	
 
-	/*m_pvd->release();
-	m_pvd = nullptr;*/
-
-//	delete m_filterCallbac;
 	delete m_eventCallbac;
 }
 
-//PxBoxController * CPhysx::CreateCapsuleController()
-//{
-//	PxBoxControllerDesc desc;
-//	desc.slopeLimit = 2.0f;
-//	desc.stepOffset = 2.0f;
-//	desc.position.x = 0.0f;
-//	desc.position.y = 100.0f;
-//	desc.position.z = 0.0f;
-//	desc.material= GetPhysics()->createMaterial(0.5f, 0.5f, 0.6f);
-//
-//	desc.halfHeight = 1.5f;
-//	desc.halfSideExtent = 1.5f;
-//	desc.halfForwardExtent = 1.5f;
-//	desc.upDirection = physx::PxVec3(0.0f, 1.0f, 0.0f);
-//
-//	PxController* c = m_controllerManager->createController(desc);
-//	
-//	PxBoxController* as = (PxBoxController*)c;
-//
-//	return as;
-//}
 
 PxFilterFlags TestFilterShader(PxFilterObjectAttributes attributes0, PxFilterData filterData0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, PxPairFlags & pairFlags, const void* constantBlock,PxU32 constantBlockSize)
 {
-	// let triggers through
+	pairFlags = PxPairFlag::eDETECT_CCD_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT;
+	//どちらかがtriggerの場合
 	if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
 	{
-		//pairFlagsによって呼び出されるタイミングが変わる
+		//pairFlagsによってコールバック関数が呼び出されるタイミングが変わる
 		pairFlags = PxPairFlag::eNOTIFY_TOUCH_LOST|PxPairFlag::eNOTIFY_TOUCH_FOUND| PxPairFlag::eNOTIFY_TOUCH_PERSISTS;
 		return PxFilterFlag::eCALLBACK;
 	}
-	// generate contacts for all that were not filtered above
-	pairFlags = PxPairFlag::eCONTACT_DEFAULT | PxPairFlag::eNOTIFY_TOUCH_FOUND;
+	pairFlags = PxPairFlag::eDETECT_CCD_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT;
+	pairFlags |= PxPairFlag::eNOTIFY_TOUCH_LOST | PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_PERSISTS | PxPairFlag::eCONTACT_DEFAULT;
+	
 
 	// trigger the contact callback for pairs (A,B) where
 	// the filtermask of A contains the ID of B and vice versa.
 	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
-		pairFlags |= PxPairFlag::eNOTIFY_TOUCH_FOUND;
+	{
+		pairFlags = PxPairFlag::eNOTIFY_TOUCH_FOUND| PxPairFlag::eCONTACT_DEFAULT;
+		pairFlags |= PxPairFlag::eDETECT_CCD_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT;
+	}
 
 	return PxFilterFlag::eCALLBACK;
 }
@@ -158,6 +141,25 @@ void setupFiltering(PxRigidActor * actor, PxU32 filterGroup, PxU32 filterMask)
 		shape->setSimulationFilterData(filterData);
 	}
 	free(shapes);
+}
+
+void CSimulationEventCallback::onContact(const PxContactPairHeader & pairHeader, const PxContactPair * pairs, PxU32 nbPairs)
+{
+	//自分で設定したトリガーのフラグをtrueにする
+	USERDATA* user = (USERDATA*)pairHeader.actors[0]->userData;
+	USERDATA* otherUser = (USERDATA*)pairHeader.actors[1]->userData;
+	//pairs->triggerActor->userData = user;
+
+	if (pairs->events&PxPairFlag::eNOTIFY_TOUCH_FOUND) {
+		user->obj->OnCollisionEnter(otherUser->obj);
+	}
+	else if (pairs->events&PxPairFlag::eNOTIFY_TOUCH_LOST) {
+		//user->obj->OnTriggerExit(otherUser->obj);
+	}
+	else if (pairs->events&PxPairFlag::eNOTIFY_TOUCH_PERSISTS) {
+		//user->obj->OnTriggerStay(otherUser->obj);
+	}
+	user->Status = NULL;
 }
 
 void CSimulationEventCallback::onTrigger(PxTriggerPair * pairs, PxU32 count)

@@ -150,6 +150,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CBox.cpp" />
+    <ClCompile Include="CCapsule.cpp" />
     <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CDirectXGraphics.cpp" />
     <ClCompile Include="CEnemy.cpp" />
@@ -187,6 +188,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CBox.h" />
+    <ClInclude Include="CCapsule.h" />
     <ClInclude Include="CCollider.h" />
     <ClInclude Include="CDirectInput.h" />
     <ClInclude Include="CDirectxGraphics.h" />

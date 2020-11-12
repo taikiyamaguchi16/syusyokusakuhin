@@ -12,7 +12,9 @@ void CMeshRenderer::Start()
 	//一度だけ読み込み実行
 	m_meshr_render_cnt++;
 	if (m_onceInitFg) {
-		
+		//===============================================================================
+		//filesystemを使ってassetファイル内のモデル取るとかにするといいかも
+		//===============================================================================
 		////今だけ
 		//m_models["X-Wing"].Init("assets/X-Wing.x.dat", "shader/vs.fx", "shader/ps.fx");
 		//m_models["TIE_Fighter"] = new CModel();

@@ -134,7 +134,7 @@ void CPlayer::Shot()
 	auto _rigid = bullet->AddComponent<CRigidbody>();
 	auto _render = bullet->AddComponent<CMeshRenderer>();
 	bullet->AddComponent<Bullet>();
-	_render->SphereInit(3.0f);
+	_render->SphereInit();
 	_rigid->InitDynamic();
 	bullet->SetName(std::string("bullet"));
 	bullet->SetTag(std::string("Default"));

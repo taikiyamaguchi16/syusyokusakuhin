@@ -40,6 +40,8 @@ void ImGuiControl::InspectorDraw(wp<CObject> obj_, std::list<CComponent*>& coms_
 	ImGui::Begin(TitleName, &show_gui);
 	const char* work[] = { "aa","vv","adadsa","asd" };
 	DropDown(work, IM_ARRAYSIZE(work));
+
+
 	//スクロール可能に
 	ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(280, 750), ImGuiWindowFlags_NoTitleBar);
 	//区切り線
@@ -50,12 +52,20 @@ void ImGuiControl::InspectorDraw(wp<CObject> obj_, std::list<CComponent*>& coms_
 
 	ImGui::Separator();
 
+	std::ostringstream oss;
+	//現状のオブジェクトの表示
+	unsigned int label = 0;
 	//コンポーネント全表示
 	for (const auto& com : obj_->m_ComponentList) {
 		//コンポーネントの名前を書くように
-		TitleName = com->m_name.c_str();
+		//同名が認識されないのでラベルを付与
+		label++;
+		oss << "##" << label;
+		std::string str = (*com).m_name + oss.str();
+		const char* TitleName = str.c_str();
+		//TitleName = com->m_name.c_str();
 
-		ImGui::SetNextTreeNodeOpen(true, ImGuiCond_Once);
+		ImGui::SetNextTreeNodeOpen(false, ImGuiCond_Once);
 		if (ImGui::TreeNode(TitleName)) {
 			com->ImGuiDraw();
 			ImGui::TreePop();

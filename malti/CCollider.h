@@ -37,6 +37,8 @@ public:
 		m_name = "BoxCollider";
 	}
 	~CBoxCollider();
+
+	void OnCollisionEnter(CObject* col)override;
 };
 
 class CSphereCollider :public CCollider

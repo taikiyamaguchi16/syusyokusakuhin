@@ -38,7 +38,7 @@ void CCamera::Update()
 	else if(m_freeCameraFg)
 	{
 		XMFLOAT3 inputSpeed = XMFLOAT3(0.0f, 0.0f, 0.0f);
-		float speed = 2.0f;
+		float speed = 0.5f;
 		//右クリック押しながらだと動くようにしている
 		if (CDirectInput::GetInstance().GetMouseRButtonCheck()) {
 			
