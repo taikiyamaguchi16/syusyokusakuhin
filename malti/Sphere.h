@@ -3,9 +3,10 @@
 
 #define  PI  (3.1412)
 
+
 class CSphere final
 {
-	CTransform* m_pos = nullptr;
+	Egliss::ComponentSystem::CTransform* m_pos = nullptr;
 	ID3D11Buffer*	m_cbuffer = nullptr;		// 定数バッファ	
 	ID3D11Buffer*		m_pVertexBuffer;	// 頂点バッファ
 	ID3D11Buffer*		m_pIndexBuffer;		// インデックスバッファ
@@ -16,7 +17,7 @@ class CSphere final
 	unsigned int		m_divY;				// 垂直方向の分割数
 	float				m_radius;			// 半径
 
-	
+
 	struct Vertex {
 		DirectX::XMFLOAT3	Pos;
 		DirectX::XMFLOAT3	Normal;
@@ -65,8 +66,7 @@ public:
 	// 終了処理
 	void Exit();
 
-	inline void SetDiffuseMaterial(float col_[4]){
+	inline void SetDiffuseMaterial(float col_[4]) {
 		m_material.DiffuseMaterial = XMFLOAT4(col_[0], col_[1], col_[2], col_[3]);
 	}
 };
-

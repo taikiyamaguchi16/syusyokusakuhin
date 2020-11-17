@@ -10,6 +10,7 @@
 #include <sstream>
 #include <DirectXMath.h>
 
+#include "object.h"
 #include "dixsmartptr.h"
 
 using namespace Dix;
@@ -152,7 +153,7 @@ public:
 		//======================================================================================================================================
 	}
 
-	void InspectorDraw(wp<CObject> obj_,std::list<CComponent*> &coms_);
+	void InspectorDraw(wp<CObject> obj_, std::list<Egliss::ComponentSystem::CComponent*> coms_);
 
 	void ConsoleDraw();
 
@@ -162,7 +163,8 @@ public:
 
 	void Draw3DGuizm(DirectX::XMFLOAT4X4 _view, DirectX::XMFLOAT4X4 _projection,DirectX::XMFLOAT4X4& _mat,DirectX::XMFLOAT3& _angle);
 	void Select3DGuizm();
-	void DropDown(const char* _str[],int _size);
+	std::string SelectDropDown(const char* _str[],int _size);
+	void DropDown(const char* _str[], int _size, wp<CObject> _obj);
 
 	void BeforeRender();
 	void AfterRebder();

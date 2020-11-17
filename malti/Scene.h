@@ -4,6 +4,7 @@
 #include "object.h"
 #include "CPhysx.h"
 
+
 class Scene
 {
 protected:

@@ -5,6 +5,7 @@
 #include "CDirectInput.h"
 #include "CObject2D.h"
 
+using namespace Egliss::ComponentSystem;
 
 CCamera* _camaa;
 

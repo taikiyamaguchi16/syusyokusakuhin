@@ -1,8 +1,9 @@
 #include "ImGuiControl.h"
-
-#include "object.h"
 #include <typeinfo.h>
 #include "Scene.h"
+
+#include "nameof.hpp"
+using namespace Egliss::ComponentSystem;
 
 ImGuiControl::ImGuiControl()
 {
@@ -22,7 +23,8 @@ ImGuiControl::~ImGuiControl()
 }
 
 
-void ImGuiControl::InspectorDraw(wp<CObject> obj_, std::list<CComponent*>& coms_)
+
+void ImGuiControl::InspectorDraw(wp<CObject> obj_, std::list<Egliss::ComponentSystem::CComponent*> coms_)
 {
 	//オブジェクトの名前を書くよう
 	std::string str = obj_->GetName();
@@ -33,14 +35,20 @@ void ImGuiControl::InspectorDraw(wp<CObject> obj_, std::list<CComponent*>& coms_
 	ImGuiCond_Once により、初回のみ設定されます。
 	ImGuiCond_Always で、常に設定することもできます。
 	*/
-	ImGui::SetNextWindowPos(ImVec2(SCREEN_X-300, 0), ImGuiCond_None);
+	ImGui::SetNextWindowPos(ImVec2(SCREEN_X - 300, 0), ImGuiCond_None);
 	ImGui::SetNextWindowSize(ImVec2(300, 750), ImGuiCond_None);
 
-	
-	ImGui::Begin(TitleName, &show_gui);
-	const char* work[] = { "aa","vv","adadsa","asd" };
-	DropDown(work, IM_ARRAYSIZE(work));
 
+	ImGui::Begin(TitleName, &show_gui);
+
+	
+	std::string sss = (std::string)NAMEOF_ENUM(FilterGroup::eDEFAULT);
+	std::string sss2 = (std::string)NAMEOF_ENUM(FilterGroup::ePLAYER);
+	std::string sss3 = (std::string)NAMEOF_ENUM(FilterGroup::eENEMY);
+	std::string sss4 = (std::string)NAMEOF_ENUM(FilterGroup::eFLOOR);
+	std::string sss5 = (std::string)NAMEOF_ENUM(FilterGroup::eWALL);
+	const char* work[] = { sss.c_str(),sss2.c_str(),sss3.c_str(),sss4.c_str(),sss5.c_str()};
+	DropDown(work, IM_ARRAYSIZE(work),obj_);
 
 	//スクロール可能に
 	ImGui::BeginChild(ImGui::GetID((void*)0), ImVec2(280, 750), ImGuiWindowFlags_NoTitleBar);
@@ -63,7 +71,6 @@ void ImGuiControl::InspectorDraw(wp<CObject> obj_, std::list<CComponent*>& coms_
 		oss << "##" << label;
 		std::string str = (*com).m_name + oss.str();
 		const char* TitleName = str.c_str();
-		//TitleName = com->m_name.c_str();
 
 		ImGui::SetNextTreeNodeOpen(false, ImGuiCond_Once);
 		if (ImGui::TreeNode(TitleName)) {
@@ -111,8 +118,6 @@ void ImGuiControl::InspectorDraw(wp<CObject> obj_, std::list<CComponent*>& coms_
 	}
 
 }
-
-
 
 void ImGuiControl::ConsoleDraw()
 {
@@ -192,11 +197,11 @@ void ImGuiControl::Select3DGuizm()
 		mCurrentGizmoMode = ImGuizmo::WORLD;
 }
 
-void ImGuiControl::DropDown(const char* _str[],int _size)
+std::string ImGuiControl::SelectDropDown(const char* _str[],int _size)
 {
 	const char** items = _str;
 
-	static const char* current_item = NULL;
+	const char* currentItem = NULL;
 	ImGuiComboFlags flags = ImGuiComboFlags_NoArrowButton;
 
 	ImGuiStyle& style = ImGui::GetStyle();
@@ -204,13 +209,18 @@ void ImGuiControl::DropDown(const char* _str[],int _size)
 	float spacing = style.ItemInnerSpacing.x;
 	float button_sz = ImGui::GetFrameHeight();
 	ImGui::PushItemWidth(w - spacing * 2.0f - button_sz * 2.0f);
-	if (ImGui::BeginCombo("##custom combo", current_item, ImGuiComboFlags_NoArrowButton))
+	//仮置き
+	std::string _st = "null";
+	if (ImGui::BeginCombo("##colliders", currentItem, ImGuiComboFlags_NoArrowButton))
 	{
 		for (int n = 0; n < _size; n++)
 		{
-			bool is_selected = (current_item == *(items + n));
-			if (ImGui::Selectable(*(items+n), is_selected))
-				current_item = *(items + n);
+			bool is_selected = (currentItem == *(items + n));
+			if (ImGui::Selectable(*(items + n), is_selected))
+			{
+				currentItem = *(items + n);
+				_st = currentItem;
+			}
 			if (is_selected)
 				ImGui::SetItemDefaultFocus();
 		}
@@ -218,15 +228,67 @@ void ImGuiControl::DropDown(const char* _str[],int _size)
 	}
 	ImGui::PopItemWidth();
 	ImGui::SameLine(0, spacing);
-	if (ImGui::ArrowButton("##r", ImGuiDir_Left))
-	{
-	}
-	ImGui::SameLine(0, spacing);
-	if (ImGui::ArrowButton("##r", ImGuiDir_Right))
-	{
-	}
+	//if (ImGui::ArrowButton("##r", ImGuiDir_Left))
+	//{
+	//}
+	//ImGui::SameLine(0, spacing);
+	//if (ImGui::ArrowButton("##r", ImGuiDir_Right))
+	//{
+	//}
 	ImGui::SameLine(0, style.ItemInnerSpacing.x);
-	ImGui::Text("Custom Combo");
+	ImGui::Text("colliders");
+
+	return _st;
+}
+
+void ImGuiControl::DropDown(const char * _str[], int _size, wp<CObject> _obj)
+{
+	const char** items = _str;
+
+	const char* current_item = NULL;
+	ImGuiComboFlags flags = ImGuiComboFlags_NoArrowButton;
+
+	ImGuiStyle& style = ImGui::GetStyle();
+	float w = ImGui::CalcItemWidth();
+	float spacing = style.ItemInnerSpacing.x;
+	float button_sz = ImGui::GetFrameHeight();
+	ImGui::PushItemWidth(w - spacing * 2.0f - button_sz * 2.0f);
+	//オブジェクトからレイヤーを抜き出して表示
+	current_item = _obj->GetCurrentItem();
+	if (ImGui::BeginCombo("##Layer", current_item, ImGuiComboFlags_NoArrowButton))
+	{
+		for (int n = 0; n < _size; n++)
+		{
+			bool is_selected = (current_item == *(items + n));
+			if (ImGui::Selectable(*(items + n), is_selected))
+			{
+				_obj->SetCurrentItem(*(items + n));
+				_obj->SetCurrentLayer(1 << n);
+
+				current_item = _obj->GetCurrentItem();
+				auto rigid = _obj->GetWeakComponent<CRigidbody>();
+				if (rigid.IsExist())
+				{
+					CPhysx::setupFiltering(rigid->GetActor(), _obj->GetCurrentLayer(), CPhysx::GetFilterGroup(_obj->GetCurrentLayer()));
+				}
+
+			}
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
+	}
+	ImGui::PopItemWidth();
+	ImGui::SameLine(0, spacing);
+	//if (ImGui::ArrowButton("##r", ImGuiDir_Left))
+	//{
+	//}
+	//ImGui::SameLine(0, spacing);
+	//if (ImGui::ArrowButton("##r", ImGuiDir_Right))
+	//{
+	//}
+	ImGui::SameLine(0, style.ItemInnerSpacing.x);
+	ImGui::Text("Layer");
 }
 
 void ImGuiControl::BeforeRender()

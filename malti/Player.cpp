@@ -5,6 +5,9 @@
 #include "MeshRenderer.h"
 #include "Bullet.h"
 using namespace Dix;
+
+using namespace Egliss::ComponentSystem;
+
 void CPlayer::Start()
 {
 	SetName();
@@ -127,32 +130,32 @@ void CPlayer::ImGuiDraw()
 
 void CPlayer::Shot()
 {
-	CObject* bullet=new CObject;
-	bullet = new CObject;
-	auto _trans = bullet->AddComponent<CTransform>();
-	_trans->SetPos(m_pos->GetDirectPos());
-	auto _rigid = bullet->AddComponent<CRigidbody>();
-	auto _render = bullet->AddComponent<CMeshRenderer>();
-	bullet->AddComponent<Bullet>();
-	_render->SphereInit();
-	_rigid->InitDynamic();
-	bullet->SetName(std::string("bullet"));
-	bullet->SetTag(std::string("Default"));
-	SceneManager::GetInstance()->AddObject(bullet);
+	//CObject* bullet=new CObject;
+	//bullet = new CObject;
+	//auto _trans = bullet->AddComponent<CTransform>();
+	//_trans->SetPos(m_pos->GetDirectPos());
+	//auto _rigid = bullet->AddComponent<CRigidbody>();
+	//auto _render = bullet->AddComponent<CMeshRenderer>();
+	//bullet->AddComponent<Bullet>();
+	//_render->SphereInit();
+	//_rigid->InitDynamic();
+	//bullet->SetName(std::string("bullet"));
+	//bullet->SetTag(std::string("Default"));
+	//SceneManager::GetInstance()->AddObject(bullet);
 
-	XMFLOAT3 _vy, _vz;
-	m_zikuX = XMFLOAT3(m_pos->m_mat._11, m_pos->m_mat._12, m_pos->m_mat._13);
-	m_zikuY = XMFLOAT3(m_pos->m_mat._21, m_pos->m_mat._22, m_pos->m_mat._23);
-	m_zikuZ = XMFLOAT3(m_pos->m_mat._31, m_pos->m_mat._32, m_pos->m_mat._33);
-	DX11Vec3Normalize(m_zikuX, m_zikuX);
-	DX11Vec3Normalize(m_zikuY, m_zikuY);
-	DX11Vec3Normalize(m_zikuZ, m_zikuZ);
+	//XMFLOAT3 _vy, _vz;
+	//m_zikuX = XMFLOAT3(m_pos->m_mat._11, m_pos->m_mat._12, m_pos->m_mat._13);
+	//m_zikuY = XMFLOAT3(m_pos->m_mat._21, m_pos->m_mat._22, m_pos->m_mat._23);
+	//m_zikuZ = XMFLOAT3(m_pos->m_mat._31, m_pos->m_mat._32, m_pos->m_mat._33);
+	//DX11Vec3Normalize(m_zikuX, m_zikuX);
+	//DX11Vec3Normalize(m_zikuY, m_zikuY);
+	//DX11Vec3Normalize(m_zikuZ, m_zikuZ);
 
-	//ローカル軸基準でいどうするため（Y軸考慮すると飛んじゃう）
+	////ローカル軸基準でいどうするため（Y軸考慮すると飛んじゃう）
 
-	_vz.x = m_zikuZ.x*8000.0f;
-	_vz.y = m_zikuZ.y*8000.0f;
-	_vz.z = m_zikuZ.z*8000.0f;
+	//_vz.x = m_zikuZ.x*8000.0f;
+	//_vz.y = m_zikuZ.y*8000.0f;
+	//_vz.z = m_zikuZ.z*8000.0f;
 
-	_rigid->GetRigidDynamic()->addForce(physx::PxVec3(_vz.x, _vz.y, _vz.z));
+	//_rigid->GetRigidDynamic()->addForce(physx::PxVec3(_vz.x, _vz.y, _vz.z));
 }

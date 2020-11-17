@@ -2,6 +2,8 @@
 #include "CPhysx.h"
 #include <cassert>
 
+using namespace Egliss::ComponentSystem;
+
 void CCollider::Start()
 {
 	//rigidbodyがないと異常終了する
@@ -98,6 +100,7 @@ void CBoxCollider::OnCollisionEnter(CObject * col)
 void CSphereCollider::Start()
 {
 	CCollider::Start();
+	Init();
 	m_radius = 1.0f;
 }
 
@@ -105,13 +108,6 @@ void CSphereCollider::Init()
 {
 	CCollider::Init();
 	m_shape = CPhysx::GetPhysics()->createShape(physx::PxSphereGeometry(m_transform->GetScale().x), *m_rb->GetMaterial(), true);
-
-	PxShape* shapes[128];
-	//シェイプの数取得
-	const PxU32 nbShapes = m_rb->GetActor()->getNbShapes();
-	m_rb->GetActor()->getShapes(shapes, nbShapes);
-	m_rb->GetActor()->detachShape(*shapes[0]);
-
 	m_rb->GetActor()->attachShape(*m_shape);
 
 	m_sphere = new CSphere();

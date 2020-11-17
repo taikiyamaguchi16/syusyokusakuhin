@@ -6,7 +6,7 @@
 
 class CCapsule final
 {
-	CTransform* m_pos = nullptr;
+	Egliss::ComponentSystem::CTransform* m_pos = nullptr;
 	ID3D11Buffer*	m_cbuffer = nullptr;		// 定数バッファ	
 	ID3D11Buffer*		m_pVertexBuffer;	// 頂点バッファ
 	ID3D11Buffer*		m_pIndexBuffer;		// インデックスバッファ

@@ -32,7 +32,7 @@
 
 #include "CObject2D.h"
 using namespace DirectX;
-
+using namespace Egliss::ComponentSystem;
 
 CCamera* _cama;
 //******************************************************************************
@@ -41,6 +41,7 @@ CCamera* _cama;
 
 bool CGame::Init()
 {
+	Egliss::Reflection::DynamicTypeManager::Initialize();
 	AddObjects();
 	return true;
 }
@@ -219,18 +220,18 @@ void CGame::AddObjects()
 	wp<CObject>wark_weak(CameraObj);
 	m_activeCamera = wark_weak;
 
+	const std::string st = "Transform";
+	const std::string st2 = "Rigidbody";
 
 	AirPlane.SetPtr(new CObject);
-	_trans = AirPlane->AddComponent<CTransform>();
+	_trans = AirPlane->AddComponentByNameAs<CTransform>(st);
 	_trans->SetPos(XMFLOAT3(0.0f, 60.0f, 0.0f));
-	_rigid = AirPlane->AddComponent<CRigidbody>();
+	_rigid = AirPlane->AddComponentByNameAs<CRigidbody>(st2);
 	_rigid->SetMass(10.f);
-	AirPlane->SetMyFps(60);
 	_render = AirPlane->AddComponent<CMeshRenderer>();
 	_trans->SetScale(XMFLOAT3(3.f, 3.f, 3.f));
+	_rigid->SetGeometryType(GEOMETRYTYPE::BOX);
 	_render->BoxInit();
-	//_render->SphereInit();
-	//_rigid->SetGeometryType(GEOMETRYTYPE::SPHERE);
 	_rigid->InitDynamic();
 
 	AirPlane->SetName(std::string("AirPlane"));
@@ -239,45 +240,26 @@ void CGame::AddObjects()
 
 	//_camera->SetTrackingObj(AirPlane->GetWeakComponent<CTransform>());
 
-	//enemy = new CObject;
-	//enemy->AddComponent<CTransform>();
-	//auto com3 = enemy->AddComponent<CMeshRenderer>();
-	////com3->LoadModel("assets/TIE_Fighter.x.dat", "shader/vs.fx", "shader/ps.fx");
-	//com3->SetModel("TIE_Fighter");
-	//enemy->SetName(std::string("enemy"));
-	//enemy->SetTag(std::string("Default"));
-	//m_obj_list.emplace_back(enemy);
-
-
-	//sphere.SetPtr(new CObject);
+	sphere.SetPtr(new CObject);
+	_trans = sphere->AddComponentByNameAs<CTransform>(st);
 	//_trans = sphere->AddComponent<CTransform>();
-	//_trans->SetPos(XMFLOAT3(0.0f, 30.0f, 0.0f));
-	//_trans->SetScale(XMFLOAT3(5.f, 5.f,5.f ));
-	//_rigid = sphere->AddComponent<CRigidbody>();
-	//_render = sphere->AddComponent<CMeshRenderer>();
-	//_render->SphereInit(9.0f);
-	//_rigid->SetGeometryType(GEOMETRYTYPE::SPHERE);
-	//_rigid->InitDynamic();
-	//sphere->SetName(std::string("sphere"));
-	//sphere->SetTag(std::string("Default"));
-	//m_obj_list.emplace_back(sphere);
 
-
-	/*sphere2 = new CObject;
-	_trans = sphere2->AddComponent<CTransform>();
-	_trans->SetPos(XMFLOAT3(15.0f, 20.0f, 0.0f));
-	_rigid = sphere2->AddComponent<CRigidbody>();
-	_render = sphere2->AddComponent<CMeshRenderer>();
-	_render->SphereInit(8.0f);
-	_rigid->SetRadius(8.0f);
+	_trans->SetPos(XMFLOAT3(0.0f, 30.0f, 0.0f));
+	_trans->SetScale(XMFLOAT3(5.f, 5.f,5.f ));
+	_rigid = sphere->AddComponent<CRigidbody>();
+	_render = sphere->AddComponent<CMeshRenderer>();
+	//_render->SphereInit();
+	_rigid->SetGeometryType(GEOMETRYTYPE::BOX);
 	_rigid->InitDynamic();
-	sphere2->SetName(std::string("sphere2"));
-	sphere2->SetTag(std::string("Default"));
-	m_obj_list.emplace_back(sphere2);*/
+	sphere->SetName(std::string("sphere"));
+	sphere->SetTag(std::string("Default"));
+	m_obj_list.emplace_back(sphere);
 
 
 	box.SetPtr(new CObject);
+	//_trans = sphere->AddComponentByNameAs<Egliss::ComponentSystem::CTransform>(st);
 	_trans = box->AddComponent<CTransform>();
+
 	_trans->SetPos(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	_rigid = box->AddComponent<CRigidbody>();
 	_render = box->AddComponent<CMeshRenderer>();
@@ -346,6 +328,7 @@ void CGame::AddObjects()
 	box5->SetName(std::string("box5"));
 	box5->SetTag(std::string("Default"));
 	m_obj_list.emplace_back(box5);
+
 
 
 	wp<CObject>wark_weak_ptr(AirPlane);

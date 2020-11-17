@@ -1,14 +1,17 @@
 #pragma once
 #include "object.h"
 
-class CEnemy :public  CComponent
+namespace Egliss::ComponentSystem
 {
-	CTransform* m_pos = nullptr;
-public:
+	class CEnemy :public  CComponent
+	{
+		CTransform* m_pos = nullptr;
+	public:
 
-	CEnemy();
-	~CEnemy();
-	void Start()override;
-	void Update()override;
-};
+		CEnemy();
+		~CEnemy();
+		void Start()override;
+		void Update()override;
+	};
+}
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 
+using namespace Egliss::ComponentSystem;
 class Title :public Scene
 {
 	

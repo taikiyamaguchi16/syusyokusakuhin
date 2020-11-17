@@ -1,7 +1,6 @@
 #include "Sphere.h"
 
 
-
 void CSphere::Init(float r_)
 {
 	Init(r_, 20, 20, GetDX11Device());

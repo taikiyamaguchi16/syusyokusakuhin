@@ -24,10 +24,9 @@ class CGame final:public Scene
 	//ID3D11ShaderResourceView* m_srv = nullptr;	// SRV
 	//ID3D11Resource* m_texres = nullptr;			// texture resource
 
-
 public:
 	//•p”É‚Éíœ‚ªs‚í‚ê‚é‚½‚ß
-	std::list<CComponent*> m_Components;
+	std::list<Egliss::ComponentSystem::CComponent*> m_Components;
 	CGame() { Init(); }
 	~CGame() { UnInit(); }
 
@@ -40,7 +39,7 @@ public:
 	
 	inline void CreateObject(std::string str_) {
 		CObject* obj = new CObject;
-		obj->AddComponent<CTransform>();
+		obj->AddComponent<Egliss::ComponentSystem::CTransform>();
 		obj->SetName(str_);
 		m_obj_list.emplace_back(obj);
 	}

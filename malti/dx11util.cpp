@@ -9,8 +9,11 @@
 
 #include "ImGuiControl.h"
 
+using namespace Egliss::ComponentSystem;
+
 CDirectXGraphics	g_DXGrobj;			// ‚c‚h‚q‚d‚b‚s‚w@‚f‚q‚`‚o‚g‚h‚b‚r@ƒIƒuƒWƒFƒNƒg		
 										// ’è”ƒoƒbƒtƒ@’è‹`
+
 CLight				g_directionallight;
 
 void DX11LightInit(DirectX::XMFLOAT4 lightpos) {

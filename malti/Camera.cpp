@@ -1,6 +1,9 @@
 #include "Camera.h"
 #include "CDirectInput.h"
 
+using namespace Egliss::ComponentSystem;
+
+
 void CCamera::Start()
 {
 	m_name = "Camera";

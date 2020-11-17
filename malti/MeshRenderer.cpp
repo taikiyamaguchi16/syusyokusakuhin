@@ -1,6 +1,7 @@
 #include "MeshRenderer.h"
 #include "CDirectInput.h"
 
+using namespace Egliss::ComponentSystem;
 
 std::map<std::string, CModel*> CMeshRenderer::m_models;
 bool CMeshRenderer::m_onceInitFg = true;

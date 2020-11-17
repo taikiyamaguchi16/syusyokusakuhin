@@ -5,6 +5,8 @@
 #include "ImGuiControl.h"
 #include "CCollider.h"
 
+using namespace Egliss::ComponentSystem;
+
 void CObject::Update()
 {
 	if (SceneManager::GetInstance()->m_fpsCount % (60 / m_myFps) == 0) {
@@ -21,13 +23,11 @@ void CObject::LateUpdate()
 	}
 }
 
-
 void CObject::Draw()
 {
 	for (const auto& com : m_ComponentList)
 		com->Draw();
 }
-
 
 void CTransform::Update()
 {
@@ -125,7 +125,6 @@ void CTransform::MoveForward(XMFLOAT3 vec_)
 	m_trans->p.y = m_mat._42;
 	m_trans->p.z = m_mat._43;
 }
-
 
 void CTransform::Draw()
 {
@@ -227,9 +226,6 @@ void CTransform::ImGuiDraw()
 	ImGui::DragFloat3(u8"サイズ", &m_scale.x, true);
 	ImGuiControl::GetInstance()->Select3DGuizm();
 
-	/*auto str = FilterGroup::eENEMY;
-	std::string sss = (std::string)NAMEOF_ENUM(str);
-	ImGui::Text(sss.c_str());*/
 }
 
 void CTransform::SetQuat(XMFLOAT4X4 & rotateMat_)
@@ -257,8 +253,6 @@ void CTransform::SetQuat(XMFLOAT4X4 & rotateMat_)
 		}
 	}
 }
-
-
 
 CRigidbody::~CRigidbody()
 {
@@ -298,8 +292,7 @@ void CRigidbody::InitDynamic()
 		m_actor = CPhysx::GetActor();
 
 		//大きさにあったコライダーの取り付け
-		col = Holder->AddComponent<CBoxCollider>();
-		//col->Init();
+		Holder->AddComponentByName("BoxColider");
 		break;
 	case GEOMETRYTYPE::CAPSILE:
 
@@ -318,8 +311,7 @@ void CRigidbody::InitDynamic()
 		m_actor = CPhysx::GetActor();
 
 
-		col = Holder->AddComponent<CSphereCollider>();
-		//col->Init();
+		Holder->AddComponent<CSphereCollider>();
 		break;
 	default:
 		break;
@@ -332,19 +324,23 @@ void CRigidbody::InitDynamic()
 	m_actor->detachShape(*shapes[0]);
 
 
+	//============================剛体のフラグ設定==========================================
 	m_actor->setActorFlag(physx::PxActorFlag::eVISUALIZATION, false);
 	m_rigidDynamic->setRigidBodyFlag(PxRigidBodyFlag::eENABLE_CCD, true);
 	m_rigidDynamic->setRigidBodyFlag(PxRigidBodyFlag::eENABLE_SPECULATIVE_CCD, true);
+	//======================================================================================
 
+	//スリープ状態に入る時間
 	m_rigidDynamic->setSleepThreshold(0.5f);
+
 	//めり込みや不自然な挙動の抑制の数値　左が挙動　右がめり込み　
 	//デフォルト値　1,4
 	m_rigidDynamic->setSolverIterationCounts(4, 4);
 
+	//各velcityの抵抗力
 	m_rigidDynamic->setAngularDamping(0.4f);
 	m_rigidDynamic->setLinearDamping(0.3f);
 	
-
 	USERDATA* use = new USERDATA();
 	use->obj = Holder;
 	m_actor->userData = use;
@@ -399,7 +395,7 @@ void CRigidbody::InitStatic()
 void CRigidbody::Update()
 {
 	if (m_rigidDynamic != nullptr) {
-		//m_rigidDynamic->wakeUp();
+		
 	}
 }
 
@@ -469,16 +465,42 @@ void CRigidbody::ImGuiDraw()
 	{
 		m_rigidDynamic->setRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, m_simulation);
 	}
-	if (ImGui::Button(u8"コライダーの追加"))
-	{
-		Holder->AddComponent<CBoxCollider>();
-	}
-	for (FilterGroup::Layer num : {FilterGroup::eDEFAULT, FilterGroup::eENEMY, FilterGroup::eFLOOR, FilterGroup::ePLAYER}) {
 
+	const char* work[] = { "SphereColider",
+		"BoxColider" };
+	auto work_str = ImGuiControl::GetInstance()->SelectDropDown(work, IM_ARRAYSIZE(work));
+	if (work_str != "null")
+	{
+		Holder->AddComponentByName(work_str);
 	}
+
+	//for (FilterGroup::Layer num : {FilterGroup::eDEFAULT, FilterGroup::eENEMY, FilterGroup::eFLOOR, FilterGroup::ePLAYER}) {
+
+	//}
 }
 
 void CRigidbody::OnCollisionEnter(CObject * col)
 {
 
 }
+
+void CRigidbody::OnCollisionStay(CObject * col)
+{
+	PxVec3 work = m_rigidDynamic->getLinearVelocity();
+	PxVec3 work_a = m_rigidDynamic->getAngularVelocity();
+	PxVec3 work_ab = work_a.abs();
+
+	PxVec3 abs_work = work.abs();
+
+	if (work.magnitude() < 1.3f)
+	{
+		m_rigidDynamic->clearForce();
+	}
+
+	if (work_a.magnitude() < 1.3f)
+	{
+		m_rigidDynamic->clearTorque();
+	}
+}
+
+

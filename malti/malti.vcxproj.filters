@@ -46,21 +46,21 @@
     <Filter Include="ソース ファイル\ImGui\other">
       <UniqueIdentifier>{ab0285f1-0681-4996-9829-9dc42258ff90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\common">
+      <UniqueIdentifier>{29e7bc79-4972-4e49-871d-6f2377523cd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Render">
+      <UniqueIdentifier>{ac41e5b7-3e4c-4918-bec7-b58b0c06946f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Reflection">
+      <UniqueIdentifier>{5f011db6-ebba-43c1-bcf6-9a2d80578032}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="object.cpp">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshRenderer.cpp">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
       <Filter>ソース ファイル\Component</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
@@ -68,9 +68,6 @@
     </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Sphere.cpp">
-      <Filter>ソース ファイル\Component</Filter>
     </ClCompile>
     <ClCompile Include="ImGuiControl.cpp">
       <Filter>ソース ファイル\ImGui\myScript</Filter>
@@ -105,9 +102,6 @@
     <ClCompile Include="WICTextureLoader.cpp">
       <Filter>ソース ファイル\Draw</Filter>
     </ClCompile>
-    <ClCompile Include="CBox.cpp">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>ソース ファイル\Component</Filter>
     </ClCompile>
@@ -128,9 +122,6 @@
     </ClCompile>
     <ClCompile Include="CEnemy.cpp">
       <Filter>ソース ファイル\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="CCollider.cpp">
-      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="CPhysx.cpp">
       <Filter>ソース ファイル\Physx</Filter>
@@ -153,8 +144,29 @@
     <ClCompile Include="imGui\imgui_widgets.cpp">
       <Filter>ソース ファイル\ImGui\other</Filter>
     </ClCompile>
+    <ClCompile Include="object.cpp">
+      <Filter>ソース ファイル\Component\common</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル\Component\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="CBox.cpp">
+      <Filter>ソース ファイル\Component\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>ソース ファイル\Component\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>ソース ファイル\Component\Render</Filter>
+    </ClCompile>
     <ClCompile Include="CCapsule.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Component\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="CCollider.cpp">
+      <Filter>ソース ファイル\Component\common</Filter>
+    </ClCompile>
+    <ClCompile Include="Reflection\DynamicType.cpp">
+      <Filter>ソース ファイル\Reflection</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -167,16 +179,7 @@
     <ClInclude Include="NonCopyable.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="object.h">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshRenderer.h">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
       <Filter>ソース ファイル\Component</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
@@ -184,9 +187,6 @@
     </ClInclude>
     <ClInclude Include="game.h">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>ソース ファイル\Component</Filter>
     </ClInclude>
     <ClInclude Include="ImGuiControl.h">
       <Filter>ソース ファイル\ImGui\myScript</Filter>
@@ -224,9 +224,6 @@
     <ClInclude Include="CLight.h">
       <Filter>ソース ファイル\Component</Filter>
     </ClInclude>
-    <ClInclude Include="CBox.h">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClInclude>
     <ClInclude Include="Bullet.h">
       <Filter>ソース ファイル\Component</Filter>
     </ClInclude>
@@ -253,9 +250,6 @@
     </ClInclude>
     <ClInclude Include="CEnemy.h">
       <Filter>ソース ファイル\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="CCollider.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="dixsmartptr.h">
       <Filter>ソース ファイル</Filter>
@@ -287,8 +281,38 @@
     <ClInclude Include="imGui\imstb_truetype.h">
       <Filter>ソース ファイル\ImGui\other</Filter>
     </ClInclude>
+    <ClInclude Include="object.h">
+      <Filter>ソース ファイル\Component\common</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ソース ファイル\Component\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="CBox.h">
+      <Filter>ソース ファイル\Component\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>ソース ファイル\Component\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>ソース ファイル\Component\Render</Filter>
+    </ClInclude>
     <ClInclude Include="CCapsule.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Component\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="CCollider.h">
+      <Filter>ソース ファイル\Component\common</Filter>
+    </ClInclude>
+    <ClInclude Include="Reflection\DynamicType.hpp">
+      <Filter>ソース ファイル\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="Reflection\Reflection.hpp">
+      <Filter>ソース ファイル\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="Reflection\ReflectionAnchor.hpp">
+      <Filter>ソース ファイル\Reflection</Filter>
+    </ClInclude>
+    <ClInclude Include="Reflection\StaticType.hpp">
+      <Filter>ソース ファイル\Reflection</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -316,5 +340,10 @@
     <FxCompile Include="shader\vsline.fx">
       <Filter>ソース ファイル\shader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Reflection\StaticType.inl">
+      <Filter>ソース ファイル\Reflection</Filter>
+    </None>
   </ItemGroup>
 </Project>

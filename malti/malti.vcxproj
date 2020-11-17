@@ -178,6 +178,7 @@
     <ClCompile Include="MeshRenderer.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Reflection\DynamicType.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Sphere.cpp" />
@@ -224,6 +225,10 @@
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="object.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Reflection\DynamicType.hpp" />
+    <ClInclude Include="Reflection\Reflection.hpp" />
+    <ClInclude Include="Reflection\ReflectionAnchor.hpp" />
+    <ClInclude Include="Reflection\StaticType.hpp" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sphere.h" />
@@ -239,6 +244,9 @@
     <FxCompile Include="shader\psvscommon.fx" />
     <FxCompile Include="shader\vs.fx" />
     <FxCompile Include="shader\vsline.fx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Reflection\StaticType.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

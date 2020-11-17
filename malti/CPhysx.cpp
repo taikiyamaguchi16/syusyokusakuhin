@@ -73,6 +73,51 @@ void CPhysx::UnInit()
 	delete m_eventCallbac;
 }
 
+//filterGroupに自身のレイヤー	filterMaskに当たり判定をとりたくないレイヤーを記述
+void CPhysx::setupFiltering(PxRigidActor * actor, PxU32 filterGroup, PxU32 filterMask)
+{
+	PxFilterData filterData;
+	filterData.word0 = filterGroup; // word0 = own ID
+	filterData.word1 = filterMask;  // word1 = ID mask to filter pairs that trigger a
+									// contact callback;
+	const PxU32 numShapes = actor->getNbShapes();
+	PxShape** shapes = (PxShape**)malloc(sizeof(PxShape*)*numShapes);
+	actor->getShapes(shapes, numShapes);
+	for (PxU32 i = 0; i < numShapes; i++)
+	{
+		PxShape* shape = shapes[i];
+		shape->setSimulationFilterData(filterData);
+	}
+	free(shapes);
+}
+
+unsigned int CPhysx::GetFilterGroup(unsigned int filter)
+{
+	//ここに記述しておくことで当たり判定をとりたくないレイヤーがreturnで帰ってくるので
+	//setupFilteringの際に間違えない
+	unsigned int mask = 0;
+	switch (filter)
+	{
+	case FilterGroup::eDEFAULT:
+		break;
+	case FilterGroup::ePLAYER:
+		mask = FilterGroup::eFLOOR;
+		break;
+	case FilterGroup::eENEMY:
+		mask = FilterGroup::eFLOOR;
+		break;
+	case FilterGroup::eFLOOR:
+		mask = FilterGroup::ePLAYER | FilterGroup::eENEMY;
+		break;
+	case FilterGroup::eWALL:
+		break;
+	default:
+		mask = 0;
+		break;
+	}
+	return mask;
+}
+
 
 PxFilterFlags TestFilterShader(PxFilterObjectAttributes attributes0, PxFilterData filterData0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, PxPairFlags & pairFlags, const void* constantBlock,PxU32 constantBlockSize)
 {
@@ -92,56 +137,15 @@ PxFilterFlags TestFilterShader(PxFilterObjectAttributes attributes0, PxFilterDat
 	// the filtermask of A contains the ID of B and vice versa.
 	if ((filterData0.word0 & filterData1.word1) && (filterData1.word0 & filterData0.word1))
 	{
-		pairFlags = PxPairFlag::eNOTIFY_TOUCH_FOUND| PxPairFlag::eCONTACT_DEFAULT;
-		pairFlags |= PxPairFlag::eDETECT_CCD_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT;
+		pairFlags = PxPairFlag::eTRIGGER_DEFAULT;
+		//pairFlags |= PxPairFlag::eDETECT_CCD_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT;
 	}
 
 	return PxFilterFlag::eCALLBACK;
 }
 
-unsigned int GetFilterGroup(unsigned int filter)
-{
-	//ここに記述しておくことで当たり判定をとりたくないレイヤーがreturnで帰ってくるので
-	//setupFilteringの際に間違えない
-	unsigned int mask;
-	switch (filter)
-	{
-	case FilterGroup::eDEFAULT:
-		break;
-	case FilterGroup::ePLAYER:
-		mask = FilterGroup::eFLOOR;
-		break;
-	case FilterGroup::eENEMY:
-		break;
-	case FilterGroup::eFLOOR:
-		break;
-	case FilterGroup::eWALL:
-		break;
-	default:
-		mask = 0;
-		break;
-	}
-	return mask;
-}
 
 
-//filterGroupに自身のレイヤー	filterMaskに当たり判定をとりたくないレイヤーを記述
-void setupFiltering(PxRigidActor * actor, PxU32 filterGroup, PxU32 filterMask)
-{
-	PxFilterData filterData;
-	filterData.word0 = filterGroup; // word0 = own ID
-	filterData.word1 = filterMask;  // word1 = ID mask to filter pairs that trigger a
-									// contact callback;
-	const PxU32 numShapes = actor->getNbShapes();
-	PxShape** shapes = (PxShape**)malloc(sizeof(PxShape*)*numShapes);
-	actor->getShapes(shapes, numShapes);
-	for (PxU32 i = 0; i < numShapes; i++)
-	{
-		PxShape* shape = shapes[i];
-		shape->setSimulationFilterData(filterData);
-	}
-	free(shapes);
-}
 
 void CSimulationEventCallback::onContact(const PxContactPairHeader & pairHeader, const PxContactPair * pairs, PxU32 nbPairs)
 {
@@ -154,10 +158,10 @@ void CSimulationEventCallback::onContact(const PxContactPairHeader & pairHeader,
 		user->obj->OnCollisionEnter(otherUser->obj);
 	}
 	else if (pairs->events&PxPairFlag::eNOTIFY_TOUCH_LOST) {
-		//user->obj->OnTriggerExit(otherUser->obj);
+		user->obj->OnCollisionExit(otherUser->obj);
 	}
 	else if (pairs->events&PxPairFlag::eNOTIFY_TOUCH_PERSISTS) {
-		//user->obj->OnTriggerStay(otherUser->obj);
+		user->obj->OnCollisionStay(otherUser->obj);
 	}
 	user->Status = NULL;
 }

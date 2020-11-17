@@ -16,8 +16,6 @@ struct FilterGroup
 
 using namespace physx;
 
-unsigned int GetFilterGroup(unsigned int filter);
-void setupFiltering(PxRigidActor* actor, PxU32 filterGroup, PxU32 filterMask);
 //pairFlagsでコールバックの呼ばれるタイミングを記述
 PxFilterFlags TestFilterShader(
 	PxFilterObjectAttributes attributes0, PxFilterData filterData0,
@@ -139,4 +137,9 @@ public:
 	//[[nodiscard]]static PxBoxController* CreateCapsuleController();
 
 	inline static void DeleteActor(PxRigidActor* _a) { m_scene->removeActor(*_a); }
+
+	static void setupFiltering(PxRigidActor* actor, PxU32 filterGroup, PxU32 filterMask);
+
+	static unsigned int GetFilterGroup(unsigned int filter);
+
 };
