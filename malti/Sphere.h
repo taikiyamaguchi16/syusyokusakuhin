@@ -1,5 +1,6 @@
 #pragma once
 #include "object.h"
+#include "DirectX11Manager.h"
 
 #define  PI  (3.1412)
 

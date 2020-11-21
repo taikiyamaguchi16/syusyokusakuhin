@@ -4,6 +4,7 @@
 #include	"Shader.h"
 #include	"DX11util.h"
 #include     "object.h"
+#include "DirectX11Manager.h"
 
 namespace Egliss::ComponentSystem
 {
@@ -36,7 +37,7 @@ namespace Egliss::ComponentSystem
 
 			// コンスタントバッファ作成
 			bool sts = CreateConstantBuffer(
-				GetDX11Device(),				// デバイス
+				DirectX11Manager::m_pDevice.Get(),				// デバイス
 				sizeof(ConstantBufferLight),		// サイズ
 				&m_pConstantBufferLight);			// コンスタントバッファ４
 			if (!sts) {
@@ -71,16 +72,16 @@ namespace Egliss::ComponentSystem
 
 			cb.Ambient = m_ambient;
 
-			GetDX11DeviceContext()->UpdateSubresource(m_pConstantBufferLight,
+			DirectX11Manager::m_pImContext->UpdateSubresource(m_pConstantBufferLight,
 				0,
 				nullptr,
 				&cb,
 				0, 0);
 
 			// コンスタントバッファ4をｂ3レジスタへセット（頂点シェーダー用）
-			GetDX11DeviceContext()->VSSetConstantBuffers(4, 1, &m_pConstantBufferLight);
+			DirectX11Manager::m_pImContext->VSSetConstantBuffers(4, 1, &m_pConstantBufferLight);
 			// コンスタントバッファ4をｂ3レジスタへセット(ピクセルシェーダー用)
-			GetDX11DeviceContext()->PSSetConstantBuffers(4, 1, &m_pConstantBufferLight);
+			DirectX11Manager::m_pImContext->PSSetConstantBuffers(4, 1, &m_pConstantBufferLight);
 
 		}
 

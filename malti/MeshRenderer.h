@@ -5,6 +5,8 @@
 #include <map>
 #include "CBox.h"
 
+#include "UnityExportModel.h"
+#include "UniExportModel.hpp"
 
 namespace Egliss::ComponentSystem
 {
@@ -27,7 +29,9 @@ namespace Egliss::ComponentSystem
 		static std::map<std::string, CModel*>m_models;
 		static bool m_onceInitFg;
 		std::string m_modelName;
-
+		//===========================ŽÀŒ±======================================
+		UnityExportModel m_model;
+		//=====================================================================
 		float m_color[4] = { 255.0f,255.0f,255.0f,255.0f };
 	public:
 		~CMeshRenderer() {

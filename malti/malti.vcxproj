@@ -160,7 +160,9 @@
     <ClCompile Include="DatFile.cpp" />
     <ClCompile Include="DatFileLoader.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
+    <ClCompile Include="DirectX11Manager.cpp" />
     <ClCompile Include="dx11mathutil.cpp" />
+    <ClCompile Include="DX11SetTransform.cpp" />
     <ClCompile Include="dx11util.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="ImGuiControl.cpp" />
@@ -176,6 +178,7 @@
     <ClCompile Include="imGui\ImSequencer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MeshRenderer.cpp" />
+    <ClCompile Include="MyInput8.cpp" />
     <ClCompile Include="object.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Reflection\DynamicType.cpp" />
@@ -183,6 +186,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Title.cpp" />
+    <ClCompile Include="UnityExportModel.cpp" />
     <ClCompile Include="WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +204,7 @@
     <ClInclude Include="CPhysx.h" />
     <ClInclude Include="DatFile.h" />
     <ClInclude Include="DatFileLoader.h" />
+    <ClInclude Include="DirectX11Manager.h" />
     <ClInclude Include="dixsmartptr.h" />
     <ClInclude Include="dx11mathutil.h" />
     <ClInclude Include="DX11Settransform.h" />
@@ -221,6 +226,7 @@
     <ClInclude Include="imGui\imstb_truetype.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="MeshRenderer.h" />
+    <ClInclude Include="MyInput8.h" />
     <ClInclude Include="nameof.hpp" />
     <ClInclude Include="NonCopyable.h" />
     <ClInclude Include="object.h" />
@@ -233,9 +239,15 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Title.h" />
+    <ClInclude Include="UniExportModel.hpp" />
+    <ClInclude Include="UnityExportModel.h" />
     <ClInclude Include="UserData.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="assets\Shaders\2DPipeLine.hlsl" />
+    <FxCompile Include="assets\Shaders\3DPipeLine.hlsl" />
+    <FxCompile Include="assets\Shaders\UnityExportModel.hlsl" />
+    <FxCompile Include="assets\Shaders\UnityExportSkinnedModel.hlsl" />
     <FxCompile Include="shader\3dsphereps.fx" />
     <FxCompile Include="shader\3dspherevs.fx" />
     <FxCompile Include="shader\ps.fx" />
@@ -246,6 +258,8 @@
     <FxCompile Include="shader\vsline.fx" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\Shaders\CorePBR.hlsli" />
+    <None Include="assets\Shaders\ShaderInput.hlsli" />
     <None Include="Reflection\StaticType.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

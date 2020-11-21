@@ -5,7 +5,9 @@
 void CBox::Init(XMFLOAT3 s_)
 {
 	m_size = s_;
-	Init(GetDX11Device());
+	//Init(GetDX11Device());
+	Init(DirectX11Manager::m_pDevice.Get());
+;
 }
 
 // 法線ベクトルを計算
@@ -77,13 +79,13 @@ void CBox::Draw() {
 
 	// 定数バッファ書き換え
 	D3D11_MAPPED_SUBRESOURCE pData;
-	HRESULT hr = GetDX11DeviceContext()->Map(m_cbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
+	HRESULT hr = DirectX11Manager::m_pImContext->Map(m_cbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
 	if (SUCCEEDED(hr)) {
 		memcpy_s(pData.pData, pData.RowPitch, (void*)(&m_material), sizeof(ConstantBufferMaterial));
-		GetDX11DeviceContext()->Unmap(m_cbuffer, 0);
+		DirectX11Manager::m_pImContext->Unmap(m_cbuffer, 0);
 	}
 
-	ID3D11DeviceContext* device = GetDX11DeviceContext();
+	ID3D11DeviceContext* device = DirectX11Manager::m_pImContext.Get();
 	// 頂点バッファをセットする
 	unsigned int stride = sizeof(Vertex);
 	unsigned  offset = 0;
@@ -96,11 +98,6 @@ void CBox::Draw() {
 	device->VSSetShader(m_pVertexShader, nullptr, 0);			// 頂点シェーダーをセット
 	device->PSSetShader(m_pPixelShader, nullptr, 0);			// ピクセルシェーダーをセット
 
-	//// PSにSRVをセット
-	//device->PSSetShaderResources(
-	//	0,			// t0レジスタ 
-	//	1,			// 個数
-	//	&SceneManager::GetInstance()->m_srv);	// SRV
 
 	device->PSSetConstantBuffers(3, 1, &m_cbuffer);
 
@@ -144,7 +141,7 @@ bool CBox::Init(ID3D11Device* device) {
 
 
 	// 定数バッファ生成
-	sts = CreateConstantBufferWrite(GetDX11Device(), sizeof(ConstantBufferMaterial), &m_cbuffer);
+	sts = CreateConstantBufferWrite(DirectX11Manager::m_pDevice.Get(), sizeof(ConstantBufferMaterial), &m_cbuffer);
 	if (!sts) {
 		MessageBox(nullptr, "CreateConstantBufferWrite error", "error", MB_OK);
 		return false;
@@ -189,6 +186,8 @@ bool CBox::Init(ID3D11Device* device) {
 
 	return true;
 }
+
+
 
 void CBox::Exit() {
 

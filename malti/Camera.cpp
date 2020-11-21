@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "CDirectInput.h"
+#include "DirectX11Manager.h"
 
 using namespace Egliss::ComponentSystem;
 
@@ -13,6 +14,19 @@ void CCamera::Start()
 	Init(1.0f, 10000.0f, XM_PIDIV2, SCREEN_X, SCREEN_Y, m_eye, m_lookat, m_up);
 	m_pos->SetPos(XMFLOAT3(0, 0, -30.0f));
 	m_radius = 30.0f;
+
+	//==========--コンスタントバッファー生成======================================================================================
+	////コンスタントバッファの作成
+	//DirectX11Manager::CreateConstantBuffer(sizeof(ConstantBufferMatrix), &m_cb);
+	//m_constantBuffer.proj = XMMatrixTranspose(
+	//	XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f),
+	//		SCREEN_X / SCREEN_Y, 0.5f, 4096.0f * 8.0f));
+
+	//XMVECTOR eyePos = XMVectorSet(m_eye.x, m_eye.y, m_eye.z, 0);
+	//XMVECTOR targetPos = XMVectorSet(m_lookat.x, m_lookat.y, m_lookat.z, 0.f);
+	//XMVECTOR upVector = XMVectorSet(m_up.x, m_up.y, m_up.z, 0);
+	//m_constantBuffer.view = XMMatrixTranspose(XMMatrixLookAtLH(eyePos, targetPos, upVector));
+	//===========================================================================================================================
 }
 
 void CCamera::Update()
@@ -43,28 +57,28 @@ void CCamera::Update()
 		XMFLOAT3 inputSpeed = XMFLOAT3(0.0f, 0.0f, 0.0f);
 		float speed = 0.5f;
 		//右クリック押しながらだと動くようにしている
-		if (CDirectInput::GetInstance().GetMouseRButtonCheck()) {
+		if (DirectX11Manager::input.Mouse()->IsRDown()) {
 			
-			if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_W)) {
+			if (DirectX11Manager::input.Keyboard()->ChkKeyDown(DIK_W)) {
 				inputSpeed.z = speed;
 			}
-			if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_A)) {
+			if (DirectX11Manager::input.Keyboard()->ChkKeyDown(DIK_A)) {
 				inputSpeed.x = -speed;
 			}
-			if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_S)) {
+			if (DirectX11Manager::input.Keyboard()->ChkKeyDown(DIK_S)) {
 				inputSpeed.z = -speed;
 			}
-			if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_D)) {
+			if (DirectX11Manager::input.Keyboard()->ChkKeyDown(DIK_D)) {
 				inputSpeed.x = speed;
 			}
-			if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_Q)) {
+			if (DirectX11Manager::input.Keyboard()->ChkKeyDown(DIK_Q)) {
 				inputSpeed.y = -speed;
 			}
-			if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_E)) {
+			if (DirectX11Manager::input.Keyboard()->ChkKeyDown(DIK_E)) {
 				inputSpeed.y = speed;
 			}
-			m_pos->m_angle.y += CDirectInput::GetInstance().GetMouseAxisX() / 5;
-			m_pos->m_angle.x += CDirectInput::GetInstance().GetMouseAxisY() / 5;
+			m_pos->m_angle.y += DirectX11Manager::input.Mouse()->MoveX() / 2;
+			m_pos->m_angle.x += DirectX11Manager::input.Mouse()->MoveY() / 2;
 
 		}
 		m_pos->MoveForward(inputSpeed);
@@ -78,6 +92,18 @@ void CCamera::Update()
 		CreateCameraMatrix();
 		//================================================================================
 	}
+
+
+	/*XMVECTOR eyePos = XMVectorSet(m_eye.x, m_eye.y, m_eye.z, 0);
+	XMVECTOR targetPos = XMVectorSet(m_lookat.x, m_lookat.y, m_lookat.z, 0.f);
+	XMVECTOR upVector = XMVectorSet(m_up.x, m_up.y, m_up.z, 0);
+
+
+	m_constantBuffer.view = XMMatrixTranspose(XMMatrixLookAtLH(eyePos, targetPos, upVector));
+	m_constantBuffer.world = XMMatrixTranspose(XMMatrixIdentity());
+	DirectX11Manager::UpdateConstantBuffer(m_cb.Get(), m_constantBuffer);
+	ID3D11Buffer* tmpCb[] = { m_cb.Get() };
+	DirectX11Manager::m_pImContext->VSSetConstantBuffers(0, 1, tmpCb);*/
 }
 
 void CCamera::Draw()

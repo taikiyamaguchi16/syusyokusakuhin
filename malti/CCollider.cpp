@@ -51,9 +51,9 @@ void CBoxCollider::Draw()
 	DX11MtxMultiply(m_mat, m_mat, objMatrix);
 
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD, m_mat);
-	TurnWire();
+	DirectX11Manager::TurnWire();
 	m_box->Draw();
-	TurnSolid();
+	DirectX11Manager::TurnSolid();
 }
 
 
@@ -145,9 +145,9 @@ void CSphereCollider::Draw()
 	DX11MtxMultiply(m_mat, m_mat, objMatrix);
 
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD, m_mat);
-	TurnWire();
+	DirectX11Manager::TurnWire();
 	m_sphere->Draw();
-	TurnSolid();
+	DirectX11Manager::TurnSolid();
 }
 
 

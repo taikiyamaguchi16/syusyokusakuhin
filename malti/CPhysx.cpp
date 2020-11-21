@@ -33,7 +33,7 @@ void CPhysx::Init()
 	sceneDesc.cpuDispatcher = m_dispatcher;
 	sceneDesc.broadPhaseType = PxBroadPhaseType::eABP;
 	//òAë±è’ìÀåüímON
-	sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;
+	//sceneDesc.flags |= PxSceneFlag::eENABLE_CCD;
 	
 	//sceneDesc.filterShader = PxDefaultSimulationFilterShader;
 	sceneDesc.filterShader = TestFilterShader;
@@ -121,7 +121,7 @@ unsigned int CPhysx::GetFilterGroup(unsigned int filter)
 
 PxFilterFlags TestFilterShader(PxFilterObjectAttributes attributes0, PxFilterData filterData0, PxFilterObjectAttributes attributes1, PxFilterData filterData1, PxPairFlags & pairFlags, const void* constantBlock,PxU32 constantBlockSize)
 {
-	pairFlags = PxPairFlag::eDETECT_CCD_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT;
+	pairFlags = PxPairFlag::eDETECT_DISCRETE_CONTACT;
 	//Ç«ÇøÇÁÇ©Ç™triggerÇÃèÍçá
 	if (PxFilterObjectIsTrigger(attributes0) || PxFilterObjectIsTrigger(attributes1))
 	{
@@ -129,7 +129,7 @@ PxFilterFlags TestFilterShader(PxFilterObjectAttributes attributes0, PxFilterDat
 		pairFlags = PxPairFlag::eNOTIFY_TOUCH_LOST|PxPairFlag::eNOTIFY_TOUCH_FOUND| PxPairFlag::eNOTIFY_TOUCH_PERSISTS;
 		return PxFilterFlag::eCALLBACK;
 	}
-	pairFlags = PxPairFlag::eDETECT_CCD_CONTACT | PxPairFlag::eDETECT_DISCRETE_CONTACT;
+	pairFlags = PxPairFlag::eDETECT_DISCRETE_CONTACT;
 	pairFlags |= PxPairFlag::eNOTIFY_TOUCH_LOST | PxPairFlag::eNOTIFY_TOUCH_FOUND | PxPairFlag::eNOTIFY_TOUCH_PERSISTS | PxPairFlag::eCONTACT_DEFAULT;
 	
 

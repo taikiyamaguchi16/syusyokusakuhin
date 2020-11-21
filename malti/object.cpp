@@ -9,18 +9,14 @@ using namespace Egliss::ComponentSystem;
 
 void CObject::Update()
 {
-	if (SceneManager::GetInstance()->m_fpsCount % (60 / m_myFps) == 0) {
-		for (const auto& com : m_ComponentList)
-			com->Update();
-	}
+	for (const auto& com : m_ComponentList)
+		com->Update();
 }
 
 void CObject::LateUpdate()
 {
-	if (SceneManager::GetInstance()->m_fpsCount % (60 / m_myFps) == 0) {
-		for (const auto& com : m_ComponentList)
-			com->LateUpdate();
-	}
+	for (const auto& com : m_ComponentList)
+		com->LateUpdate();
 }
 
 void CObject::Draw()
@@ -326,7 +322,6 @@ void CRigidbody::InitDynamic()
 
 	//============================„‘Ì‚Ìƒtƒ‰ƒOÝ’è==========================================
 	m_actor->setActorFlag(physx::PxActorFlag::eVISUALIZATION, false);
-	m_rigidDynamic->setRigidBodyFlag(PxRigidBodyFlag::eENABLE_CCD, true);
 	m_rigidDynamic->setRigidBodyFlag(PxRigidBodyFlag::eENABLE_SPECULATIVE_CCD, true);
 	//======================================================================================
 

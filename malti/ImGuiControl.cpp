@@ -137,7 +137,6 @@ void ImGuiControl::ConsoleDraw()
 	ImGui::End();
 }
 
-
 void ImGuiControl::Draw3DGuizm(DirectX::XMFLOAT4X4 _view, DirectX::XMFLOAT4X4 _projection,DirectX::XMFLOAT4X4& _mat,DirectX::XMFLOAT3& _angle)
 {
 	ImGuizmo::Enable(true);

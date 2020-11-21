@@ -16,7 +16,7 @@
 #include "CModel.h"
 #include "game.h"
 #include "CDirectInput.h"
-#include "DX11Settransform.h"
+
 #include "dx11mathutil.h"
 #include "shader.h"
 #include "Player.h"
@@ -65,10 +65,11 @@ void CGame::Update()
 	float ClearColor[4] = { 0.0f, 0.0f, 1.0f, 1.0f }; //red,green,blue,alpha
 
 	// レンダリング前処理
-	DX11BeforeRender(ClearColor);
+	//DX11BeforeRender(ClearColor);
+	DirectX11Manager::DrawBegin();
 
+	//CDirectInput::GetInstance().GetKeyBuffer();			// キー入力取得
 
-	CDirectInput::GetInstance().GetKeyBuffer();			// キー入力取得
 
 	for (auto item = m_obj_list.begin(); item != m_obj_list.end();) {
 		(*item)->Update();
@@ -95,22 +96,27 @@ void CGame::Update()
 		(*item)->LateUpdate();
 	}
 	//=============================デバッグモード用のGUI表示====================================================
-
-	if (CDirectInput::GetInstance().CheckKeyBufferTrigger(DIK_Y))
+	if(DirectX11Manager::input.Keyboard()->ChkKeyAction(DIK_Y))
+	//if (CDirectInput::GetInstance().CheckKeyBufferTrigger(DIK_Y))
 	{
 		ImGuiControl::GetInstance()->m_debugMode = !ImGuiControl::GetInstance()->m_debugMode;
 	}
+
 	if (ImGuiControl::GetInstance()->m_debugMode) {
 		ImGuiControl::GetInstance()->HierarchyDraw(this);
 		ImGuiControl::GetInstance()->InspectorDraw(m_active_obj, m_Components);
 		ImGuiControl::GetInstance()->ConsoleDraw();
 	}
 	//==========================================================================================================
-	if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_1)) {
+	//if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_1))
+	if (DirectX11Manager::input.Keyboard()->ChkKeyAction(DIK_1))
+	{
 		m_activeCamera = m_mainCamera;
 	}
 
-	if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_2)) {
+	//if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_2)) 
+	if (DirectX11Manager::input.Keyboard()->ChkKeyAction(DIK_2))
+	{
 		m_activeCamera = m_subCameras[0];
 	}
 
@@ -121,9 +127,11 @@ void CGame::Update()
 		SceneManager::GetInstance()->ChangeScene(sp<Scene>(new Title()));
 	}
 	
-	CPhysx::StepPhysics(144.0f);
+	CPhysx::StepPhysics(60.0f);
 
-	CDirectInput::GetInstance().GetMouseState();
+	//CDirectInput::GetInstance().GetMouseState();
+
+	DirectX11Manager::input.InputUpdate();
 }
 
 void CGame::MainLoop()
@@ -135,7 +143,7 @@ void CGame::MainLoop()
 void CGame::Draw()
 {
 	// イミィディエイトコンテキスト
-	ID3D11DeviceContext* devcontext = GetDX11DeviceContext();
+	ID3D11DeviceContext* devcontext = DirectX11Manager::m_pImContext.Get();
 
 	for (auto item : m_obj_list) {
 		item->Draw();
@@ -145,7 +153,8 @@ void CGame::Draw()
 	}
 
 	// レンダリング後処理
-	DX11AfterRender();
+	//DX11AfterRender();
+	DirectX11Manager::DrawEnd();
 }
 
 

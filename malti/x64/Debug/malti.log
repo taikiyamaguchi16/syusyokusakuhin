@@ -1,4 +1,39 @@
-﻿  ImGuiControl.cpp
+﻿  CBox.cpp
 c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
 c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  CCollider.cpp
+c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  CPhysx.cpp
+c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  DirectX11Manager.cpp
+c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  ImGuiControl.cpp
+c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Player.cpp
+c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
+c:\users\ohs80200\desktop\syusaku\malti\myinput8.h(3): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h(48): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
+  Scene.cpp
+c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  Title.cpp
+c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  game.cpp
+c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  main.cpp
+c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  object.cpp
+c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+c:\users\ohs80200\desktop\syusaku\malti\object.cpp(274): warning C4101: 'col': ローカル変数は 1 度も使われていません。
+  コードを生成中...
   malti.vcxproj -> C:\Users\ohs80200\Desktop\syusaku\x64\Debug\malti.exe

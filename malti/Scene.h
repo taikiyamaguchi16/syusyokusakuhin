@@ -3,7 +3,7 @@
 #include <Vector>
 #include "object.h"
 #include "CPhysx.h"
-
+#include "DirectX11Manager.h"
 
 class Scene
 {

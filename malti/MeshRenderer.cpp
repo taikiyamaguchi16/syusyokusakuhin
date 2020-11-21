@@ -1,6 +1,7 @@
 #include "MeshRenderer.h"
 #include "CDirectInput.h"
 
+
 using namespace Egliss::ComponentSystem;
 
 std::map<std::string, CModel*> CMeshRenderer::m_models;
@@ -23,6 +24,15 @@ void CMeshRenderer::Start()
 		//m_models["TIE_Fighter"]->Init("assets/TIE_Fighter.x.dat", "shader/vs.fx", "shader/ps.fx");
 	
 		//m_models["skydome"].Init("assets/skydome.x.dat", "shader/vs.fx", "shader/ps.fx");
+
+
+		
+		//===========================ŽÀŒ±======================================
+		//model.LoadAscii("Assets/Models/MeshData.txt");
+		m_model.LoadBinary("assets/Models/MeshData.bin");
+		//=====================================================================
+		
+
 
 		m_meshtype = GEOMETRYTYPE::BOX;
 		m_box = new CBox();
@@ -56,8 +66,10 @@ void CMeshRenderer::Draw(){
 			switch (m_meshtype)
 			{
 			case GEOMETRYTYPE::BOX:
-				m_box->SetDiffuseMaterial(m_color);
-				m_box->Draw();
+				/*m_box->SetDiffuseMaterial(m_color);
+				m_box->Draw();*/
+
+				m_model.Draw(m_pos->m_mat);
 				break;
 			case GEOMETRYTYPE::CAPSILE:
 
@@ -66,6 +78,7 @@ void CMeshRenderer::Draw(){
 			case GEOMETRYTYPE::SPHERE:
 				m_sphere->SetDiffuseMaterial(m_color);
 				m_sphere->Draw();
+				
 				break;
 			default:
 				break;

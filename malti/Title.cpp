@@ -35,28 +35,28 @@ void Title::MainLoop()
 
 void Title::Update()
 {
-	CDirectInput::GetInstance().GetKeyBuffer();			// キー入力取得
-	for (auto item = m_obj_list.begin(); item != m_obj_list.end();) {
-		(*item)->Update();
-		if (!(*item)->GetLife()) {
-			//delete item;
-			item->Clear();
-			item = m_obj_list.erase(item);
-			continue;
-		}
-		item++;
-	}
+	//CDirectInput::GetInstance().GetKeyBuffer();			// キー入力取得
+	//for (auto item = m_obj_list.begin(); item != m_obj_list.end();) {
+	//	(*item)->Update();
+	//	if (!(*item)->GetLife()) {
+	//		//delete item;
+	//		item->Clear();
+	//		item = m_obj_list.erase(item);
+	//		continue;
+	//	}
+	//	item++;
+	//}
 
-	for (auto item2 : m_subCameras) {
-		item2->Update();
-	}
+	//for (auto item2 : m_subCameras) {
+	//	item2->Update();
+	//}
 
-	if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_L)) {
-		// レンダリング後処理
-		DX11AfterRender();
-		SceneManager::GetInstance()->ChangeScene(sp<Scene>(new CGame()));
-	}
-	CDirectInput::GetInstance().GetMouseState();
+	//if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_L)) {
+	//	// レンダリング後処理
+	//	DX11AfterRender();
+	//	SceneManager::GetInstance()->ChangeScene(sp<Scene>(new CGame()));
+	//}
+	//CDirectInput::GetInstance().GetMouseState();
 }
 
 void Title::Draw()
@@ -66,23 +66,23 @@ void Title::Draw()
 	float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; //red,green,blue,alpha
 
 
-	// レンダリング前処理
-	DX11BeforeRender(ClearColor);
+	//// レンダリング前処理
+	//DX11BeforeRender(ClearColor);
 
-	// イミィディエイトコンテキスト
-	ID3D11DeviceContext* devcontext = GetDX11DeviceContext();
+	//// イミィディエイトコンテキスト
+	//ID3D11DeviceContext* devcontext = GetDX11DeviceContext();
 
-	
-	//==========================================================================================================
+	//
+	////==========================================================================================================
 
-	for (int i = 0; i < 1; i++) {
-		for (auto item : m_obj_list) {
-			item->Draw();
-		}
-		m_subCameras[i]->Draw();
-	}
-	// レンダリング後処理
-	DX11AfterRender();
+	//for (int i = 0; i < 1; i++) {
+	//	for (auto item : m_obj_list) {
+	//		item->Draw();
+	//	}
+	//	m_subCameras[i]->Draw();
+	//}
+	//// レンダリング後処理
+	//DX11AfterRender();
 }
 
 void Title::AddObjects()

@@ -4,13 +4,14 @@
 
 #include	"DX11util.h"
 #include	"DX11Settransform.h"
+#include "DirectX11Manager.h"
 
 bool CModel::Init(const char* filename, const char* vsfile, const char* psfile) {
 
 	bool sts;
 
 	// 飛行機のモデルデータを読み込み
-	sts = m_datfile.Load(filename, GetDX11Device(), GetDX11DeviceContext());
+	sts = m_datfile.Load(filename, DirectX11Manager::m_pDevice.Get(), DirectX11Manager::m_pImContext.Get());
 	if (!sts) {
 		char str[128];
 		sprintf_s(str, 128,"%s load ERROR!!", filename);
@@ -28,7 +29,7 @@ bool CModel::Init(const char* filename, const char* vsfile, const char* psfile) 
 	unsigned int numElements = ARRAYSIZE(layout);
 
 	// 頂点シェーダーオブジェクトを生成、同時に頂点レイアウトも生成
-	sts = CreateVertexShader(GetDX11Device(),
+	sts = CreateVertexShader(DirectX11Manager::m_pDevice.Get(),
 		vsfile,
 		"main",
 		"vs_5_0",
@@ -43,7 +44,7 @@ bool CModel::Init(const char* filename, const char* vsfile, const char* psfile) 
 
 	// ピクセルシェーダーを生成
 	sts = CreatePixelShader(			// ピクセルシェーダーオブジェクトを生成
-		GetDX11Device(),		// デバイスオブジェクト
+		DirectX11Manager::m_pDevice.Get(),		// デバイスオブジェクト
 		psfile,
 		"main",
 		"ps_5_0",
@@ -81,14 +82,14 @@ void CModel::Update() {
 
 void CModel::Draw() {
 	// 頂点フォーマットをセット
-	GetDX11DeviceContext()->IASetInputLayout(m_pVertexLayout);
+	DirectX11Manager::m_pImContext->IASetInputLayout(m_pVertexLayout);
 
 	// 頂点シェーダーをセット
-	GetDX11DeviceContext()->VSSetShader(m_pVertexShader, nullptr, 0);
+	DirectX11Manager::m_pImContext->VSSetShader(m_pVertexShader, nullptr, 0);
 
 	// ピクセルシェーダーをセット
-	GetDX11DeviceContext()->PSSetShader(m_pPixelShader, nullptr, 0);
+	DirectX11Manager::m_pImContext->PSSetShader(m_pPixelShader, nullptr, 0);
 
 	// モデル描画
-	m_datfile.Draw(GetDX11DeviceContext());
+	m_datfile.Draw(DirectX11Manager::m_pImContext.Get());
 }

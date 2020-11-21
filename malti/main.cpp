@@ -22,6 +22,8 @@
 #include "imGui/imgui_impl_win32.h"
 #include "imGui/imgui_impl_dx11.h"
 #include "CDirectxGraphics.h"
+
+#include "DirectX11Manager.h"
 //-----------------------------------------------------------------------------
 // マクロの定義
 //-----------------------------------------------------------------------------
@@ -68,111 +70,93 @@ int APIENTRY WinMain(HINSTANCE 	hInstance, 		// アプリケーションのハンドル
 					 LPSTR 		lpszArgs, 		// 起動時の引数（文字列）
 					 int 		nWinMode)		// ウインドウ表示モード
 {
-	HWND			hwnd;						// ウインドウハンドル
+	//HWND			hwnd;						// ウインドウハンドル
 	MSG				msg;						// メッセージ構造体
-	WNDCLASSEX		wcex;						// ウインドウクラス構造体
-	int				width = SCREEN_X;			// ウインドウの幅 計算用ワーク
-	int				height = SCREEN_Y;			// ウインドウの高さ 計算用ワーク
+	//WNDCLASSEX		wcex;						// ウインドウクラス構造体
+	//int				width = SCREEN_X;			// ウインドウの幅 計算用ワーク
+	//int				height = SCREEN_Y;			// ウインドウの高さ 計算用ワーク
 
 	DWORD dwExecLastTime;		// 最後に実行した時間		
 	DWORD dwFPSLastTime;		// 最後に計測した時間
 	DWORD dwCurrentTime;		// 現在時刻
 	DWORD dwFrameCount;			// フレーム数
 
-	// メモリリークを検知
-	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+	//// メモリリークを検知
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	// ウインドウクラス情報のセット
-	wcex.hInstance		= hInstance;			// インスタンス値のセット
-	wcex.lpszClassName	= NAME;					// クラス名
-	wcex.lpfnWndProc	= (WNDPROC)WndProc;		// ウインドウメッセージ関数
-	wcex.style			= 0;					// ウインドウスタイル
-	wcex.cbSize 		= sizeof(WNDCLASSEX);	// 構造体のサイズ
-	wcex.hIcon			= LoadIcon((HINSTANCE)NULL, IDI_APPLICATION);	// ラージアイコン
-	wcex.hIconSm		= LoadIcon((HINSTANCE)NULL, IDI_WINLOGO);		// スモールアイコン
-	wcex.hCursor		= LoadCursor((HINSTANCE)NULL, IDC_ARROW);		// カーソルスタイル
-	wcex.lpszMenuName	= 0; 					// メニューなし
-	wcex.cbClsExtra		= 0;					// エキストラなし
-	wcex.cbWndExtra		= 0;					
-	wcex.hbrBackground	= (HBRUSH)GetStockObject(WHITE_BRUSH);		// 背景色白
+	//// ウインドウクラス情報のセット
+	//wcex.hInstance		= hInstance;			// インスタンス値のセット
+	//wcex.lpszClassName	= NAME;					// クラス名
+	//wcex.lpfnWndProc	= (WNDPROC)WndProc;		// ウインドウメッセージ関数
+	//wcex.style			= 0;					// ウインドウスタイル
+	//wcex.cbSize 		= sizeof(WNDCLASSEX);	// 構造体のサイズ
+	//wcex.hIcon			= LoadIcon((HINSTANCE)NULL, IDI_APPLICATION);	// ラージアイコン
+	//wcex.hIconSm		= LoadIcon((HINSTANCE)NULL, IDI_WINLOGO);		// スモールアイコン
+	//wcex.hCursor		= LoadCursor((HINSTANCE)NULL, IDC_ARROW);		// カーソルスタイル
+	//wcex.lpszMenuName	= 0; 					// メニューなし
+	//wcex.cbClsExtra		= 0;					// エキストラなし
+	//wcex.cbWndExtra		= 0;					
+	//wcex.hbrBackground	= (HBRUSH)GetStockObject(WHITE_BRUSH);		// 背景色白
 
-	if (!RegisterClassEx(&wcex)) return FALSE;	// ウインドウクラスの登録
+	//if (!RegisterClassEx(&wcex)) return FALSE;	// ウインドウクラスの登録
 
-	if(FULLSCREEN){
-		hwnd = CreateWindow(
-			NAME,							// ウィンドウクラスの名前
-			TITLE,							// タイトル
-			WS_VISIBLE | WS_POPUP,			// ウィンドウスタイル
-			0, 0,							// ウィンドウ位置 縦, 横
-			SCREEN_X, SCREEN_Y,				// ウィンドウサイズ
-			NULL,							// 親ウィンドウなし
-			(HMENU)nullptr,					// メニューなし
-			hInstance,						// インスタンスハンドル
-			(LPVOID)nullptr);					// 追加引数なし
-	}else{
-		//タイトルバーとウインドウ枠の分を含めてウインドウサイズを設定
-		RECT rect;
-		SetRect(&rect, 0, 0, SCREEN_X, SCREEN_Y);
-		AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
-		int window_width = rect.right - rect.left;
-		int window_height = rect.bottom - rect.top;
-		rect.top = 0;
-		rect.left = 0;
+	//if(FULLSCREEN){
+	//	hwnd = CreateWindow(
+	//		NAME,							// ウィンドウクラスの名前
+	//		TITLE,							// タイトル
+	//		WS_VISIBLE | WS_POPUP,			// ウィンドウスタイル
+	//		0, 0,							// ウィンドウ位置 縦, 横
+	//		SCREEN_X, SCREEN_Y,				// ウィンドウサイズ
+	//		NULL,							// 親ウィンドウなし
+	//		(HMENU)nullptr,					// メニューなし
+	//		hInstance,						// インスタンスハンドル
+	//		(LPVOID)nullptr);					// 追加引数なし
+	//}else{
+	//	//タイトルバーとウインドウ枠の分を含めてウインドウサイズを設定
+	//	RECT rect;
+	//	SetRect(&rect, 0, 0, SCREEN_X, SCREEN_Y);
+	//	AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
+	//	int window_width = rect.right - rect.left;
+	//	int window_height = rect.bottom - rect.top;
+	//	rect.top = 0;
+	//	rect.left = 0;
 
-		hwnd = CreateWindowEx(0,	// 拡張ウィンドウスタイル
-			NAME,					// ウィンドウクラスの名前
-			TITLE,					// タイトル
-			WS_OVERLAPPEDWINDOW,	// ウィンドウスタイル
-			CW_USEDEFAULT,			// ウィンドウの左上Ｘ座標
-			CW_USEDEFAULT,			// ウィンドウの左上Ｙ座標 
-			window_width,			// ウィンドウの幅
-			window_height,			// ウィンドウの高さ
-			nullptr,				// 親ウィンドウのハンドル
-			nullptr,				// メニューハンドルまたは子ウィンドウID
-			hInstance,				// インスタンスハンドル
-			nullptr);				// ウィンドウ作成データ
-	}
+	//	hwnd = CreateWindowEx(0,	// 拡張ウィンドウスタイル
+	//		NAME,					// ウィンドウクラスの名前
+	//		TITLE,					// タイトル
+	//		WS_OVERLAPPEDWINDOW,	// ウィンドウスタイル
+	//		CW_USEDEFAULT,			// ウィンドウの左上Ｘ座標
+	//		CW_USEDEFAULT,			// ウィンドウの左上Ｙ座標 
+	//		window_width,			// ウィンドウの幅
+	//		window_height,			// ウィンドウの高さ
+	//		nullptr,				// 親ウィンドウのハンドル
+	//		nullptr,				// メニューハンドルまたは子ウィンドウID
+	//		hInstance,				// インスタンスハンドル
+	//		nullptr);				// ウィンドウ作成データ
+	//}
 
-	if (!hwnd) return FALSE;
+	//if (!hwnd) return FALSE;
 
 	timeBeginPeriod(1);							// タイマの分解能力を１msにする
 	dwExecLastTime = dwFPSLastTime = timeGetTime();
 	dwCurrentTime = dwFrameCount = 0;
-	// ウインドウを表示する
-	ShowWindow(hwnd, nWinMode);
-	UpdateWindow(hwnd);
-	if (!SceneManager::GetInstance()->Init(hInstance, hwnd, SCREEN_X, SCREEN_Y, FULLSCREEN)) {
+
+	//// ウインドウを表示する
+	//ShowWindow(hwnd, nWinMode);
+	//UpdateWindow(hwnd);
+
+	//dx11マネージャーの初期化
+	if (FAILED(DirectX11Manager::Init(hInstance, nWinMode)))
+		return -1;
+
+	/*if (!SceneManager::GetInstance()->Init(hInstance, hwnd, SCREEN_X, SCREEN_Y, FULLSCREEN)) {
 		SceneManager::GetInstance()->UnInit();
 		MessageBox(hwnd, "ERROR!", "GameInit Error", MB_OK);
 		return false;
-	}
+	}*/
 
 	//===================================================追加=======================================================================
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	ImGui::StyleColorsLight();
-
-	if (!ImGui_ImplWin32_Init(hwnd))
-	{
-		std::cout << "ImGui_ImplWin32_Init failed\n";
-		ImGui::DestroyContext();
-		UnregisterClass(wcex.lpszClassName, wcex.hInstance);
-		std::exit(1);
-	}
-
-	if (!ImGui_ImplDX11_Init(GetDX11Device(), GetDX11DeviceContext()))
-	{
-		std::cout << "ImGui_ImplDX11_Init failed\n";
-		ImGui::DestroyContext();
-		UnregisterClass(wcex.lpszClassName, wcex.hInstance);
-		std::exit(1);
-	}
-
-	//iniを生成しないように
-	io.IniFilename = NULL;
-	//日本語フォントに対応
-	io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\meiryo.ttc", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
+	
 	//==============================================================================================================================
 
 	// メッセージループ
@@ -241,31 +225,31 @@ int APIENTRY WinMain(HINSTANCE 	hInstance, 		// アプリケーションのハンドル
 //!	@param	Lパラメータ
 //!	@retval	終了状況
 //==============================================================================
-LRESULT WINAPI WndProc(	HWND hwnd, 		// ウィンドウハンドル
-						UINT message,	// メッセージ識別子
-						WPARAM wParam,	// 付帯情報１
-						LPARAM lParam)	// 付帯情報２
-{
-
-	if (ImGui_ImplWin32_WndProcHandler(hwnd, message, wParam, lParam))
-		return true;
-
-	switch( message ){
-	case WM_KEYDOWN:
-		switch(wParam){
-		case VK_ESCAPE:
-			DestroyWindow(hwnd);
-			break;
-		}
-		break;
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	default:
-		return DefWindowProc(hwnd, message, wParam, lParam);
-	}
-	return 0;
-}
+//LRESULT WINAPI WndProc(	HWND hwnd, 		// ウィンドウハンドル
+//						UINT message,	// メッセージ識別子
+//						WPARAM wParam,	// 付帯情報１
+//						LPARAM lParam)	// 付帯情報２
+//{
+//
+//	if (ImGui_ImplWin32_WndProcHandler(hwnd, message, wParam, lParam))
+//		return true;
+//
+//	switch( message ){
+//	case WM_KEYDOWN:
+//		switch(wParam){
+//		case VK_ESCAPE:
+//			DestroyWindow(hwnd);
+//			break;
+//		}
+//		break;
+//	case WM_DESTROY:
+//		PostQuitMessage(0);
+//		break;
+//	default:
+//		return DefWindowProc(hwnd, message, wParam, lParam);
+//	}
+//	return 0;
+//}
 
 //******************************************************************************
 //	End of file.

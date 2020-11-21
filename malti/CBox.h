@@ -3,6 +3,7 @@
 
 class CBox
 {
+
 	Egliss::ComponentSystem::CTransform* m_pos = nullptr;
 	ID3D11Buffer*	m_cbuffer = nullptr;		// 定数バッファ	
 	ID3D11Buffer*		m_pVertexBuffer;	// 頂点バッファ
@@ -58,6 +59,7 @@ public:
 
 	// 初期化
 	bool Init(ID3D11Device* device);
+	//bool Init(ComPtr<ID3D11Device> device);
 
 	// 終了処理
 	void Exit();

@@ -5,6 +5,7 @@
 #include	"DX11util.h"
 #include	"Camera.h"
 #include	"DX11Settransform.h"
+#include  "DirectX11Manager.h"
 
 bool CObject2D::Init(const char* filename, const char* vsfile, const char* psfile) {
 	c_fg = false;
@@ -21,7 +22,7 @@ bool CObject2D::Init(const char* filename, const char* vsfile, const char* psfil
 	unsigned int numElements = ARRAYSIZE(layout);
 
 	// 頂点シェーダーオブジェクトを生成、同時に頂点レイアウトも生成
-	sts = CreateVertexShader(GetDX11Device(),
+	sts = CreateVertexShader(DirectX11Manager::m_pDevice.Get(),
 		vsfile,
 		"main",
 		"vs_5_0",
@@ -36,7 +37,7 @@ bool CObject2D::Init(const char* filename, const char* vsfile, const char* psfil
 
 	// ピクセルシェーダーを生成
 	sts = CreatePixelShader(			// ピクセルシェーダーオブジェクトを生成
-		GetDX11Device(),		// デバイスオブジェクト
+		DirectX11Manager::m_pDevice.Get(),		// デバイスオブジェクト
 		psfile,
 		"main",
 		"ps_5_0",
@@ -56,28 +57,28 @@ bool CObject2D::Init(const char* filename, const char* vsfile, const char* psfil
 	};
 
 	// 頂点バッファ生成
-	CreateVertexBuffer(GetDX11Device(), sizeof(Vertex), 4, v, &m_pVertexBuffer);
+	CreateVertexBuffer(DirectX11Manager::m_pDevice.Get(), sizeof(Vertex), 4, v, &m_pVertexBuffer);
 
 	// インデックスバッファ生成
 	unsigned int idx[4] = { 0, 1, 2, 3 };
 
 	// インデックスバッファ生成
-	CreateIndexBuffer(GetDX11Device(), 4, idx, &m_pIndexBuffer);
+	CreateIndexBuffer(DirectX11Manager::m_pDevice.Get(), 4, idx, &m_pIndexBuffer);
 
 	// 定数バッファ生成
-	CreateConstantBufferWrite(GetDX11Device(), sizeof(ConstantBufferMaterial), &m_pCBuffer);
+	CreateConstantBufferWrite(DirectX11Manager::m_pDevice.Get(), sizeof(ConstantBufferMaterial), &m_pCBuffer);
 
 	// SRV生成
-	CreateSRVfromFile(filename, GetDX11Device(), GetDX11DeviceContext(), &m_texRes, &m_texSRV);
+	CreateSRVfromFile(filename, DirectX11Manager::m_pDevice.Get(), DirectX11Manager::m_pImContext.Get(), &m_texRes, &m_texSRV);
 
 	
 
 	// 定数バッファ書き換え
 	D3D11_MAPPED_SUBRESOURCE pData;
-	HRESULT hr = GetDX11DeviceContext()->Map(m_pCBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
+	HRESULT hr = DirectX11Manager::m_pImContext->Map(m_pCBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
 	if (SUCCEEDED(hr)) {
 		memcpy_s(pData.pData, pData.RowPitch, (void*)(&material), sizeof(ConstantBufferMaterial));
-		GetDX11DeviceContext()->Unmap(m_pCBuffer, 0);
+		DirectX11Manager::m_pImContext->Unmap(m_pCBuffer, 0);
 	}
 
 	return true;
@@ -151,39 +152,39 @@ void CObject2D::Draw() {
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD, m_matrix);
 
 	D3D11_MAPPED_SUBRESOURCE pData;
-	HRESULT hr = GetDX11DeviceContext()->Map(m_pCBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
+	HRESULT hr = DirectX11Manager::m_pImContext->Map(m_pCBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
 	if (SUCCEEDED(hr)) {
 		memcpy_s(pData.pData, pData.RowPitch, (void*)(&material), sizeof(ConstantBufferMaterial));
 		GetDX11DeviceContext()->Unmap(m_pCBuffer, 0);
 	}
 	// 頂点シェーダーをセット
-	GetDX11DeviceContext()->VSSetShader(m_pVertexShader, nullptr, 0);
+	DirectX11Manager::m_pImContext->VSSetShader(m_pVertexShader, nullptr, 0);
 
 	// ピクセルシェーダーをセット
-	GetDX11DeviceContext()->PSSetShader(m_pPixelShader, nullptr, 0);
+	DirectX11Manager::m_pImContext->PSSetShader(m_pPixelShader, nullptr, 0);
 
 	// 頂点フォーマットをセット
-	GetDX11DeviceContext()->IASetInputLayout(m_pVertexLayout);
+	DirectX11Manager::m_pImContext->IASetInputLayout(m_pVertexLayout);
 
 	// トポロジーをセット
-	GetDX11DeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	DirectX11Manager::m_pImContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 	// 頂点バッファをセット
 	unsigned int stride = sizeof(Vertex);
 	unsigned int offset = 0;
-	GetDX11DeviceContext()->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
+	DirectX11Manager::m_pImContext->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 
 	// インデックスバッファをセット
-	GetDX11DeviceContext()->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
+	DirectX11Manager::m_pImContext->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);
 
 	// PSにSRVをセット
-	GetDX11DeviceContext()->PSSetShaderResources(0, 1, &m_texSRV);
+	DirectX11Manager::m_pImContext->PSSetShaderResources(0, 1, &m_texSRV);
 
 	// PSに定数バッファをセット
-	GetDX11DeviceContext()->PSSetConstantBuffers(3, 1, &m_pCBuffer);
+	DirectX11Manager::m_pImContext->PSSetConstantBuffers(3, 1, &m_pCBuffer);
 
 	// GPUコマンドを発行
-	GetDX11DeviceContext()->DrawIndexed(4, 0, 0);
+	DirectX11Manager::m_pImContext->DrawIndexed(4, 0, 0);
 }
 
 bool CObject2D::CountUp()

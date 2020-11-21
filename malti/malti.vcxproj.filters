@@ -55,6 +55,9 @@
     <Filter Include="ソース ファイル\Reflection">
       <UniqueIdentifier>{5f011db6-ebba-43c1-bcf6-9a2d80578032}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\UnityExportModel">
+      <UniqueIdentifier>{604769ee-67a6-44d3-9bd9-dc5c50bf90ea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -167,6 +170,18 @@
     </ClCompile>
     <ClCompile Include="Reflection\DynamicType.cpp">
       <Filter>ソース ファイル\Reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="UnityExportModel.cpp">
+      <Filter>ソース ファイル\UnityExportModel</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11Manager.cpp">
+      <Filter>ソース ファイル\UnityExportModel</Filter>
+    </ClCompile>
+    <ClCompile Include="MyInput8.cpp">
+      <Filter>ソース ファイル\UnityExportModel</Filter>
+    </ClCompile>
+    <ClCompile Include="DX11SetTransform.cpp">
+      <Filter>ソース ファイル\Dx11</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -314,6 +329,18 @@
     <ClInclude Include="Reflection\StaticType.hpp">
       <Filter>ソース ファイル\Reflection</Filter>
     </ClInclude>
+    <ClInclude Include="UnityExportModel.h">
+      <Filter>ソース ファイル\UnityExportModel</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectX11Manager.h">
+      <Filter>ソース ファイル\UnityExportModel</Filter>
+    </ClInclude>
+    <ClInclude Include="UniExportModel.hpp">
+      <Filter>ソース ファイル\UnityExportModel</Filter>
+    </ClInclude>
+    <ClInclude Include="MyInput8.h">
+      <Filter>ソース ファイル\UnityExportModel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="shader\3dsphereps.fx">
@@ -340,10 +367,28 @@
     <FxCompile Include="shader\vsline.fx">
       <Filter>ソース ファイル\shader</Filter>
     </FxCompile>
+    <FxCompile Include="assets\Shaders\2DPipeLine.hlsl">
+      <Filter>ソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="assets\Shaders\3DPipeLine.hlsl">
+      <Filter>ソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="assets\Shaders\UnityExportModel.hlsl">
+      <Filter>ソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="assets\Shaders\UnityExportSkinnedModel.hlsl">
+      <Filter>ソース ファイル\shader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Reflection\StaticType.inl">
       <Filter>ソース ファイル\Reflection</Filter>
+    </None>
+    <None Include="assets\Shaders\CorePBR.hlsli">
+      <Filter>ソース ファイル\shader</Filter>
+    </None>
+    <None Include="assets\Shaders\ShaderInput.hlsli">
+      <Filter>ソース ファイル\shader</Filter>
     </None>
   </ItemGroup>
 </Project>
