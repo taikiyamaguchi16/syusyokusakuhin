@@ -144,13 +144,13 @@ void CGame::Draw()
 {
 	// イミィディエイトコンテキスト
 	ID3D11DeviceContext* devcontext = DirectX11Manager::m_pImContext.Get();
-
-	for (auto item : m_obj_list) {
-		item->Draw();
-	}
 	if (m_activeCamera.IsExist()) {
 		m_activeCamera->Draw();
 	}
+	for (auto item : m_obj_list) {
+		item->Draw();
+	}
+	
 
 	// レンダリング後処理
 	//DX11AfterRender();

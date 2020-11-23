@@ -1,13 +1,32 @@
 #include "CBox.h"
 #include "Scene.h"
-
+#include "UnityExportModel.h"
 
 void CBox::Init(XMFLOAT3 s_)
 {
 	m_size = s_;
 	//Init(GetDX11Device());
+
+	//vs.Attach(DirectX11Manager::CreateVertexShader("assets/Shaders/UnityExportModel.hlsl", "vsMain"));
+	//ps.Attach(DirectX11Manager::CreatePixelShader("assets/Shaders/UnityExportModel.hlsl", "psMain"));
+
+	////InputLayoutの作成
+	//D3D11_INPUT_ELEMENT_DESC elem[] = {
+	//	{ "POSITION",	0,	DXGI_FORMAT_R32G32B32_FLOAT,	0,	0,	D3D11_INPUT_PER_VERTEX_DATA,	0 },
+	//	{ "NORMAL"	,	0,	DXGI_FORMAT_R32G32B32_FLOAT,	0,	12,	D3D11_INPUT_PER_VERTEX_DATA,	0 },
+	//	{ "TEXCOORD",	0,	DXGI_FORMAT_R32G32_FLOAT,		0,	24,	D3D11_INPUT_PER_VERTEX_DATA,	0 },
+	//	{ "COLOR"	,	0,	DXGI_FORMAT_R32G32B32A32_FLOAT,	0,	32,	D3D11_INPUT_PER_VERTEX_DATA,	0 },
+	//};
+	//il.Attach(DirectX11Manager::CreateInputLayout(elem, 4, "assets/Shaders/UnityExportModel.hlsl", "vsMain"));
+
 	Init(DirectX11Manager::m_pDevice.Get());
-;
+
+	//コンスタントバッファの作成
+	DirectX11Manager::CreateConstantBuffer(sizeof(ConstantBufferMatrix), &cb);
+	UnityExportModel::constantBuffer.proj = XMMatrixTranspose(
+		XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f),
+			SCREEN_X / SCREEN_X, 0.5f, 4096.0f * 8.0f));
+	m_cube.LoadBinary("assets/Models/Cube.bin");
 }
 
 // 法線ベクトルを計算
@@ -75,35 +94,43 @@ void CBox::CreateVertex() {
 }
 
 // 描画
-void CBox::Draw() {
+void CBox::Draw(XMFLOAT4X4 _mat) {
 
-	// 定数バッファ書き換え
-	D3D11_MAPPED_SUBRESOURCE pData;
-	HRESULT hr = DirectX11Manager::m_pImContext->Map(m_cbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
-	if (SUCCEEDED(hr)) {
-		memcpy_s(pData.pData, pData.RowPitch, (void*)(&m_material), sizeof(ConstantBufferMaterial));
-		DirectX11Manager::m_pImContext->Unmap(m_cbuffer, 0);
-	}
+	//// 定数バッファ書き換え
+	//D3D11_MAPPED_SUBRESOURCE pData;
+	//HRESULT hr = DirectX11Manager::m_pImContext->Map(m_cbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
+	//if (SUCCEEDED(hr)) {
+	//	memcpy_s(pData.pData, pData.RowPitch, (void*)(&m_material), sizeof(ConstantBufferMaterial));
+	//	DirectX11Manager::m_pImContext->Unmap(m_cbuffer, 0);
+	//}
 
-	ID3D11DeviceContext* device = DirectX11Manager::m_pImContext.Get();
-	// 頂点バッファをセットする
-	unsigned int stride = sizeof(Vertex);
-	unsigned  offset = 0;
-	device->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
-
-	device->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);			// インデックスバッファをセット
-	device->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);		// トポロジーをセット（旧プリミティブタイプ）
-	device->IASetInputLayout(m_pVertexLayout);					// 頂点レイアウトセット
-
-	device->VSSetShader(m_pVertexShader, nullptr, 0);			// 頂点シェーダーをセット
-	device->PSSetShader(m_pPixelShader, nullptr, 0);			// ピクセルシェーダーをセット
+	//UnityExportModel::constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&_mat));
 
 
-	device->PSSetConstantBuffers(3, 1, &m_cbuffer);
+	//DirectX11Manager::UpdateConstantBuffer(cb.Get(), UnityExportModel::constantBuffer);
+	//ID3D11Buffer* tmpCb[] = { cb.Get() };
+	//DirectX11Manager::m_pImContext->VSSetConstantBuffers(0, 1, tmpCb);
+	m_cube.Draw(_mat);
 
-	device->DrawIndexed(36,		// 描画するインデックス数（面数×３）
-		0,									// 最初のインデックスバッファの位置
-		0);									// 頂点バッファの最初から使う
+	//ID3D11DeviceContext* device = DirectX11Manager::m_pImContext.Get();
+	//// 頂点バッファをセットする
+	//unsigned int stride = sizeof(Vertex);
+	//unsigned  offset = 0;
+	//device->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
+
+	//device->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);			// インデックスバッファをセット
+	//device->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);		// トポロジーをセット（旧プリミティブタイプ）
+	//device->IASetInputLayout(m_pVertexLayout);					// 頂点レイアウトセット
+
+	//device->VSSetShader(m_pVertexShader, nullptr, 0);			// 頂点シェーダーをセット
+	//device->PSSetShader(m_pPixelShader, nullptr, 0);			// ピクセルシェーダーをセット
+
+
+	////device->PSSetConstantBuffers(3, 1, &m_cbuffer);
+	//device->PSSetConstantBuffers(3, 1, tmpCb);
+	//device->DrawIndexed(36,		// 描画するインデックス数（面数×３）
+	//	0,									// 最初のインデックスバッファの位置
+	//	0);									// 頂点バッファの最初から使う
 }
 
 

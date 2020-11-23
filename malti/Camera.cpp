@@ -2,6 +2,9 @@
 #include "CDirectInput.h"
 #include "DirectX11Manager.h"
 
+#include "UnityExportModel.h"
+#include  "UnityExportSkinnedModel.h"
+
 using namespace Egliss::ComponentSystem;
 
 
@@ -16,16 +19,15 @@ void CCamera::Start()
 	m_radius = 30.0f;
 
 	//==========--コンスタントバッファー生成======================================================================================
-	////コンスタントバッファの作成
-	//DirectX11Manager::CreateConstantBuffer(sizeof(ConstantBufferMatrix), &m_cb);
-	//m_constantBuffer.proj = XMMatrixTranspose(
-	//	XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f),
-	//		SCREEN_X / SCREEN_Y, 0.5f, 4096.0f * 8.0f));
+	//コンスタントバッファの作成
+	UnityExportModel::constantBuffer.proj= XMMatrixTranspose(
+		XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f),
+			SCREEN_X / SCREEN_Y, 0.5f, 4096.0f * 8.0f));
 
-	//XMVECTOR eyePos = XMVectorSet(m_eye.x, m_eye.y, m_eye.z, 0);
-	//XMVECTOR targetPos = XMVectorSet(m_lookat.x, m_lookat.y, m_lookat.z, 0.f);
-	//XMVECTOR upVector = XMVectorSet(m_up.x, m_up.y, m_up.z, 0);
-	//m_constantBuffer.view = XMMatrixTranspose(XMMatrixLookAtLH(eyePos, targetPos, upVector));
+	XMVECTOR eyePos = XMVectorSet(m_eye.x, m_eye.y, m_eye.z, 0);
+	XMVECTOR targetPos = XMVectorSet(m_lookat.x, m_lookat.y, m_lookat.z, 0.f);
+	XMVECTOR upVector = XMVectorSet(m_up.x, m_up.y, m_up.z, 0);
+	UnityExportModel::constantBuffer.view = XMMatrixTranspose(XMMatrixLookAtLH(eyePos, targetPos, upVector));
 	//===========================================================================================================================
 }
 
@@ -90,20 +92,17 @@ void CCamera::Update()
 		SetLookat(XMFLOAT3(forward_._41, forward_._42, forward_._43));
 		SetUp(XMFLOAT3(forward_._21, forward_._22, forward_._23));
 		CreateCameraMatrix();
+		CreateProjectionMatrix();
 		//================================================================================
+
+
+		UnityExportModel::constantBuffer.view = XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m_camera));
+		UnityExportModel::constantBuffer.proj = XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m_projection));
+
+		UnityExportSkinnedModel::constantBuffer2.view = XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m_camera));
+		UnityExportSkinnedModel::constantBuffer2.proj = XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m_projection));
 	}
 
-
-	/*XMVECTOR eyePos = XMVectorSet(m_eye.x, m_eye.y, m_eye.z, 0);
-	XMVECTOR targetPos = XMVectorSet(m_lookat.x, m_lookat.y, m_lookat.z, 0.f);
-	XMVECTOR upVector = XMVectorSet(m_up.x, m_up.y, m_up.z, 0);
-
-
-	m_constantBuffer.view = XMMatrixTranspose(XMMatrixLookAtLH(eyePos, targetPos, upVector));
-	m_constantBuffer.world = XMMatrixTranspose(XMMatrixIdentity());
-	DirectX11Manager::UpdateConstantBuffer(m_cb.Get(), m_constantBuffer);
-	ID3D11Buffer* tmpCb[] = { m_cb.Get() };
-	DirectX11Manager::m_pImContext->VSSetConstantBuffers(0, 1, tmpCb);*/
 }
 
 void CCamera::Draw()

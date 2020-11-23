@@ -183,6 +183,9 @@
     <ClCompile Include="DX11SetTransform.cpp">
       <Filter>ソース ファイル\Dx11</Filter>
     </ClCompile>
+    <ClCompile Include="UnityExportSkinnedModel.cpp">
+      <Filter>ソース ファイル\UnityExportModel</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Exception.h">
@@ -339,6 +342,9 @@
       <Filter>ソース ファイル\UnityExportModel</Filter>
     </ClInclude>
     <ClInclude Include="MyInput8.h">
+      <Filter>ソース ファイル\UnityExportModel</Filter>
+    </ClInclude>
+    <ClInclude Include="UnityExportSkinnedModel.h">
       <Filter>ソース ファイル\UnityExportModel</Filter>
     </ClInclude>
   </ItemGroup>

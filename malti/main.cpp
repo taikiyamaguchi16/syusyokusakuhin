@@ -46,8 +46,8 @@
 //-----------------------------------------------------------------------------
 // プロトタイプ宣言
 //-----------------------------------------------------------------------------
-LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);			// ウインドウプロシージャ
-LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+//LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);			// ウインドウプロシージャ
+//LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //-----------------------------------------------------------------------------
 // グローバル変数
@@ -213,6 +213,7 @@ int APIENTRY WinMain(HINSTANCE 	hInstance, 		// アプリケーションのハンドル
 	timeEndPeriod(1);			// タイマの分解能力もとに戻す
 
 	SceneManager::GetInstance()->UnInit();
+	DirectX11Manager::Cleanup();
 	return (int)msg.wParam;
 }
 

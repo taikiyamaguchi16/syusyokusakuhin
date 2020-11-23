@@ -28,8 +28,8 @@ void CMeshRenderer::Start()
 
 		
 		//===========================ŽÀŒ±======================================
-		//model.LoadAscii("Assets/Models/MeshData.txt");
 		m_model.LoadBinary("assets/Models/MeshData.bin");
+		skinnedModel.LoadBinary("assets/Models/SkinnedMeshData.txt.bin");
 		//=====================================================================
 		
 
@@ -66,10 +66,11 @@ void CMeshRenderer::Draw(){
 			switch (m_meshtype)
 			{
 			case GEOMETRYTYPE::BOX:
-				/*m_box->SetDiffuseMaterial(m_color);
-				m_box->Draw();*/
+				m_box->SetDiffuseMaterial(m_color);
+				m_box->Draw(m_pos->m_mat);
 
-				m_model.Draw(m_pos->m_mat);
+				//m_model.Draw(m_pos->m_mat);
+				skinnedModel.Draw(m_pos->m_mat);
 				break;
 			case GEOMETRYTYPE::CAPSILE:
 

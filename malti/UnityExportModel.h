@@ -7,10 +7,12 @@ class UnityExportModel
 	VertexShader vs;
 	PixelShader ps;
 
-	ConstantBufferMatrix constantBuffer;
+
 	ConstantBuffer cb;
 
 public:
+	static inline ConstantBufferMatrix constantBuffer;
+
 	struct VertexData{
 		XMFLOAT3 position;
 		XMFLOAT3 normal = XMFLOAT3(0, 0, 0);

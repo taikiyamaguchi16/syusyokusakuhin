@@ -187,6 +187,7 @@
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Title.cpp" />
     <ClCompile Include="UnityExportModel.cpp" />
+    <ClCompile Include="UnityExportSkinnedModel.cpp" />
     <ClCompile Include="WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +242,7 @@
     <ClInclude Include="Title.h" />
     <ClInclude Include="UniExportModel.hpp" />
     <ClInclude Include="UnityExportModel.h" />
+    <ClInclude Include="UnityExportSkinnedModel.h" />
     <ClInclude Include="UserData.h" />
   </ItemGroup>
   <ItemGroup>

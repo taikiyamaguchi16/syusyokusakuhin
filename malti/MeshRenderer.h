@@ -7,6 +7,7 @@
 
 #include "UnityExportModel.h"
 #include "UniExportModel.hpp"
+#include "UnityExportSkinnedModel.h"
 
 namespace Egliss::ComponentSystem
 {
@@ -31,6 +32,7 @@ namespace Egliss::ComponentSystem
 		std::string m_modelName;
 		//===========================ŽÀŒ±======================================
 		UnityExportModel m_model;
+		UnityExportSkinnedModel skinnedModel;
 		//=====================================================================
 		float m_color[4] = { 255.0f,255.0f,255.0f,255.0f };
 	public:
@@ -46,6 +48,7 @@ namespace Egliss::ComponentSystem
 					m_box->Exit();
 					delete m_box;
 				}
+				
 				///m_models["TIE_Fighter"]->Uninit();
 			//	delete m_models["TIE_Fighter"];
 			//	m_models.clear();

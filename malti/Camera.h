@@ -23,8 +23,8 @@ namespace Egliss::ComponentSystem
 
 		XMFLOAT4X4		m_camera;
 		//=====================コンスタントバッファー更新用===============================================
-		ConstantBufferMatrix m_constantBuffer;
-		ConstantBuffer m_cb;
+		//ConstantBufferMatrix m_constantBuffer;
+		//ConstantBuffer m_cb;
 		//================================================================================================
 
 		float			m_near;

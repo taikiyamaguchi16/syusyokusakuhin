@@ -19,12 +19,11 @@ UnityExportModel::UnityExportModel()
 	constantBuffer.proj = XMMatrixTranspose(
 		XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f),
 			SCREEN_X / SCREEN_X, 0.5f, 4096.0f * 8.0f));
-	XMVECTOR eyePos = XMVectorSet(0, 10, -40.0f, 0);
-
-
-	XMVECTOR targetPos = XMVectorSet(0, 1, 0, 0);
-	XMVECTOR upVector = XMVectorSet(0, 1, 0, 0);
-	constantBuffer.view = XMMatrixTranspose(XMMatrixLookAtLH(eyePos, targetPos, upVector));
+	//
+	//XMVECTOR eyePos = XMVectorSet(0, 10, -40.0f, 0);
+	//XMVECTOR targetPos = XMVectorSet(0, 1, 0, 0);
+	//XMVECTOR upVector = XMVectorSet(0, 1, 0, 0);
+	//constantBuffer.view = XMMatrixTranspose(XMMatrixLookAtLH(eyePos, targetPos, upVector));
 }
 
 void UnityExportModel::LoadAscii(string filename)
@@ -83,15 +82,13 @@ void UnityExportModel::Draw(XMFLOAT4X4 _mat)
 	DirectX11Manager::SetPixelShader(ps.Get());
 	DirectX11Manager::SetInputLayout(il.Get());
 
-	constantBuffer.world = XMMatrixTranspose(XMMatrixIdentity());
-	/*XMFLOAT4X4 m;
-	constantBuffer.world = XMLoadFloat4x4(&m);*/
-	/*DirectX11Manager::UpdateConstantBuffer(cb.Get(), constantBuffer);
-	ID3D11Buffer* tmpCb[] = { cb.Get() };
-	DirectX11Manager::m_pImContext->VSSetConstantBuffers(0, 1, tmpCb);*/
+	constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&_mat));
 
-	// ƒ[ƒ‹ƒh•ÏŠ·s—ñ
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD, _mat);
+
+	DirectX11Manager::UpdateConstantBuffer(cb.Get(), constantBuffer);
+	ID3D11Buffer* tmpCb[] = { cb.Get() };
+	DirectX11Manager::m_pImContext->VSSetConstantBuffers(0, 1, tmpCb);
+	
 	for (int i = 0; i < uemData.meshs.size(); i++) {
 		auto& model = uemData.meshs[i];
 		DirectX11Manager::SetVertexBuffer(models[i].vb.Get(), sizeof(VertexData));

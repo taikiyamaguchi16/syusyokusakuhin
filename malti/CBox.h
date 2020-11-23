@@ -1,5 +1,7 @@
 #pragma once
 #include "object.h"
+#include "DirectX11Manager.h"
+#include "UnityExportModel.h"
 
 class CBox
 {
@@ -12,6 +14,13 @@ class CBox
 	ID3D11PixelShader*  m_pPixelShader;		// ピクセルシェーダー
 	ID3D11InputLayout*  m_pVertexLayout;	// 頂点レイアウト
 
+	//==========================================追加=========================================
+	InputLayout il;
+	VertexShader vs;
+	PixelShader ps;
+
+	UnityExportModel m_cube;
+	//=======================================================================================
 
 	struct Vertex {
 		DirectX::XMFLOAT3	Pos;
@@ -47,11 +56,15 @@ class CBox
 	void CreateVertex();
 
 public:
+
+	ConstantBuffer cb;
+	static inline ConstantBufferMatrix constantBuffer3;
+
 	~CBox() {  }
 	void Init(XMFLOAT3 s_);
 	void Normalize(XMFLOAT3 vector, XMFLOAT3& Normal);
 
-	void Draw();
+	void Draw(XMFLOAT4X4 _mat);
 
 	inline void SetDiffuseMaterial(float col_[4]) {
 		m_material.DiffuseMaterial = XMFLOAT4(col_[0], col_[1], col_[2], col_[3]);
