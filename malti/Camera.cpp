@@ -19,15 +19,15 @@ void CCamera::Start()
 	m_radius = 30.0f;
 
 	//==========--コンスタントバッファー生成======================================================================================
-	//コンスタントバッファの作成
-	UnityExportModel::constantBuffer.proj= XMMatrixTranspose(
-		XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f),
-			SCREEN_X / SCREEN_Y, 0.5f, 4096.0f * 8.0f));
+
+	
 
 	XMVECTOR eyePos = XMVectorSet(m_eye.x, m_eye.y, m_eye.z, 0);
 	XMVECTOR targetPos = XMVectorSet(m_lookat.x, m_lookat.y, m_lookat.z, 0.f);
 	XMVECTOR upVector = XMVectorSet(m_up.x, m_up.y, m_up.z, 0);
-	UnityExportModel::constantBuffer.view = XMMatrixTranspose(XMMatrixLookAtLH(eyePos, targetPos, upVector));
+	DirectX11Manager::m_constantBuffer.view = XMMatrixTranspose(XMMatrixLookAtLH(eyePos, targetPos, upVector));
+
+
 	//===========================================================================================================================
 }
 
@@ -96,11 +96,9 @@ void CCamera::Update()
 		//================================================================================
 
 
-		UnityExportModel::constantBuffer.view = XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m_camera));
-		UnityExportModel::constantBuffer.proj = XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m_projection));
+		DirectX11Manager::m_constantBuffer.view = XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m_camera));
+		DirectX11Manager::m_constantBuffer.proj = XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m_projection));
 
-		UnityExportSkinnedModel::constantBuffer2.view = XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m_camera));
-		UnityExportSkinnedModel::constantBuffer2.proj = XMMatrixTranspose(DirectX::XMLoadFloat4x4(&m_projection));
 	}
 
 }

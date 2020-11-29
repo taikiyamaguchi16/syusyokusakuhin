@@ -64,7 +64,7 @@ public:
 	void Init(XMFLOAT3 s_);
 	void Normalize(XMFLOAT3 vector, XMFLOAT3& Normal);
 
-	void Draw(XMFLOAT4X4 _mat);
+	void Draw();
 
 	inline void SetDiffuseMaterial(float col_[4]) {
 		m_material.DiffuseMaterial = XMFLOAT4(col_[0], col_[1], col_[2], col_[3]);

@@ -134,7 +134,7 @@ HRESULT DirectX11Manager::Init(HINSTANCE hInstance, int cCmdShow)
 	sd.BufferDesc.Height = rc.bottom;
 	sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	sd.BufferDesc.RefreshRate.Numerator = 1000;
-	sd.BufferDesc.RefreshRate.Denominator = 1/144;	//1/60 = 60fps
+	sd.BufferDesc.RefreshRate.Denominator = 1;	//1/60 = 60fps
 	sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	sd.OutputWindow = hWnd;
 	sd.SampleDesc.Count = 1;
@@ -311,7 +311,6 @@ HRESULT DirectX11Manager::Init(HINSTANCE hInstance, int cCmdShow)
 	io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\meiryo.ttc", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
 
 	if (!SceneManager::GetInstance()->Init(hInstance, hWnd, SCREEN_X, SCREEN_Y, FULLSCREEN)) {
-		SceneManager::GetInstance()->UnInit();
 		MessageBox(hWnd, "ERROR!", "GameInit Error", MB_OK);
 		return false;
 	}
@@ -327,6 +326,9 @@ void DirectX11Manager::Cleanup()
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+	SceneManager::GetInstance()->UnInit();
+	CPhysx::UnInit();
+
 }
 
 ID3D11VertexShader* DirectX11Manager::CreateVertexShader(const string & filename, const string & entrypath, bool erorr)

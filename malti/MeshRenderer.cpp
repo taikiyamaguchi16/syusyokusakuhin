@@ -1,38 +1,51 @@
 #include "MeshRenderer.h"
 #include "CDirectInput.h"
+#include <filesystem>
 
+namespace fs = std::filesystem;
 
 using namespace Egliss::ComponentSystem;
+std::map<std::string, UnityExportModel*>CMeshRenderer::m_models;
 
-std::map<std::string, CModel*> CMeshRenderer::m_models;
 bool CMeshRenderer::m_onceInitFg = true;
 
 void CMeshRenderer::Start()
 {
 	m_name = "CMeshRenderer";
-	//m_model.Init("assets/X-Wing.x.dat", "shader/vs.fx", "shader/ps.fx");
 	//一度だけ読み込み実行
 	m_meshr_render_cnt++;
 	if (m_onceInitFg) {
-		//===============================================================================
-		//filesystemを使ってassetファイル内のモデル取るとかにするといいかも
-		//===============================================================================
-		////今だけ
-		//m_models["X-Wing"].Init("assets/X-Wing.x.dat", "shader/vs.fx", "shader/ps.fx");
-		//m_models["TIE_Fighter"] = new CModel();
-
-		//m_models["TIE_Fighter"]->Init("assets/TIE_Fighter.x.dat", "shader/vs.fx", "shader/ps.fx");
 	
-		//m_models["skydome"].Init("assets/skydome.x.dat", "shader/vs.fx", "shader/ps.fx");
-
-
-		
-		//===========================実験======================================
-		m_model.LoadBinary("assets/Models/MeshData.bin");
-		skinnedModel.LoadBinary("assets/Models/SkinnedMeshData.txt.bin");
-		//=====================================================================
-		
-
+		std::string path = "assets/Models";
+		for (auto & p : fs::directory_iterator(path))
+		{
+			fs::path ps = p.path();
+			//==========モデルフォルダの更に中の階層の検索してモデル読み込み============================
+			//モデルファイル内のフォルダのパスの生成
+			std::string serchPath = path + "/" + ps.filename().string();
+			for (auto & q : fs::directory_iterator(serchPath))
+			{
+				fs::path s_ps = q.path();
+				//拡張子のぬきだし
+				std::string extensionName = s_ps.extension().string();
+				std::string comExtension = ".umb";
+				//拡張子がusbだったら（モデルの場合）
+				if (extensionName == comExtension)
+				{
+					std::string fileName = s_ps.stem().string();
+					//モデルの格納されているフォルダの名前で登録
+					std::string loadName = serchPath + "/" + s_ps.filename().string();
+					m_models[fileName] = new UnityExportModel();
+					m_models[fileName]->LoadBinary(loadName);
+					if (ps.filename().string()!= "DefaultShapes")
+					{
+						m_modelNames.emplace_back(fileName);
+						//m_currentModelName = fileName;
+					}
+				}
+			}
+			//========================================================================================================
+		}
 
 		m_meshtype = GEOMETRYTYPE::BOX;
 		m_box = new CBox();
@@ -44,16 +57,15 @@ void CMeshRenderer::Start()
 
 		m_onceInitFg = false;
 	}
-	//m_sphere.Init(m_radius);
 
-	m_modelName = "X-Wing";
+	m_currentModelName = m_modelNames[1];
 }
 
-
-void CMeshRenderer::LoadModel(const char * filename, const char * vsfile, const char * psfile)
+void Egliss::ComponentSystem::CMeshRenderer::Update()
 {
-	//m_model->Init(filename, vsfile, psfile);
+	
 }
+
 
 
 void CMeshRenderer::Draw(){
@@ -66,27 +78,25 @@ void CMeshRenderer::Draw(){
 			switch (m_meshtype)
 			{
 			case GEOMETRYTYPE::BOX:
-				m_box->SetDiffuseMaterial(m_color);
-				m_box->Draw(m_pos->m_mat);
-
-				//m_model.Draw(m_pos->m_mat);
-				skinnedModel.Draw(m_pos->m_mat);
+				//m_box->SetDiffuseMaterial(m_color);
+				//m_box->Draw();
+				m_models["cube"]->Draw();
 				break;
 			case GEOMETRYTYPE::CAPSILE:
 
 				break;
 
 			case GEOMETRYTYPE::SPHERE:
-				m_sphere->SetDiffuseMaterial(m_color);
-				m_sphere->Draw();
-				
+				//m_sphere->SetDiffuseMaterial(m_color);
+				//m_sphere->Draw();
+				m_models["sphere"]->Draw();
 				break;
 			default:
 				break;
 			}
 		}
 		else {
-			m_models[m_modelName]->Draw();
+			m_models[m_currentModelName]->Draw();
 		}
 	}
 }
@@ -103,11 +113,15 @@ void CMeshRenderer::ImGuiDraw()
 		ImGui::RadioButton(u8"球", &keeptype, (int)GEOMETRYTYPE::SPHERE);
 		m_meshtype = (GEOMETRYTYPE)keeptype;
 		//カラーの決定
-		ImGui::ColorPicker4(u8"カラーピッカー", m_color);
+		//ImGui::ColorPicker4(u8"カラーピッカー", m_color);
+	}
+	else
+	{
+		auto work_str = ImGuiControl::GetInstance()->SelectDropDown(m_modelNames, m_currentModelName,"models");
+		if (work_str != "null")
+		{
+			m_currentModelName = work_str;
+		}
 	}
 }
 
-void CMeshRenderer::SetModel(std::string s_)
-{
-	m_modelName = s_;
-}

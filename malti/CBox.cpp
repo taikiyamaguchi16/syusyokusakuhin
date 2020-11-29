@@ -23,10 +23,10 @@ void CBox::Init(XMFLOAT3 s_)
 
 	//コンスタントバッファの作成
 	DirectX11Manager::CreateConstantBuffer(sizeof(ConstantBufferMatrix), &cb);
-	UnityExportModel::constantBuffer.proj = XMMatrixTranspose(
+	DirectX11Manager::m_constantBuffer.proj = XMMatrixTranspose(
 		XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f),
 			SCREEN_X / SCREEN_X, 0.5f, 4096.0f * 8.0f));
-	m_cube.LoadBinary("assets/Models/Cube.bin");
+	//m_cube.LoadBinary("assets/Models/Cube.bin");
 }
 
 // 法線ベクトルを計算
@@ -94,7 +94,7 @@ void CBox::CreateVertex() {
 }
 
 // 描画
-void CBox::Draw(XMFLOAT4X4 _mat) {
+void CBox::Draw() {
 
 	//// 定数バッファ書き換え
 	//D3D11_MAPPED_SUBRESOURCE pData;
@@ -110,7 +110,7 @@ void CBox::Draw(XMFLOAT4X4 _mat) {
 	//DirectX11Manager::UpdateConstantBuffer(cb.Get(), UnityExportModel::constantBuffer);
 	//ID3D11Buffer* tmpCb[] = { cb.Get() };
 	//DirectX11Manager::m_pImContext->VSSetConstantBuffers(0, 1, tmpCb);
-	m_cube.Draw(_mat);
+	m_cube.Draw();
 
 	//ID3D11DeviceContext* device = DirectX11Manager::m_pImContext.Get();
 	//// 頂点バッファをセットする

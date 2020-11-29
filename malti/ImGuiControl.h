@@ -164,6 +164,7 @@ public:
 	void Draw3DGuizm(DirectX::XMFLOAT4X4 _view, DirectX::XMFLOAT4X4 _projection,DirectX::XMFLOAT4X4& _mat,DirectX::XMFLOAT3& _angle);
 	void Select3DGuizm();
 	std::string SelectDropDown(const char* _str[],int _size);
+	std::string SelectDropDown(std::vector<std::string>_str, std::string _current_str, std::string _title);
 	void DropDown(const char* _str[], int _size, wp<CObject> _obj);
 
 	void BeforeRender();

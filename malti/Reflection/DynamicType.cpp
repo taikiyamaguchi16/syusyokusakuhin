@@ -2,6 +2,9 @@
 #include "DynamicType.hpp"
 #include "../object.h"
 #include "../CCollider.h"
+#include "../CSkineMeshRenderer.h"
+#include "../MeshRenderer.h"
+#include "../Camera.h"
 
 using namespace Egliss::Reflection;
 using namespace std::string_literals;
@@ -23,6 +26,13 @@ void Egliss::Reflection::DynamicTypeManager::Initialize()
 	_typesindices.insert(std::make_pair("SphereColider", 3));
 	_indexedTypes.emplace_back("BoxColider", false, std::vector<int>({ 4,0 }), []() {return new Egliss::ComponentSystem::CBoxCollider(); });
 	_typesindices.insert(std::make_pair("BoxColider", 4));
-	/*_indexedTypes.emplace_back("Egliss::Game::Dummy", false,std::vector<int>({3 ,0}),[](){return new Egliss::Game::Dummy();});
-	_typesindices.insert(std::make_pair("Egliss::Game::Dummy"s,3));*/
+	
+	_indexedTypes.emplace_back("SkineMeshRenderer", false, std::vector<int>({ 5,0 }), []() {return new Egliss::ComponentSystem::CSkineMeshRenderer(); });
+	_typesindices.insert(std::make_pair("SkineMeshRenderer", 5));
+
+	_indexedTypes.emplace_back("MeshRenderer", false, std::vector<int>({ 6,0 }), []() {return new Egliss::ComponentSystem::CMeshRenderer(); });
+	_typesindices.insert(std::make_pair("MeshRenderer", 6));
+
+	_indexedTypes.emplace_back("Camera", false, std::vector<int>({ 7,0 }), []() {return new Egliss::ComponentSystem::CCamera(); });
+	_typesindices.insert(std::make_pair("Camera", 7));
 }

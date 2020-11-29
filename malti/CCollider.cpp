@@ -53,7 +53,7 @@ void CBoxCollider::Draw()
 	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD, m_mat);
 	DirectX11Manager::TurnWire();
 
-	m_box->Draw(m_mat);
+	m_box->Draw();
 
 	DirectX11Manager::TurnSolid();
 }

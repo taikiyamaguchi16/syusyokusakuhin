@@ -116,15 +116,21 @@ half4 LightweightFragmentPBR(InputData inputData, half3 albedo, half metallic,
     InitializeBRDFData(albedo, metallic, smoothness, alpha, brdfData);
 
     Light mainLight = (Light)0;
-    mainLight.direction = -normalize(half3(0.5, 0.5, 0));
+    mainLight.direction = -normalize(half3(1.0, 0.0, 0));
     mainLight.color = half3(1, 1, 1);
     mainLight.distanceAttenuation = mainLight.shadowAttenuation = 1;
 
     float3 color = LightingPhysicallyBased(brdfData, mainLight, inputData.normalWS, inputData.viewDirectionWS);
+
     mainLight.direction = -mainLight.direction;
     color += LightingPhysicallyBased(brdfData, mainLight, inputData.normalWS, inputData.viewDirectionWS);
     mainLight.direction = normalize(half3(0, 1, 0));
     color += LightingPhysicallyBased(brdfData, mainLight, inputData.normalWS, inputData.viewDirectionWS);
+
+	mainLight.direction = normalize(half3(0, 0, 1));
+	color += LightingPhysicallyBased(brdfData, mainLight, inputData.normalWS, inputData.viewDirectionWS);
+
+
 
 #ifdef _ADDITIONAL_LIGHTS
     int pixelLightCount = GetAdditionalLightsCount();

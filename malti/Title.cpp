@@ -3,7 +3,6 @@
 #include "Camera.h"
 #include "game.h"
 #include "CDirectInput.h"
-#include "CObject2D.h"
 
 using namespace Egliss::ComponentSystem;
 

@@ -58,6 +58,12 @@
     <Filter Include="ソース ファイル\UnityExportModel">
       <UniqueIdentifier>{604769ee-67a6-44d3-9bd9-dc5c50bf90ea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Component\Render\DefaultShape">
+      <UniqueIdentifier>{aee4d018-60cd-4166-a201-cad7387e30d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Component\Render\Meshs">
+      <UniqueIdentifier>{53646571-d849-43a5-8fbb-dcc9c2a1e093}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -105,12 +111,6 @@
     <ClCompile Include="WICTextureLoader.cpp">
       <Filter>ソース ファイル\Draw</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="CObject2D.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="imGui\ImGuizmo.cpp">
       <Filter>ソース ファイル\ImGui\3DGuizmo</Filter>
     </ClCompile>
@@ -122,9 +122,6 @@
     </ClCompile>
     <ClCompile Include="imGui\ImSequencer.cpp">
       <Filter>ソース ファイル\ImGui\3DGuizmo</Filter>
-    </ClCompile>
-    <ClCompile Include="CEnemy.cpp">
-      <Filter>ソース ファイル\Component</Filter>
     </ClCompile>
     <ClCompile Include="CPhysx.cpp">
       <Filter>ソース ファイル\Physx</Filter>
@@ -153,18 +150,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>ソース ファイル\Component\Render</Filter>
     </ClCompile>
-    <ClCompile Include="CBox.cpp">
-      <Filter>ソース ファイル\Component\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="Sphere.cpp">
-      <Filter>ソース ファイル\Component\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="MeshRenderer.cpp">
-      <Filter>ソース ファイル\Component\Render</Filter>
-    </ClCompile>
-    <ClCompile Include="CCapsule.cpp">
-      <Filter>ソース ファイル\Component\Render</Filter>
-    </ClCompile>
     <ClCompile Include="CCollider.cpp">
       <Filter>ソース ファイル\Component\common</Filter>
     </ClCompile>
@@ -172,9 +157,6 @@
       <Filter>ソース ファイル\Reflection</Filter>
     </ClCompile>
     <ClCompile Include="UnityExportModel.cpp">
-      <Filter>ソース ファイル\UnityExportModel</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectX11Manager.cpp">
       <Filter>ソース ファイル\UnityExportModel</Filter>
     </ClCompile>
     <ClCompile Include="MyInput8.cpp">
@@ -185,6 +167,24 @@
     </ClCompile>
     <ClCompile Include="UnityExportSkinnedModel.cpp">
       <Filter>ソース ファイル\UnityExportModel</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectX11Manager.cpp">
+      <Filter>ソース ファイル\UnityExportModel</Filter>
+    </ClCompile>
+    <ClCompile Include="CBox.cpp">
+      <Filter>ソース ファイル\Component\Render\DefaultShape</Filter>
+    </ClCompile>
+    <ClCompile Include="CCapsule.cpp">
+      <Filter>ソース ファイル\Component\Render\DefaultShape</Filter>
+    </ClCompile>
+    <ClCompile Include="CSkineMeshRenderer.cpp">
+      <Filter>ソース ファイル\Component\Render\Meshs</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshRenderer.cpp">
+      <Filter>ソース ファイル\Component\Render\Meshs</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>ソース ファイル\Component\Render\DefaultShape</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,15 +239,6 @@
     <ClInclude Include="CDirectInput.h">
       <Filter>ソース ファイル\Dx11</Filter>
     </ClInclude>
-    <ClInclude Include="CLight.h">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>ソース ファイル\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="CObject2D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="UserData.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -265,9 +256,6 @@
     </ClInclude>
     <ClInclude Include="imGui\ImSequencer.h">
       <Filter>ソース ファイル\ImGui\3DGuizmo</Filter>
-    </ClInclude>
-    <ClInclude Include="CEnemy.h">
-      <Filter>ソース ファイル\Component</Filter>
     </ClInclude>
     <ClInclude Include="dixsmartptr.h">
       <Filter>ソース ファイル</Filter>
@@ -305,18 +293,6 @@
     <ClInclude Include="Camera.h">
       <Filter>ソース ファイル\Component\Render</Filter>
     </ClInclude>
-    <ClInclude Include="CBox.h">
-      <Filter>ソース ファイル\Component\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>ソース ファイル\Component\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshRenderer.h">
-      <Filter>ソース ファイル\Component\Render</Filter>
-    </ClInclude>
-    <ClInclude Include="CCapsule.h">
-      <Filter>ソース ファイル\Component\Render</Filter>
-    </ClInclude>
     <ClInclude Include="CCollider.h">
       <Filter>ソース ファイル\Component\common</Filter>
     </ClInclude>
@@ -346,6 +322,24 @@
     </ClInclude>
     <ClInclude Include="UnityExportSkinnedModel.h">
       <Filter>ソース ファイル\UnityExportModel</Filter>
+    </ClInclude>
+    <ClInclude Include="CBox.h">
+      <Filter>ソース ファイル\Component\Render\DefaultShape</Filter>
+    </ClInclude>
+    <ClInclude Include="CCapsule.h">
+      <Filter>ソース ファイル\Component\Render\DefaultShape</Filter>
+    </ClInclude>
+    <ClInclude Include="CSkineMeshRenderer.h">
+      <Filter>ソース ファイル\Component\Render\Meshs</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>ソース ファイル\Component\Render\Meshs</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>ソース ファイル\Component\Render\DefaultShape</Filter>
+    </ClInclude>
+    <ClInclude Include="CLight.h">
+      <Filter>ソース ファイル\Component\Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

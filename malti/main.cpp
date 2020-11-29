@@ -149,12 +149,6 @@ int APIENTRY WinMain(HINSTANCE 	hInstance, 		// アプリケーションのハンドル
 	if (FAILED(DirectX11Manager::Init(hInstance, nWinMode)))
 		return -1;
 
-	/*if (!SceneManager::GetInstance()->Init(hInstance, hwnd, SCREEN_X, SCREEN_Y, FULLSCREEN)) {
-		SceneManager::GetInstance()->UnInit();
-		MessageBox(hwnd, "ERROR!", "GameInit Error", MB_OK);
-		return false;
-	}*/
-
 	//===================================================追加=======================================================================
 	
 	//==============================================================================================================================
@@ -212,9 +206,8 @@ int APIENTRY WinMain(HINSTANCE 	hInstance, 		// アプリケーションのハンドル
 
 	timeEndPeriod(1);			// タイマの分解能力もとに戻す
 
-	SceneManager::GetInstance()->UnInit();
 	DirectX11Manager::Cleanup();
-	return (int)msg.wParam;
+	return 0;
 }
 
 //==============================================================================

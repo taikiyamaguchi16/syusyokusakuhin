@@ -20,7 +20,7 @@
 #include "Reflection/DynamicType.hpp"
 
 #define		SCREEN_X		1920
-#define		SCREEN_Y		1080
+#define		SCREEN_Y		1060
 #define		FULLSCREEN      0
 using namespace Dix;
 
@@ -206,10 +206,9 @@ public:
 	CObject() {}
 	virtual ~CObject() {
 		for (auto itr = m_ComponentList.begin(); itr != m_ComponentList.end(); itr++) {
-			(*itr).Clear();
+			//(*itr).Clear();
 		}
 		m_ComponentList.clear();
-
 	}
 
 	void Update();

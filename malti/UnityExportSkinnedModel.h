@@ -1,5 +1,6 @@
 #pragma once
 #include "DirectX11Manager.h"
+#include <map>
 
 class UnityExportSkinnedModel
 {
@@ -11,9 +12,14 @@ class UnityExportSkinnedModel
 	XMMATRIX boneMtx[200];
 
 	ConstantBuffer cb;
-public:
-	static inline ConstantBufferMatrix constantBuffer2;
 
+	std::string m_currentAnimationName;
+	std::map<string,uem::SkinnedAnimation*> m_animation;
+	std::vector<std::string>m_AnimationNames;
+	float m_animTime = 0.f;
+	float m_loopSplit = 60.f;
+public:
+	
 	struct VertexData
 	{
 		XMFLOAT3 position;
@@ -40,10 +46,25 @@ public:
 	vector<Material> materials;
 
 	UnityExportSkinnedModel();
+	~UnityExportSkinnedModel();
+
 
 	void LoadAscii(string filename);
 	void LoadBinary(string filename);
 
+	void LoadAnimation(string _pathname);
+
+	inline float GetMaxAnimTime()
+	{
+		return m_animation[m_currentAnimationName]->GetMaxAnimationTime();
+	}
+
+	inline void SetAnimTime(float _time)
+	{
+		m_animTime = _time;
+	}
+
+	void ImGuiDraw();
 	//void DrawImGui(std::shared_ptr<uem::Transform> trans);
-	void Draw(XMFLOAT4X4 _mat);
+	void Draw();
 };

@@ -7,12 +7,6 @@ using namespace Egliss::ComponentSystem;
 
 ImGuiControl::ImGuiControl()
 {
-	/*
-	ImGui::Checkbox(u8"チェックボックス", &checkbox);
-
-	ImGui::Separator();
-
-	ImGui::ColorPicker4(u8"カラーピッカー", color_picker);*/
 }
 
 
@@ -236,6 +230,48 @@ std::string ImGuiControl::SelectDropDown(const char* _str[],int _size)
 	//}
 	ImGui::SameLine(0, style.ItemInnerSpacing.x);
 	ImGui::Text("colliders");
+
+	return _st;
+}
+
+std::string ImGuiControl::SelectDropDown(std::vector<std::string>_str, std::string _current_str, std::string _title)
+{
+	//const char** items = _str;
+
+	const char* currentItem = NULL;
+	ImGuiComboFlags flags = ImGuiComboFlags_NoArrowButton;
+
+	ImGuiStyle& style = ImGui::GetStyle();
+	float w = ImGui::CalcItemWidth();
+	float spacing = style.ItemInnerSpacing.x;
+	float button_sz = ImGui::GetFrameHeight();
+	ImGui::PushItemWidth(w - spacing * 2.0f - button_sz * 2.0f);
+	//仮置き
+	std::string _st = "null";
+	currentItem = _current_str.c_str();
+
+	std::string name = "##" + _title;
+	if (ImGui::BeginCombo(name.c_str(), currentItem, ImGuiComboFlags_NoArrowButton))
+	{
+		for (auto itr : _str)
+		{
+			bool is_selected = (currentItem == itr.c_str());
+			if (ImGui::Selectable(itr.c_str(), is_selected))
+			{
+				currentItem = itr.c_str();
+				_st = currentItem;
+			}
+			if (is_selected)
+				ImGui::SetItemDefaultFocus();
+		}
+		ImGui::EndCombo();
+	}
+
+	ImGui::PopItemWidth();
+	ImGui::SameLine(0, spacing);
+	
+	ImGui::SameLine(0, style.ItemInnerSpacing.x);
+	ImGui::Text(_title.c_str());
 
 	return _st;
 }

@@ -12,18 +12,6 @@
 
 class CGame final:public Scene
 {
-	
-	//ID3D11Buffer*	m_vertexbuffer = nullptr;	// 頂点バッファ
-	//ID3D11Buffer*	m_idxbuffer = nullptr;		// インデックスバッファ	
-	//ID3D11Buffer*	m_cbuffer = nullptr;		// 定数バッファ	
-
-	//ID3D11VertexShader*	m_vs = nullptr;			// 頂点シェーダー
-	//ID3D11PixelShader* m_ps = nullptr;			// ピクセルシェーダー
-	//ID3D11InputLayout* m_layout = nullptr;		// 頂点レイアウト
-
-	//ID3D11ShaderResourceView* m_srv = nullptr;	// SRV
-	//ID3D11Resource* m_texres = nullptr;			// texture resource
-
 public:
 	//頻繁に削除が行われるため
 	std::list<Egliss::ComponentSystem::CComponent*> m_Components;

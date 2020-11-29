@@ -16,14 +16,27 @@ UnityExportModel::UnityExportModel()
 
 	//コンスタントバッファの作成
 	DirectX11Manager::CreateConstantBuffer(sizeof(ConstantBufferMatrix), &cb);
-	constantBuffer.proj = XMMatrixTranspose(
+	DirectX11Manager::m_constantBuffer.proj = XMMatrixTranspose(
 		XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f),
 			SCREEN_X / SCREEN_X, 0.5f, 4096.0f * 8.0f));
-	//
-	//XMVECTOR eyePos = XMVectorSet(0, 10, -40.0f, 0);
-	//XMVECTOR targetPos = XMVectorSet(0, 1, 0, 0);
-	//XMVECTOR upVector = XMVectorSet(0, 1, 0, 0);
-	//constantBuffer.view = XMMatrixTranspose(XMMatrixLookAtLH(eyePos, targetPos, upVector));
+}
+
+UnityExportModel::~UnityExportModel()
+{
+	/*cb->Release();
+	il->Release();
+	vs->Release();
+	ps->Release();
+	
+	for (auto itr : models)
+	{
+		itr.ib->Release();
+		itr.vb->Release();
+	}
+	for (auto itr : materials)
+	{
+		itr.albedoTexture->Release();
+	}*/
 }
 
 void UnityExportModel::LoadAscii(string filename)
@@ -51,6 +64,7 @@ void UnityExportModel::LoadAscii(string filename)
 void UnityExportModel::LoadBinary(string filename)
 {
 	uemData.LoadBinary(filename);
+	kari = DirectX11Manager::CreateTextureFromFile("assets/Models/DefaultShapes/white.jpg");
 
 	//VertexBuffer IndexBuffer作成
 	for (auto& mesh : uemData.meshs)
@@ -70,31 +84,30 @@ void UnityExportModel::LoadBinary(string filename)
 	}
 }
 
-void UnityExportModel::Draw(XMFLOAT4X4 _mat)
+void UnityExportModel::Draw()
 {
-	/*XMVECTOR eyePos = XMVectorSet(0, 10, -40.0f, 0);
-	XMVECTOR targetPos = XMVectorSet(0, 1, 0, 0);
-	XMVECTOR upVector = XMVectorSet(0, 1, 0, 0);
-
-	constantBuffer.view = XMMatrixTranspose(XMMatrixLookAtLH(eyePos, eyePos + constantBuffer.view.r[2], upVector));*/
 
 	DirectX11Manager::SetVertexShader(vs.Get());
 	DirectX11Manager::SetPixelShader(ps.Get());
-	DirectX11Manager::SetInputLayout(il.Get());
+	DirectX11Manager::SetInputLayout(il.Get());	
 
-	constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&_mat));
+	//DirectX11Manager::m_constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&_mat));
 
-
-	DirectX11Manager::UpdateConstantBuffer(cb.Get(), constantBuffer);
+	DirectX11Manager::UpdateConstantBuffer(cb.Get(), DirectX11Manager::m_constantBuffer);
 	ID3D11Buffer* tmpCb[] = { cb.Get() };
 	DirectX11Manager::m_pImContext->VSSetConstantBuffers(0, 1, tmpCb);
 	
 	for (int i = 0; i < uemData.meshs.size(); i++) {
+		
 		auto& model = uemData.meshs[i];
 		DirectX11Manager::SetVertexBuffer(models[i].vb.Get(), sizeof(VertexData));
 		DirectX11Manager::SetIndexBuffer(models[i].ib.Get());
 		if (materials[model.materialNo].albedoTexture.Get() != nullptr)
 			DirectX11Manager::SetTexture2D(0, materials[model.materialNo].albedoTexture.Get());
+		//あらかじめ生成しておいた真っ白なテクスチャなどを張る
+		else {
+			DirectX11Manager::SetTexture2D(0, kari);
+		}
 
 		//DrawCall
 		DirectX11Manager::DrawIndexed(static_cast<UINT>(model.indexs.size()));

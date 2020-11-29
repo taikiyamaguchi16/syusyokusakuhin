@@ -7,7 +7,6 @@
 
 #include "UnityExportModel.h"
 #include "UniExportModel.hpp"
-#include "UnityExportSkinnedModel.h"
 
 namespace Egliss::ComponentSystem
 {
@@ -27,12 +26,13 @@ namespace Egliss::ComponentSystem
 
 		GEOMETRYTYPE m_meshtype = GEOMETRYTYPE::BOX;
 
-		static std::map<std::string, CModel*>m_models;
+		static std::map<std::string, UnityExportModel*>m_models;
+		static inline std::vector<std::string>m_modelNames;
+		std::string m_currentModelName;
+
 		static bool m_onceInitFg;
-		std::string m_modelName;
 		//===========================ŽÀŒ±======================================
-		UnityExportModel m_model;
-		UnityExportSkinnedModel skinnedModel;
+		
 		//=====================================================================
 		float m_color[4] = { 255.0f,255.0f,255.0f,255.0f };
 	public:
@@ -47,21 +47,16 @@ namespace Egliss::ComponentSystem
 				if (m_box != nullptr) {
 					m_box->Exit();
 					delete m_box;
-				}
-				
-				///m_models["TIE_Fighter"]->Uninit();
-			//	delete m_models["TIE_Fighter"];
-			//	m_models.clear();
+				}	
+				CMeshRenderer::DeleteModel();
 			}
-
 		}
 		void Start()override;
-		//void Update()override;
-		void LoadModel(const char * filename, const char * vsfile, const char * psfile);
+		void Update()override;
+
 		void Draw();
 		void ImGuiDraw()override;
 
-		void SetModel(std::string);
 		inline void SetName()override {
 			m_name = "MeshRender";
 		}
@@ -103,8 +98,11 @@ namespace Egliss::ComponentSystem
 
 		static void DeleteModel() {
 			m_onceInitFg = true;
-			m_models["TIE_Fighter"]->Uninit();
-			delete m_models["TIE_Fighter"];
+
+			for (auto itr : m_models)
+			{
+				delete	(itr.second);
+			}
 			m_models.clear();
 		}
 

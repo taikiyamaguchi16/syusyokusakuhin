@@ -8,9 +8,7 @@
 class Scene
 {
 protected:
-	//std::list<CObject*> m_obj_list;
 	std::list<sp<CObject>> m_obj_list;
-	//CObject* m_mainCamera;
 	sp<CObject>m_mainCamera;
 	std::vector<sp<CObject>>m_subCameras;
 	wp<CObject> m_activeCamera;

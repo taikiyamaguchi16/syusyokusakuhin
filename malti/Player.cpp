@@ -3,7 +3,6 @@
 #include  "CPhysx.h"
 #include "Scene.h"
 #include "MeshRenderer.h"
-#include "Bullet.h"
 using namespace Dix;
 
 using namespace Egliss::ComponentSystem;

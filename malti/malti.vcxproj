@@ -147,16 +147,14 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CBox.cpp" />
     <ClCompile Include="CCapsule.cpp" />
     <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CDirectXGraphics.cpp" />
-    <ClCompile Include="CEnemy.cpp" />
     <ClCompile Include="CModel.cpp" />
-    <ClCompile Include="CObject2D.cpp" />
     <ClCompile Include="CPhysx.cpp" />
+    <ClCompile Include="CSkineMeshRenderer.cpp" />
     <ClCompile Include="DatFile.cpp" />
     <ClCompile Include="DatFileLoader.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
@@ -191,18 +189,16 @@
     <ClCompile Include="WICTextureLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CBox.h" />
     <ClInclude Include="CCapsule.h" />
     <ClInclude Include="CCollider.h" />
     <ClInclude Include="CDirectInput.h" />
     <ClInclude Include="CDirectxGraphics.h" />
-    <ClInclude Include="CEnemy.h" />
     <ClInclude Include="CLight.h" />
     <ClInclude Include="CModel.h" />
-    <ClInclude Include="CObject2D.h" />
     <ClInclude Include="CPhysx.h" />
+    <ClInclude Include="CSkineMeshRenderer.h" />
     <ClInclude Include="DatFile.h" />
     <ClInclude Include="DatFileLoader.h" />
     <ClInclude Include="DirectX11Manager.h" />

@@ -45,6 +45,12 @@ typedef ComPtr<ID3D11Texture2D> Texture2D;
 typedef ComPtr<ID3D11ShaderResourceView> ShaderTexture;
 typedef ComPtr<ID3D11UnorderedAccessView> ComputeOutputView;
 
+struct ConstantBufferMatrix
+{
+	XMMATRIX world;
+	XMMATRIX view;
+	XMMATRIX proj;
+};
 //============================================================================
 //スタティックなクラスにする
 //============================================================================
@@ -52,6 +58,9 @@ class DirectX11Manager
 {
 	static inline HWND hWnd = NULL;
 public:
+	//コンスタントバッファー
+	static inline ConstantBufferMatrix m_constantBuffer;
+	
 	//DX11
 	static inline ComPtr<ID3D11Device>			m_pDevice = nullptr;
 	static inline ComPtr<ID3D11DeviceContext>		m_pImContext = nullptr;
@@ -185,9 +194,3 @@ public:
 	static void TurnWire();
 };
 
-struct ConstantBufferMatrix
-{
-	XMMATRIX world;
-	XMMATRIX view;
-	XMMATRIX proj;
-};

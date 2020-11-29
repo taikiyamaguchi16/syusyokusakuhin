@@ -9,9 +9,9 @@ class UnityExportModel
 
 
 	ConstantBuffer cb;
-
 public:
-	static inline ConstantBufferMatrix constantBuffer;
+	
+	static inline ID3D11ShaderResourceView* kari = nullptr;
 
 	struct VertexData{
 		XMFLOAT3 position;
@@ -36,9 +36,10 @@ public:
 	vector<Material> materials;
 
 	UnityExportModel();
+	~UnityExportModel();
 
 	void LoadAscii(string filename);
 	void LoadBinary(string filename);
 
-	void Draw(XMFLOAT4X4 _mat);
+	void Draw();
 };

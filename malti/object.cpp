@@ -130,7 +130,8 @@ void CTransform::Draw()
 	m_trans->p.y = m_mat._42;
 	m_trans->p.z = m_mat._43;
 	// ƒ[ƒ‹ƒh•ÏŠ·s—ñ
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD, m_mat);
+	//DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD, m_mat);
+	DirectX11Manager::m_constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&m_mat));
 }
 
 void CTransform::Rotation(XMFLOAT4X4 & rotateMat_)
@@ -487,12 +488,12 @@ void CRigidbody::OnCollisionStay(CObject * col)
 
 	PxVec3 abs_work = work.abs();
 
-	if (work.magnitude() < 1.3f)
+	if (work.magnitude() < 0.5f)
 	{
 		m_rigidDynamic->clearForce();
 	}
 
-	if (work_a.magnitude() < 1.3f)
+	if (work_a.magnitude() < 0.5f)
 	{
 		m_rigidDynamic->clearTorque();
 	}
