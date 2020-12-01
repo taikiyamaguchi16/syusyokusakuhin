@@ -5,7 +5,6 @@
 #include <DirectXMath.h>
 #include "dx11mathutil.h"
 #include <list>
-#include "DX11Settransform.h"
 
 #include "imGui/imgui.h"
 #include "imGui/imgui_impl_win32.h"
@@ -206,7 +205,7 @@ public:
 	CObject() {}
 	virtual ~CObject() {
 		for (auto itr = m_ComponentList.begin(); itr != m_ComponentList.end(); itr++) {
-			//(*itr).Clear();
+			(*itr).Clear();
 		}
 		m_ComponentList.clear();
 	}

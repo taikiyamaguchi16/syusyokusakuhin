@@ -1,5 +1,4 @@
 #include "CSkineMeshRenderer.h"
-#include "CDirectInput.h"
 #include <filesystem>
 
 using namespace Egliss::ComponentSystem;
@@ -15,9 +14,6 @@ void CSkineMeshRenderer::Start()
 	m_name = "CSkineMeshRenderer";
 	//一度だけ読み込み実行
 	if (m_onceInitFg) {
-		//===============================================================================
-		//filesystemを使ってassetファイル内のモデル取るとかにするといいかも
-		//===============================================================================
 
 		std::string path = "assets/SkineMeshModels";
 		for (auto & p : fs::directory_iterator(path))
@@ -36,7 +32,8 @@ void CSkineMeshRenderer::Start()
 				if (extensionName == comExtension)
 				{
 					//モデルの格納されているフォルダの名前で登録
-					std::string loadName = serchPath + "/" + s_ps.filename().string();
+					std::string loadName = serchPath + "/";//+ s_ps.filename().string();
+					loadName += s_ps.filename().string();
 					m_skinnedModels[ps.filename().string()] = new UnityExportSkinnedModel();
 					m_skinnedModels[ps.filename().string()]->LoadBinary(loadName);
 					m_skinnedModels[ps.filename().string()]->LoadAnimation(serchPath);
@@ -48,9 +45,6 @@ void CSkineMeshRenderer::Start()
 			//========================================================================================================
 		}
 
-		//===========================実験======================================
-	
-		//=====================================================================
 
 		m_onceInitFg = false;
 	}

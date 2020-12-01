@@ -12,10 +12,8 @@
 #include <stdio.h>
 #include <Crtdbg.h>
 #include <DirectXMath.h>
-#include "DX11util.h"
-#include "CModel.h"
+
 #include "game.h"
-#include "CDirectInput.h"
 
 #include "dx11mathutil.h"
 #include "shader.h"
@@ -108,28 +106,20 @@ void CGame::Update()
 		ImGuiControl::GetInstance()->ConsoleDraw();
 	}
 	//==========================================================================================================
-	//if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_1))
+
 	if (DirectX11Manager::input.Keyboard()->ChkKeyAction(DIK_1))
 	{
 		m_activeCamera = m_mainCamera;
 	}
 
-	//if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_2)) 
 	if (DirectX11Manager::input.Keyboard()->ChkKeyAction(DIK_2))
 	{
 		m_activeCamera = m_subCameras[0];
 	}
 
 
-	if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_H)) {
-		// ƒŒƒ“ƒ_ƒŠƒ“ƒOŒãˆ—
-		DX11AfterRender();
-		SceneManager::GetInstance()->ChangeScene(sp<Scene>(new Title()));
-	}
 	
 	CPhysx::StepPhysics(60.0f);
-
-	//CDirectInput::GetInstance().GetMouseState();
 
 	DirectX11Manager::input.InputUpdate();
 }
@@ -160,17 +150,11 @@ void CGame::Draw()
 
 void CGame::AddObjects()
 {
-	/*CObject* AirPlane;
-	CObject* SkyDome;
-	CObject* CameraObj;
-	CObject* SubCamera;*/
 
 	sp<CObject> AirPlane;
-	sp<CObject> SkyDome;
 	sp<CObject> CameraObj;
 	sp<CObject> SubCamera;
 
-	sp<CObject> enemy;
 	sp<CObject> sphere;
 	sp<CObject> sphere2;
 	sp<CObject> box;
@@ -182,9 +166,6 @@ void CGame::AddObjects()
 	float _plane = 100.0f;
 	float _color[4] = { 255.0f,255.0f,255.0f,255.0f };
 
-	/*m_Components.emplace_back(createInstance<CPlayer>());
-	m_Components.emplace_back(createInstance<CRigidbody>());
-	m_Components.emplace_back(createInstance<CMeshRenderer>());*/
 
 	for (auto item : m_Components) {
 		item->SetName();
@@ -244,7 +225,7 @@ void CGame::AddObjects()
 
 	sphere.SetPtr(new CObject);
 	_trans = sphere->AddComponentByNameAs<CTransform>(transName);
-	_trans->SetPos(XMFLOAT3(50.0f, 30.0f, 0.0f));
+	_trans->SetPos(XMFLOAT3(30.0f, 30.0f, 0.0f));
 	_trans->SetScale(XMFLOAT3(5.f, 5.f,5.f ));
 	_rigid = sphere->AddComponentByNameAs<CRigidbody>(rigidName);
 	_render = sphere->AddComponent<CMeshRenderer>();
@@ -256,7 +237,6 @@ void CGame::AddObjects()
 
 
 	box.SetPtr(new CObject);
-	//_trans = sphere->AddComponentByNameAs<Egliss::ComponentSystem::CTransform>(st);
 	_trans = box->AddComponent<CTransform>();
 
 	_trans->SetPos(XMFLOAT3(0.0f, 0.0f, 0.0f));
@@ -273,7 +253,7 @@ void CGame::AddObjects()
 
 
 
-	box2.SetPtr(new CObject);
+	/*box2.SetPtr(new CObject);
 	_trans = box2->AddComponent<CTransform>();
 	_trans->SetPos(XMFLOAT3(_plane / 2.0f, _plane / 2.0f, .0f));
 	_rigid = box2->AddComponent<CRigidbody>();
@@ -326,9 +306,7 @@ void CGame::AddObjects()
 	_rigid->InitStatic();
 	box5->SetName(std::string("box5"));
 	box5->SetTag(std::string("Default"));
-	m_obj_list.emplace_back(box5);
-
-
+	m_obj_list.emplace_back(box5);*/
 
 	wp<CObject>wark_weak_ptr(AirPlane);
 	m_active_obj = wark_weak_ptr;

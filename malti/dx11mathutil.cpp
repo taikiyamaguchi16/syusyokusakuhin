@@ -738,7 +738,7 @@ float haltonseq(unsigned int no, unsigned int base) {
 void QuaternionToEulerAngles(XMFLOAT3 & _angle, const physx::PxQuat  _q)
 {
 	XMFLOAT4 qt;	// クオータニオン
-	XMFLOAT4X4 rotateMat_;
+	//XMFLOAT4X4 rotateMat_;
 
 	qt = XMFLOAT4(_q.x, _q.y,_q.z, _q.w);
 	// クオータニオンから行列を作成

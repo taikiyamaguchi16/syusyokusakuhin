@@ -7,12 +7,12 @@
 class CCapsule final
 {
 	Egliss::ComponentSystem::CTransform* m_pos = nullptr;
-	ID3D11Buffer*	m_cbuffer = nullptr;		// 定数バッファ	
-	ID3D11Buffer*		m_pVertexBuffer;	// 頂点バッファ
-	ID3D11Buffer*		m_pIndexBuffer;		// インデックスバッファ
-	ID3D11VertexShader* m_pVertexShader;	// 頂点シェーダー
-	ID3D11PixelShader*  m_pPixelShader;		// ピクセルシェーダー
-	ID3D11InputLayout*  m_pVertexLayout;	// 頂点レイアウト
+	//ID3D11Buffer*	m_cbuffer = nullptr;		// 定数バッファ	
+	//ID3D11Buffer*		m_pVertexBuffer;	// 頂点バッファ
+	//ID3D11Buffer*		m_pIndexBuffer;		// インデックスバッファ
+	//ID3D11VertexShader* m_pVertexShader;	// 頂点シェーダー
+	//ID3D11PixelShader*  m_pPixelShader;		// ピクセルシェーダー
+	//ID3D11InputLayout*  m_pVertexLayout;	// 頂点レイアウト
 	unsigned int		m_divX;				// 水平方向の分割数
 	unsigned int		m_divY;				// 垂直方向の分割数
 	float				m_radius;			// 半径

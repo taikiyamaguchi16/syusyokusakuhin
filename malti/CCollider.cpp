@@ -1,6 +1,7 @@
 #include "CCollider.h"
 #include "CPhysx.h"
 #include <cassert>
+#include "MeshRenderer.h"
 
 using namespace Egliss::ComponentSystem;
 
@@ -50,10 +51,13 @@ void CBoxCollider::Draw()
 	//子の行列を生成
 	DX11MtxMultiply(m_mat, m_mat, objMatrix);
 
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD, m_mat);
+	//DirectX11Manager::m_constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&_mat));
+	
+	DirectX11Manager::m_constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&m_mat));
 	DirectX11Manager::TurnWire();
 
-	m_box->Draw();
+	//m_box->Draw();
+	CMeshRenderer::DrawModel("cube");
 
 	DirectX11Manager::TurnSolid();
 }
@@ -124,6 +128,7 @@ CSphereCollider::~CSphereCollider()
 
 void CSphereCollider::Draw()
 {
+	//====================================コライダー用のローカル行列の生成======================================================================
 	DX11MtxIdentity(m_mat);
 	XMFLOAT4X4 scaleMatrix;
 	XMFLOAT4X4 rotMatrix;
@@ -145,10 +150,11 @@ void CSphereCollider::Draw()
 	DX11MtxMultiply(objMatrix, inverseMatrix, m_transform->m_mat);
 	//子の行列を生成
 	DX11MtxMultiply(m_mat, m_mat, objMatrix);
-
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD, m_mat);
+	//=========================================================================================================================================
+	DirectX11Manager::m_constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&m_mat));
 	DirectX11Manager::TurnWire();
-	m_sphere->Draw();
+	//m_sphere->Draw();
+	CMeshRenderer::DrawModel("sphere");
 	DirectX11Manager::TurnSolid();
 }
 

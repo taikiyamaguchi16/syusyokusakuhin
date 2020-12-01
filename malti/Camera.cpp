@@ -1,5 +1,4 @@
 #include "Camera.h"
-#include "CDirectInput.h"
 #include "DirectX11Manager.h"
 
 #include "UnityExportModel.h"
@@ -108,10 +107,10 @@ void CCamera::Draw()
 
 	m_pos->m_mat = GetCameraMatrix();
 
-	// ビュー変換行列セット
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::VIEW, m_pos->m_mat);
+	//// ビュー変換行列セット
+	//DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::VIEW, m_pos->m_mat);
 
-	DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION, m_projection);
+	//DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::PROJECTION, m_projection);
 
 }
 

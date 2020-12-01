@@ -1,5 +1,4 @@
 #include "MeshRenderer.h"
-#include "CDirectInput.h"
 #include <filesystem>
 
 namespace fs = std::filesystem;

@@ -1,6 +1,5 @@
 #pragma once
 #include "object.h"
-#include "CModel.h"
 #include "Sphere.h"
 #include <map>
 #include "CBox.h"
@@ -104,6 +103,11 @@ namespace Egliss::ComponentSystem
 				delete	(itr.second);
 			}
 			m_models.clear();
+		}
+
+		static void DrawModel(std::string _str)
+		{
+			m_models[_str]->Draw();
 		}
 
 	};

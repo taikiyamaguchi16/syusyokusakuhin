@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "CDirectInput.h"
 #include  "CPhysx.h"
 #include "Scene.h"
 #include "MeshRenderer.h"
@@ -32,48 +31,10 @@ void CPlayer::Move()
 	//移動ーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーーー
 	XMFLOAT3 inputSpeed = XMFLOAT3(0.0f, 0.0f, 0.0f);
 
-	CDirectInput::GetInstance().GetMouseState();
-	if (!CDirectInput::GetInstance().GetMouseRButtonCheck()) {
-		if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_W)){
-			inputSpeed.z = speed;
-			
-			inputFg = true;
-		}
-		if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_A)){
-			inputSpeed.x = -speed;
-			
-			inputFg = true;
-		}
-		if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_S)){
-			inputSpeed.z = -speed;
-			
-			inputFg = true;
-		}
-		if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_D)){
-			inputSpeed.x = speed;
-			
-			inputFg = true;
-		}
-		if (CDirectInput::GetInstance().CheckKeyBufferTrigger(DIK_SPACE)) {
-			inputSpeed.y = 500.0f;
-			inputFg = true;
-		}
-
-
-	}
-	//--------------------------------------------------------------------------------------
-
-	if (CDirectInput::GetInstance().GetMouseLButtonTrigger()) {
-		//Shot();
-	}
-	//----------------------------回転-----------------------------------------------------
 	
 	//m_pos->m_angle.y += CDirectInput::GetInstance().GetMouseAxisX()/5.0f;
 	//m_pos->m_angle.x += CDirectInput::GetInstance().GetMouseAxisY()/5.0f;
 
-	if (CDirectInput::GetInstance().CheckKeyBuffer(DIK_UP)) {
-		m_pos->m_angle.y += 5.f;
-	}
 	//---------------------------------------------------------------------------------------
 	//入力された場合
 		if (m_rb.IsExist()) {

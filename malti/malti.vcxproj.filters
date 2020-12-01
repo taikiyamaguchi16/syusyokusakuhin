@@ -81,9 +81,6 @@
     <ClCompile Include="ImGuiControl.cpp">
       <Filter>ソース ファイル\ImGui\myScript</Filter>
     </ClCompile>
-    <ClCompile Include="dx11util.cpp">
-      <Filter>ソース ファイル\Dx11</Filter>
-    </ClCompile>
     <ClCompile Include="dx11mathutil.cpp">
       <Filter>ソース ファイル\Dx11</Filter>
     </ClCompile>
@@ -92,18 +89,6 @@
     </ClCompile>
     <ClCompile Include="Title.cpp">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="CDirectXGraphics.cpp">
-      <Filter>ソース ファイル\Draw</Filter>
-    </ClCompile>
-    <ClCompile Include="DatFile.cpp">
-      <Filter>ソース ファイル\Draw</Filter>
-    </ClCompile>
-    <ClCompile Include="DatFileLoader.cpp">
-      <Filter>ソース ファイル\Draw</Filter>
-    </ClCompile>
-    <ClCompile Include="CModel.cpp">
-      <Filter>ソース ファイル\Draw</Filter>
     </ClCompile>
     <ClCompile Include="DDSTextureLoader.cpp">
       <Filter>ソース ファイル\Draw</Filter>
@@ -162,9 +147,6 @@
     <ClCompile Include="MyInput8.cpp">
       <Filter>ソース ファイル\UnityExportModel</Filter>
     </ClCompile>
-    <ClCompile Include="DX11SetTransform.cpp">
-      <Filter>ソース ファイル\Dx11</Filter>
-    </ClCompile>
     <ClCompile Include="UnityExportSkinnedModel.cpp">
       <Filter>ソース ファイル\UnityExportModel</Filter>
     </ClCompile>
@@ -209,13 +191,7 @@
     <ClInclude Include="ImGuiControl.h">
       <Filter>ソース ファイル\ImGui\myScript</Filter>
     </ClInclude>
-    <ClInclude Include="DX11util.h">
-      <Filter>ソース ファイル\Dx11</Filter>
-    </ClInclude>
     <ClInclude Include="dx11mathutil.h">
-      <Filter>ソース ファイル\Dx11</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11Settransform.h">
       <Filter>ソース ファイル\Dx11</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
@@ -223,21 +199,6 @@
     </ClInclude>
     <ClInclude Include="Title.h">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="CDirectxGraphics.h">
-      <Filter>ソース ファイル\Draw</Filter>
-    </ClInclude>
-    <ClInclude Include="DatFile.h">
-      <Filter>ソース ファイル\Draw</Filter>
-    </ClInclude>
-    <ClInclude Include="DatFileLoader.h">
-      <Filter>ソース ファイル\Draw</Filter>
-    </ClInclude>
-    <ClInclude Include="CModel.h">
-      <Filter>ソース ファイル\Draw</Filter>
-    </ClInclude>
-    <ClInclude Include="CDirectInput.h">
-      <Filter>ソース ファイル\Dx11</Filter>
     </ClInclude>
     <ClInclude Include="UserData.h">
       <Filter>ヘッダー ファイル</Filter>

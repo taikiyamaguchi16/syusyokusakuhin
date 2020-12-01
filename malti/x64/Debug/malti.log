@@ -1,23 +1,19 @@
-﻿  CSkineMeshRenderer.cpp
-c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  MeshRenderer.cpp
-c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  Player.cpp
-c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h: DIRECTINPUT_VERSION undefined. Defaulting to version 0x0800
-c:\users\ohs80200\desktop\syusaku\malti\myinput8.h(3): warning C4005: 'DIRECTINPUT_VERSION': マクロが再定義されました。
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\dinput.h(48): note: 'DIRECTINPUT_VERSION' の以前の定義を確認してください
-  DynamicType.cpp
-c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  Scene.cpp
-c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+﻿  Camera.cpp
+  CBox.cpp
+  CCollider.cpp
+  CSkineMeshRenderer.cpp
+  DirectX11Manager.cpp
   game.cpp
-c:\users\ohs80200\desktop\syusaku\malti\reflection\statictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-c:\users\ohs80200\desktop\syusaku\malti\reflection\dynamictype.hpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  ImGuiControl.cpp
+  main.cpp
+  MeshRenderer.cpp
+  object.cpp
+  Player.cpp
+  DynamicType.cpp
+  Scene.cpp
+  Sphere.cpp
+  Title.cpp
+  UnityExportModel.cpp
+  UnityExportSkinnedModel.cpp
   コードを生成中...
   malti.vcxproj -> C:\Users\ohs80200\Desktop\syusaku\x64\Debug\malti.exe

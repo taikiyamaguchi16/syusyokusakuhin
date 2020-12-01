@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{60551A3B-D0F3-4366-B5C3-75DBE5F61973}</ProjectGuid>
     <RootNamespace>malti</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -76,6 +76,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\directxtex\include;C:\Users\ohs80200\Desktop\malti\malti\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\ohs80200\Desktop\malti\malti\lib\Release;C:\directxtex\lib\x64\release;$(LibraryPath)</LibraryPath>
+    <TargetName>release</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -96,6 +97,7 @@
       </AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4819;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>
@@ -132,6 +134,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <DisableSpecificWarnings>4819;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -151,17 +154,11 @@
     <ClCompile Include="CBox.cpp" />
     <ClCompile Include="CCapsule.cpp" />
     <ClCompile Include="CCollider.cpp" />
-    <ClCompile Include="CDirectXGraphics.cpp" />
-    <ClCompile Include="CModel.cpp" />
     <ClCompile Include="CPhysx.cpp" />
     <ClCompile Include="CSkineMeshRenderer.cpp" />
-    <ClCompile Include="DatFile.cpp" />
-    <ClCompile Include="DatFileLoader.cpp" />
     <ClCompile Include="DDSTextureLoader.cpp" />
     <ClCompile Include="DirectX11Manager.cpp" />
     <ClCompile Include="dx11mathutil.cpp" />
-    <ClCompile Include="DX11SetTransform.cpp" />
-    <ClCompile Include="dx11util.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="ImGuiControl.cpp" />
     <ClCompile Include="imGui\ImCurveEdit.cpp" />
@@ -193,19 +190,12 @@
     <ClInclude Include="CBox.h" />
     <ClInclude Include="CCapsule.h" />
     <ClInclude Include="CCollider.h" />
-    <ClInclude Include="CDirectInput.h" />
-    <ClInclude Include="CDirectxGraphics.h" />
     <ClInclude Include="CLight.h" />
-    <ClInclude Include="CModel.h" />
     <ClInclude Include="CPhysx.h" />
     <ClInclude Include="CSkineMeshRenderer.h" />
-    <ClInclude Include="DatFile.h" />
-    <ClInclude Include="DatFileLoader.h" />
     <ClInclude Include="DirectX11Manager.h" />
     <ClInclude Include="dixsmartptr.h" />
     <ClInclude Include="dx11mathutil.h" />
-    <ClInclude Include="DX11Settransform.h" />
-    <ClInclude Include="DX11util.h" />
     <ClInclude Include="Exception.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="ImGuiControl.h" />

@@ -2,7 +2,6 @@
 
 #include "Camera.h"
 #include "game.h"
-#include "CDirectInput.h"
 
 using namespace Egliss::ComponentSystem;
 
@@ -64,24 +63,6 @@ void Title::Draw()
 	// ターゲットバッファクリア	
 	float ClearColor[4] = { 0.0f, 0.0f, 0.0f, 1.0f }; //red,green,blue,alpha
 
-
-	//// レンダリング前処理
-	//DX11BeforeRender(ClearColor);
-
-	//// イミィディエイトコンテキスト
-	//ID3D11DeviceContext* devcontext = GetDX11DeviceContext();
-
-	//
-	////==========================================================================================================
-
-	//for (int i = 0; i < 1; i++) {
-	//	for (auto item : m_obj_list) {
-	//		item->Draw();
-	//	}
-	//	m_subCameras[i]->Draw();
-	//}
-	//// レンダリング後処理
-	//DX11AfterRender();
 }
 
 void Title::AddObjects()

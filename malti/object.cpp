@@ -130,7 +130,6 @@ void CTransform::Draw()
 	m_trans->p.y = m_mat._42;
 	m_trans->p.z = m_mat._43;
 	// ƒ[ƒ‹ƒh•ÏŠ·s—ñ
-	//DX11SetTransform::GetInstance()->SetTransform(DX11SetTransform::TYPE::WORLD, m_mat);
 	DirectX11Manager::m_constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&m_mat));
 }
 
@@ -272,7 +271,7 @@ void CRigidbody::InitDynamic()
 {
 	m_material = CPhysx::GetPhysics()->createMaterial(0.6f, 0.6f, 0.f);
 	physx::PxVec3 boxSize = m_transform->GetScale();
-	CCollider* col;
+
 	switch (m_geometryType)
 	{
 	case GEOMETRYTYPE::BOX:

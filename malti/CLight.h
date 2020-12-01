@@ -2,7 +2,6 @@
 #include	<DirectXMath.h>
 #include	"memory.h"
 #include	"Shader.h"
-#include	"DX11util.h"
 #include     "object.h"
 #include "DirectX11Manager.h"
 

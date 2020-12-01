@@ -110,11 +110,11 @@ namespace Egliss::ComponentSystem
 		}
 
 		inline void CreateCameraMatrix() {
-			ALIGN16 XMVECTOR Eye = XMVectorSet(m_eye.x, m_eye.y, m_eye.z, 0.0f);
-			ALIGN16 XMVECTOR At = XMVectorSet(m_lookat.x, m_lookat.y, m_lookat.z, 0.0f);
-			ALIGN16 XMVECTOR Up = XMVectorSet(m_up.x, m_up.y, m_up.z, 0.0f);
+			 XMVECTOR Eye = XMVectorSet(m_eye.x, m_eye.y, m_eye.z, 0.0f);
+			 XMVECTOR At = XMVectorSet(m_lookat.x, m_lookat.y, m_lookat.z, 0.0f);
+			 XMVECTOR Up = XMVectorSet(m_up.x, m_up.y, m_up.z, 0.0f);
 
-			ALIGN16 XMMATRIX camera;
+			/*ALIGN16 */XMMATRIX camera;
 			camera = XMMatrixLookAtLH(Eye, At, Up);
 
 			XMStoreFloat4x4(&m_camera, camera);
@@ -122,7 +122,7 @@ namespace Egliss::ComponentSystem
 
 		void CreateProjectionMatrix() {
 
-			ALIGN16 XMMATRIX projection;
+			/*ALIGN16 */XMMATRIX projection;
 
 			projection = XMMatrixPerspectiveFovLH(m_fov, m_aspect, m_near, m_far);
 
