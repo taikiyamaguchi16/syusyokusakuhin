@@ -11,7 +11,7 @@ void CCamera::Start()
 {
 	m_name = "Camera";
 	if (!m_pos.IsExist())
-		m_pos = Holder->GetWeakComponent<CTransform>();
+		m_pos = Holder->m_transform;
 
 	Init(1.0f, 10000.0f, XM_PIDIV2, SCREEN_X, SCREEN_Y, m_eye, m_lookat, m_up);
 	m_pos->SetPos(XMFLOAT3(0, 0, -30.0f));
@@ -19,13 +19,10 @@ void CCamera::Start()
 
 	//==========--コンスタントバッファー生成======================================================================================
 
-	
-
 	XMVECTOR eyePos = XMVectorSet(m_eye.x, m_eye.y, m_eye.z, 0);
 	XMVECTOR targetPos = XMVectorSet(m_lookat.x, m_lookat.y, m_lookat.z, 0.f);
 	XMVECTOR upVector = XMVectorSet(m_up.x, m_up.y, m_up.z, 0);
 	DirectX11Manager::m_constantBuffer.view = XMMatrixTranspose(XMMatrixLookAtLH(eyePos, targetPos, upVector));
-
 
 	//===========================================================================================================================
 }
@@ -87,6 +84,7 @@ void CCamera::Update()
 		SetEye(m_pos->GetDirectPos());
 		XMFLOAT4X4 forward_;
 		DX11MtxTranslation(XMFLOAT3(0, 0, 10.0f), forward_);
+		auto aaaa = m_pos->m_mat;
 		DX11MtxMultiply(forward_, forward_, m_pos->m_mat);
 		SetLookat(XMFLOAT3(forward_._41, forward_._42, forward_._43));
 		SetUp(XMFLOAT3(forward_._21, forward_._22, forward_._23));

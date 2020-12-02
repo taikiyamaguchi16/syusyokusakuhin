@@ -61,6 +61,12 @@ void ImGuiControl::InspectorDraw(wp<CObject> obj_, std::list<Egliss::ComponentSy
 	std::ostringstream oss;
 	//現状のオブジェクトの表示
 	unsigned int label = 0;
+
+	ImGui::SetNextTreeNodeOpen(false, ImGuiCond_Once);
+	if (ImGui::TreeNode("Transform")) {
+		obj_->m_transform->ImGuiDraw();
+		ImGui::TreePop();
+	}
 	//コンポーネント全表示
 	for (const auto& com : obj_->m_ComponentList) {
 		//コンポーネントの名前を書くように

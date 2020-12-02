@@ -189,7 +189,7 @@ namespace Egliss::ComponentSystem
 }
 
 
-class CObject final
+class CObject
 {
 	std::string m_tag;
 	std::string m_name;
@@ -201,8 +201,13 @@ class CObject final
 	const char* m_currentItem;
 	unsigned int  m_currentLayer;
 public:
+	sp<Egliss::ComponentSystem::CTransform> m_transform;
+
 	std::list<sp<Egliss::ComponentSystem::CComponent>> m_ComponentList;
-	CObject() {}
+	CObject() {
+		m_transform.SetPtr(new Egliss::ComponentSystem::CTransform());
+		m_transform->Start();
+	}
 	virtual ~CObject() {
 		for (auto itr = m_ComponentList.begin(); itr != m_ComponentList.end(); itr++) {
 			(*itr).Clear();
@@ -221,11 +226,6 @@ public:
 	template<class T>
 	T* GetComponent()
 	{
-		/*for (auto itr = m_ComponentList.begin(); itr != m_ComponentList.end(); itr++) {
-			T* buff = dynamic_cast<T*>(itr->get());
-			if (buff != nullptr)
-				return buff;
-		}*/
 		for (auto com : m_ComponentList) {
 			T* buff = dynamic_cast<T*>(com.GetPtr());
 			if (buff != nullptr)
@@ -237,11 +237,6 @@ public:
 	template<class T>
 	wp<T> GetWeakComponent()
 	{
-		/*for (auto itr = m_ComponentList.begin(); itr != m_ComponentList.end(); itr++) {
-			T* buff = dynamic_cast<T*>(itr->get());
-			if (buff != nullptr)
-				return buff;
-		}*/
 		for (auto com : m_ComponentList) {
 			wp<T>_wp1(com);
 			if (_wp1.IsExist() != NULL)
@@ -253,10 +248,9 @@ public:
 	template<class T>
 	T* AddComponent()
 	{
-		//std::shared_ptr<T> buff = std::make_shared<T>();
+		
 		T* buff = new T();
 		buff->Holder = this;
-		//m_ComponentList.emplace_back(std::make_shared<T>(buff));
 		sp<Egliss::ComponentSystem::CComponent>work_sp;
 		work_sp.SetPtr(buff);
 		m_ComponentList.emplace_back(work_sp);

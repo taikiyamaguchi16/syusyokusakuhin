@@ -18,7 +18,6 @@ namespace Egliss::ComponentSystem
 		//=======================================================================================
 		float m_radius = 1;
 
-		wp<CTransform> m_pos;
 		bool m_active = true;
 		//球やボックスなどのシンプルなメッシュの描画する用のフラグ
 		bool m_defaultMeshsMode = true;
@@ -51,7 +50,6 @@ namespace Egliss::ComponentSystem
 			}
 		}
 		void Start()override;
-		void Update()override;
 
 		void Draw();
 		void ImGuiDraw()override;

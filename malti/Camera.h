@@ -42,16 +42,6 @@ namespace Egliss::ComponentSystem
 			m_trackingFg = true;
 		}
 
-		/*
-			CCamera(const CCamera&) = delete;
-			CCamera& operator=(const CCamera&) = delete;
-			CCamera(CCamera&&) = delete;
-			CCamera& operator=(CCamera&&) = delete;
-
-			static CCamera* GetInstance() {
-				static CCamera instance;
-				return &instance;
-			}*/
 
 		inline void Init(float nearclip, float farclip, float fov,
 			float width, float height,

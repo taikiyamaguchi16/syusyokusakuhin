@@ -9,6 +9,7 @@ using namespace Egliss::ComponentSystem;
 
 void CObject::Update()
 {
+	m_transform->Update();
 	for (const auto& com : m_ComponentList)
 		com->Update();
 }
@@ -21,6 +22,7 @@ void CObject::LateUpdate()
 
 void CObject::Draw()
 {
+	m_transform->Draw();
 	for (const auto& com : m_ComponentList)
 		com->Draw();
 }
@@ -261,7 +263,8 @@ CRigidbody::~CRigidbody()
 void CRigidbody::Start()
 {
 	m_usegravity = true;
-	m_transform = Holder->GetWeakComponent<CTransform>();
+	m_transform = Holder->m_transform;
+
 	wp<CRigidbody>wark_wp = Holder->GetWeakComponent<CRigidbody>();
 	m_transform->SetRigidbody(wark_wp);
 	m_name = "Rigidbody";
@@ -275,7 +278,7 @@ void CRigidbody::InitDynamic()
 	switch (m_geometryType)
 	{
 	case GEOMETRYTYPE::BOX:
-		m_rigidDynamic = CPhysx::createDynamic(physx::PxTransform(Holder->GetComponent<CTransform>()->GetPhysXPos()), 
+		m_rigidDynamic = CPhysx::createDynamic(physx::PxTransform(m_transform->GetPhysXPos()), 
 			physx::PxBoxGeometry(boxSize /2.f),
 			m_material);
 
@@ -295,7 +298,7 @@ void CRigidbody::InitDynamic()
 		break;
 
 	case GEOMETRYTYPE::SPHERE:
-		m_rigidDynamic = CPhysx::createDynamic(physx::PxTransform(Holder->GetComponent<CTransform>()->GetPhysXPos()),
+		m_rigidDynamic = CPhysx::createDynamic(physx::PxTransform(m_transform->GetPhysXPos()),
 			physx::PxSphereGeometry(boxSize.x),
 			m_material);
 
@@ -348,7 +351,7 @@ void CRigidbody::InitStatic()
 	switch (m_geometryType)
 	{
 	case GEOMETRYTYPE::BOX:
-		m_rigidStatic = CPhysx::createStatic(physx::PxTransform(Holder->GetComponent<CTransform>()->GetPhysXPos()),
+		m_rigidStatic = CPhysx::createStatic(physx::PxTransform(m_transform->GetPhysXPos()),
 			physx::PxBoxGeometry(boxSize / 2.0f),
 			m_material);
 
@@ -363,7 +366,7 @@ void CRigidbody::InitStatic()
 		break;
 
 	case GEOMETRYTYPE::SPHERE:
-		m_rigidStatic = CPhysx::createStatic(physx::PxTransform(Holder->GetComponent<CTransform>()->GetPhysXPos()), 
+		m_rigidStatic = CPhysx::createStatic(physx::PxTransform(m_transform->GetPhysXPos()),
 			physx::PxSphereGeometry(boxSize.x),
 			m_material);
 
@@ -398,12 +401,11 @@ void CRigidbody::LateUpdate()
 {
 	if (m_rigidDynamic != nullptr) {
 		//‰ñ“]‚Ì‚½‚ß‚É
-		CTransform* _tra = Holder->GetComponent<CTransform>();
-		_tra->GetTrans().q = m_rigidDynamic->getGlobalPose().q;
+		m_transform->GetTrans().q = m_rigidDynamic->getGlobalPose().q;
 
 		physx::PxQuat _q = m_rigidDynamic->getGlobalPose().q;
 
-		m_actor->setGlobalPose(physx::PxTransform(_tra->GetPhysXPos(), physx::PxQuat(_q.x, _q.y, _q.z, _q.w)), true);
+		m_actor->setGlobalPose(physx::PxTransform(m_transform->GetPhysXPos(), physx::PxQuat(_q.x, _q.y, _q.z, _q.w)), true);
 	}
 }
 

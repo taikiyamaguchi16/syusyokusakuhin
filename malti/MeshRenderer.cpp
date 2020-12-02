@@ -60,16 +60,9 @@ void CMeshRenderer::Start()
 	m_currentModelName = m_modelNames[1];
 }
 
-void Egliss::ComponentSystem::CMeshRenderer::Update()
-{
-	
-}
-
-
 
 void CMeshRenderer::Draw(){
-	if (!m_pos.IsExist())
-		m_pos = Holder->GetWeakComponent<CTransform>();
+	
 	//•`‰æ‰Â”\ó‘Ô‚È‚ç
 	if (m_active) {
 

@@ -7,7 +7,6 @@ namespace Egliss::ComponentSystem
 	class CSkineMeshRenderer :public CComponent
 	{
 		static inline int m_mesh_cnt = 0;
-		wp<CTransform> m_pos;
 		bool m_active = true;
 
 		static std::map<std::string, UnityExportSkinnedModel*>m_skinnedModels;

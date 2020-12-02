@@ -81,8 +81,8 @@ void CGame::Update()
 
 	for (auto item2 : m_subCameras) {
 		CCamera* caca = item2->GetComponent<CCamera>();
-		CTransform* tra1 = item2->GetComponent<CTransform>();
-		CTransform* tra = m_active_obj->GetComponent<CTransform>();
+		CTransform* tra1 = item2->m_transform.GetPtr();
+		CTransform* tra = m_active_obj->m_transform.GetPtr();
 
 		ImGuiControl::GetInstance()->Draw3DGuizm(tra1->m_mat,caca->GetProjectionMatrix(), tra->m_mat,tra->m_angle);
 
@@ -171,13 +171,11 @@ void CGame::AddObjects()
 		item->SetName();
 	}
 
-	CTransform* _trans;
 	CRigidbody* _rigid;
 	CMeshRenderer* _render;
 	CCamera* _camera;
 
-	const std::string transName = "Transform";
-	const std::string rigidName = "Rigidbody";
+		const std::string rigidName = "Rigidbody";
 	//==========================================================================================
 	//AddComponentはTransformから！！！！！！！！！！！！！！
 	//その次にRigidbody
@@ -185,18 +183,14 @@ void CGame::AddObjects()
 
 
 	SubCamera.SetPtr(new CObject);
-	SubCamera->AddComponent<CTransform>();
 	_cama = SubCamera->AddComponentByNameAs<CCamera>("Camera");
-	SubCamera->AddComponent<CLight>();
 	SubCamera->SetName(std::string("SubCamera"));
 	SubCamera->SetTag(std::string("Camera"));
 	m_subCameras.emplace_back(SubCamera);
 
 
 	CameraObj.SetPtr(new CObject);
-	CameraObj->AddComponent<CTransform>();
 	_camera = CameraObj->AddComponent<CCamera>();
-	CameraObj->AddComponent<CLight>();
 	CameraObj->SetName(std::string("Camera"));
 	CameraObj->SetTag(std::string("Camera"));
 	sp<CObject>wark(CameraObj);
@@ -208,12 +202,11 @@ void CGame::AddObjects()
 
 
 	AirPlane.SetPtr(new CObject);
-	_trans = AirPlane->AddComponentByNameAs<CTransform>(transName);
-	_trans->SetPos(XMFLOAT3(0.0f, 60.0f, 0.0f));
+	AirPlane->m_transform->SetPos(XMFLOAT3(0.0f, 60.0f, 0.0f));
 	_rigid = AirPlane->AddComponentByNameAs<CRigidbody>(rigidName);
 	_rigid->SetMass(10.f);
 	AirPlane->AddComponent<CSkineMeshRenderer>();
-	_trans->SetScale(XMFLOAT3(3.f, 3.f, 3.f));
+	AirPlane->m_transform->SetScale(XMFLOAT3(3.f, 3.f, 3.f));
 	_rigid->SetGeometryType(GEOMETRYTYPE::BOX);
 	_rigid->InitDynamic();
 
@@ -221,12 +214,11 @@ void CGame::AddObjects()
 	AirPlane->SetTag(std::string("Player"));
 	m_obj_list.emplace_back(AirPlane);
 
-	//_camera->SetTrackingObj(AirPlane->GetWeakComponent<CTransform>());
+	_camera->SetTrackingObj(AirPlane->m_transform);
 
 	sphere.SetPtr(new CObject);
-	_trans = sphere->AddComponentByNameAs<CTransform>(transName);
-	_trans->SetPos(XMFLOAT3(30.0f, 30.0f, 0.0f));
-	_trans->SetScale(XMFLOAT3(5.f, 5.f,5.f ));
+	sphere->m_transform->SetPos(XMFLOAT3(30.0f, 30.0f, 0.0f));
+	sphere->m_transform->SetScale(XMFLOAT3(5.f, 5.f,5.f ));
 	_rigid = sphere->AddComponentByNameAs<CRigidbody>(rigidName);
 	_render = sphere->AddComponent<CMeshRenderer>();
 	_rigid->SetGeometryType(GEOMETRYTYPE::BOX);
@@ -237,14 +229,13 @@ void CGame::AddObjects()
 
 
 	box.SetPtr(new CObject);
-	_trans = box->AddComponent<CTransform>();
 
-	_trans->SetPos(XMFLOAT3(0.0f, 0.0f, 0.0f));
+	box->m_transform->SetPos(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	_rigid = box->AddComponent<CRigidbody>();
 	_render = box->AddComponent<CMeshRenderer>();
 	//_rigid->SetBoxSize(XMFLOAT3(_plane, 5.0f, _plane));
 	_render->BoxInit();
-	_trans->SetScale(XMFLOAT3(_plane, 5.0f, _plane));
+	box->m_transform->SetScale(XMFLOAT3(_plane, 5.0f, _plane));
 	_render->SetColor(255.0f, 0.0f, 0.0f, 255.0f);
 	_rigid->InitStatic();
 	box->SetName(std::string("box"));

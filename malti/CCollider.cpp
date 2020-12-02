@@ -10,7 +10,7 @@ void CCollider::Start()
 	//rigidbody‚ª‚È‚¢‚ÆˆÙíI—¹‚·‚é
 	m_rb = Holder->GetWeakComponent<CRigidbody>();
 	assert(m_rb.IsExist());
-	m_transform= Holder->GetWeakComponent<CTransform>();
+	m_transform= Holder->m_transform;
 
 	SetName();
 }

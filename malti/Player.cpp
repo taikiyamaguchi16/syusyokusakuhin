@@ -10,7 +10,7 @@ void CPlayer::Start()
 {
 	SetName();
 	if (m_pos.IsExist() == NULL)
-		m_pos = Holder->GetWeakComponent<CTransform>();
+		m_pos = Holder->m_transform;
 	
 	m_rb = Holder->GetWeakComponent<CRigidbody>();
 

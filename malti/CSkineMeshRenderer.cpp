@@ -54,8 +54,6 @@ void CSkineMeshRenderer::Start()
 
 
 void CSkineMeshRenderer::Draw() {
-	if (!m_pos.IsExist())
-		m_pos = Holder->GetWeakComponent<CTransform>();
 	//•`‰æ‰Â”\ó‘Ô‚È‚ç
 	if (m_active) {
 		m_skinnedModels[m_currentModelName]->Draw();
