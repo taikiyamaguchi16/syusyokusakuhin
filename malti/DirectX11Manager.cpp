@@ -309,6 +309,8 @@ HRESULT DirectX11Manager::Init(HINSTANCE hInstance, int cCmdShow)
 	io.IniFilename = NULL;
 	//日本語フォントに対応
 	io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\meiryo.ttc", 18.0f, nullptr, io.Fonts->GetGlyphRangesJapanese());
+	io.DisplaySize.x = SCREEN_X;
+	io.DisplaySize.y = SCREEN_Y;
 
 	if (!SceneManager::GetInstance()->Init(hInstance, hWnd, SCREEN_X, SCREEN_Y, FULLSCREEN)) {
 		MessageBox(hWnd, "ERROR!", "GameInit Error", MB_OK);

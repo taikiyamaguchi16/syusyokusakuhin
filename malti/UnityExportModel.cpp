@@ -39,27 +39,6 @@ UnityExportModel::~UnityExportModel()
 	}*/
 }
 
-void UnityExportModel::LoadAscii(string filename)
-{
-	uemData.LoadAscii(filename);
-
-	//VertexBuffer IndexBufferçÏê¨
-	for (auto& mesh : uemData.meshs)
-	{
-		ModelData tmpData;
-		tmpData.vb.Attach(DirectX11Manager::CreateVertexBuffer(mesh.vertexDatas.data(), (UINT)mesh.vertexDatas.size()));
-		tmpData.ib.Attach(DirectX11Manager::CreateIndexBuffer(mesh.indexs.data(), (UINT)mesh.indexs.size()));
-		models.push_back(tmpData);
-	}
-
-	//TextureLoad
-	for (auto& material : uemData.materials)
-	{
-		Material tmpMaterial;
-		tmpMaterial.albedoTexture.Attach(DirectX11Manager::CreateTextureFromFile(material.GetTexture("_MainTex")));
-		materials.push_back(tmpMaterial);
-	}
-}
 
 void UnityExportModel::LoadBinary(string filename)
 {

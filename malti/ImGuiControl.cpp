@@ -20,6 +20,10 @@ ImGuiControl::~ImGuiControl()
 
 void ImGuiControl::InspectorDraw(wp<CObject> obj_, std::list<Egliss::ComponentSystem::CComponent*> coms_)
 {
+	ImGuiIO& io = ImGui::GetIO();
+	io.DisplaySize.x = SCREEN_X;
+	io.DisplaySize.y = SCREEN_Y;
+
 	//オブジェクトの名前を書くよう
 	std::string str = obj_->GetName();
 	const char* TitleName = str.c_str();
@@ -29,8 +33,8 @@ void ImGuiControl::InspectorDraw(wp<CObject> obj_, std::list<Egliss::ComponentSy
 	ImGuiCond_Once により、初回のみ設定されます。
 	ImGuiCond_Always で、常に設定することもできます。
 	*/
-	ImGui::SetNextWindowPos(ImVec2(SCREEN_X - 300, 0), ImGuiCond_None);
-	ImGui::SetNextWindowSize(ImVec2(300, 750), ImGuiCond_None);
+	ImGui::SetNextWindowPos(ImVec2(SCREEN_X - 300, 0), ImGuiCond_Always);
+	ImGui::SetNextWindowSize(ImVec2(300, 750), ImGuiCond_Always);
 
 
 	ImGui::Begin(TitleName, &show_gui);
@@ -152,7 +156,8 @@ void ImGuiControl::Draw3DGuizm(DirectX::XMFLOAT4X4 _view, DirectX::XMFLOAT4X4 _p
 	mat[12]= _mat._41; mat[13] = _mat._42;mat[14] = _mat._43; mat[15] = _mat._44;
 
 	ImGuiIO& io = ImGui::GetIO();
-
+	io.DisplaySize.x = SCREEN_X;
+	io.DisplaySize.y = SCREEN_Y;
 	ImGuizmo::SetID(0);
 	//描画範囲の設定
 	ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);

@@ -398,52 +398,6 @@ namespace uem
 		std::unordered_map<size_t, std::unique_ptr<Transform>> transformMap;
 
 	private:
-		void LoadHierarchyAscii(std::ifstream& ifs)
-		{
-			//モデルの階層構造を読み込み
-			auto active = root.get();
-			int transformCount = 0;
-			{
-				std::string tmp;
-				ifs >> tmp;
-				transformCount++;
-				active->name = tmp;
-				active->hash = std::hash<std::string>()(tmp);
-				ifs >> active->position.x >> active->position.y >> active->position.z;
-				DirectX::XMFLOAT3 euler;
-				ifs >> euler.x >> euler.y >> euler.z;
-				active->rotation = DirectX::XMQuaternionRotationRollPitchYaw(DirectX::XMConvertToRadians(euler.x),
-					DirectX::XMConvertToRadians(euler.y), DirectX::XMConvertToRadians(euler.z));
-				ifs >> active->scale.x >> active->scale.y >> active->scale.z;
-			}
-			while (transformCount != 0)
-			{
-				std::string tmp;
-				ifs >> tmp;
-				if (tmp == "ChildEndTransform")
-				{
-					transformCount--;
-					active = active->parent;
-					continue;
-				}
-				else
-					transformCount++;
-				auto newTrans = std::unique_ptr<Transform>(new Transform());
-				newTrans->name = tmp;
-				newTrans->hash = std::hash<std::string>()(tmp);
-				ifs >> newTrans->position.x >> newTrans->position.y >> newTrans->position.z;
-
-				DirectX::XMFLOAT3 euler;
-				ifs >> euler.x >> euler.y >> euler.z;
-				newTrans->rotation = DirectX::XMQuaternionRotationRollPitchYaw(DirectX::XMConvertToRadians(euler.x),
-					DirectX::XMConvertToRadians(euler.y), DirectX::XMConvertToRadians(euler.z));
-				ifs >> newTrans->scale.x >> newTrans->scale.y >> newTrans->scale.z;
-				newTrans->parent = active;
-				active->child.push_back(newTrans.get());
-				active = newTrans.get();
-				transformMap.insert(std::make_pair(newTrans->hash, std::move(newTrans)));
-			}
-		}
 
 		void LoadHierarchyBinary(FileStream& fileStream)
 		{
@@ -498,142 +452,7 @@ namespace uem
 			}
 		}
 	public:
-		void LoadAscii(std::string filename)
-		{
-			root.reset(new Transform);
-
-			std::ifstream ifs(filename);
-			auto lastSlash = filename.find_last_of('/');
-			filename.erase(lastSlash);
-			assert(ifs.is_open());
-
-			LoadHierarchyAscii(ifs);
-
-			//頂点フォーマットを読み込み
-			int vertexFormat;
-			ifs >> vertexFormat;
-
-			int modelCount;
-			ifs >> modelCount;
-
-			//フォーマットエラーチェック
-			std::vector<bool> formatFlg;
-			formatFlg.resize(12);
-			int totalByte = 32; //BoneIndex & BoneWeight
-			auto formatSizes = VertexFormatSizes();
-			for (int i = 0; i < formatSizes.size(); i++)
-				if (vertexFormat & formatSizes[i].first)
-					totalByte += formatSizes[i].second;
-			if (totalByte != sizeof(X))
-			{
-				std::string errorLog = std::string(typeid(X).name()) + " is " + std::to_string(sizeof(X)) + "\n " +
-					"The required size is " + std::to_string(totalByte) + " bytes";
-			}
-
-			for (int i = 0; i < modelCount; i++)
-			{
-				Mesh model;
-				//頂点情報読み込み
-				int vertexCount;
-				ifs >> vertexCount;
-				for (int j = 0; j < vertexCount; j++)
-				{
-					uint8_t* rawData = new uint8_t[sizeof(X)];
-					int rawCnt = 0;
-
-					for (int i = 0; i < formatSizes.size(); i++)
-					{
-						if (vertexFormat & formatSizes[i].first)
-						{
-							float tmpData[4];
-							int dataSize = formatSizes[i].second / 4;
-							for (int j = 0; j < dataSize; j++)
-								ifs >> tmpData[j];
-							memcpy(&rawData[rawCnt], tmpData, formatSizes[i].second);
-							rawCnt += formatSizes[i].second;
-						}
-					}
-					DirectX::XMINT4 boneIndex;
-					DirectX::XMFLOAT4 boneWeight;
-					ifs >> boneIndex.x >> boneIndex.y >> boneIndex.z >> boneIndex.w;
-					ifs >> boneWeight.x >> boneWeight.y >> boneWeight.z >> boneWeight.w;
-					memcpy(&rawData[rawCnt], &boneIndex, 16);
-					memcpy(&rawData[rawCnt + 16], &boneWeight, 16);
-
-					X data;
-					memcpy(&data, rawData, sizeof(X));
-					delete[] rawData;
-					model.vertexDatas.push_back(data);
-				}
-
-				//インデックス読み込み
-				int indexCount;
-				ifs >> indexCount;
-				model.indexs.resize(indexCount);
-				for (int j = 0; j < indexCount; j++)
-				{
-					ifs >> model.indexs[j];
-				}
-
-				//ベースポーズ読み込み
-				int basePoseCount;
-				ifs >> basePoseCount;
-				for (int j = 0; j < basePoseCount; j++)
-				{
-					std::string name;
-					ifs >> name;
-
-					DirectX::XMMATRIX tmp;
-					ifs >> tmp.r[0].m128_f32[0] >> tmp.r[0].m128_f32[1] >> tmp.r[0].m128_f32[2] >> tmp.r[0].m128_f32[3]
-						>> tmp.r[1].m128_f32[0] >> tmp.r[1].m128_f32[1] >> tmp.r[1].m128_f32[2] >> tmp.r[1].m128_f32[3]
-						>> tmp.r[2].m128_f32[0] >> tmp.r[2].m128_f32[1] >> tmp.r[2].m128_f32[2] >> tmp.r[2].m128_f32[3]
-						>> tmp.r[3].m128_f32[0] >> tmp.r[3].m128_f32[1] >> tmp.r[3].m128_f32[2] >> tmp.r[3].m128_f32[3];
-
-					auto trans = root->Find(name);
-					model.bones.push_back(std::make_pair(XMMatrixTranspose(tmp), trans));
-				}
-
-				//マテリアルの読み込み
-				Material material;
-				ifs >> material.name;
-				int colorCount;
-				ifs >> colorCount;
-				for (int i = 0; i < colorCount; i++)
-				{
-					std::string propertyName;
-					ifs >> propertyName;
-					DirectX::XMFLOAT4 color;
-					ifs >> color.x >> color.y >> color.z >> color.w;
-					material.AddColor(propertyName, color);
-				}
-
-				int textureCount;
-				ifs >> textureCount;
-				for (int i = 0; i < textureCount; i++)
-				{
-					std::string propertyName;
-					ifs >> propertyName;
-					std::string textureName;
-					ifs >> textureName;
-					material.AddTexture(propertyName, filename + "/" + textureName);
-				}
-
-				int materialNo = -1;
-				for (int j = 0; j < static_cast<int>(materials.size()); j++)
-				{
-					if (materials[j] == material.name)
-						materialNo = j;
-				}
-				if (materialNo == -1)
-				{
-					materialNo = static_cast<int>(materials.size());
-					materials.push_back(material);
-				}
-				model.materialNo = materialNo;
-				meshs.push_back(model);
-			}
-		}
-
+		
 		void LoadBinary(std::string filename)
 		{
 			root.reset(new Transform());
@@ -682,6 +501,8 @@ namespace uem
 				//ベースポーズ読み込み
 				uint16_t basePoseCount;
 				fileStream.Read(&basePoseCount, sizeof(uint16_t));
+
+				
 				for (int j = 0; j < basePoseCount; j++)
 				{
 					std::string name;

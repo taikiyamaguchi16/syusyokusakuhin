@@ -51,7 +51,6 @@ public:
 	template<typename T>
 	inline void HierarchyDraw(T* scene_) {
 		//=======================================ƒqƒGƒ‰ƒ‹ƒL[‚Ì•`‰æ=========================================================
-		//std::list<wp<CObject>>obj_s = scene_->GetObjList();
 		std::list<wp<CObject>>obj_s;
 		for (auto item : scene_->GetObjList()) {
 			wp<CObject>_ob(item);

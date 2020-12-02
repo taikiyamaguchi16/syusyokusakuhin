@@ -48,8 +48,6 @@ public:
 	UnityExportSkinnedModel();
 	~UnityExportSkinnedModel();
 
-
-	void LoadAscii(string filename);
 	void LoadBinary(string filename);
 
 	void LoadAnimation(string _pathname);
@@ -65,6 +63,7 @@ public:
 	}
 
 	void ImGuiDraw();
-	//void DrawImGui(std::shared_ptr<uem::Transform> trans);
+	void DrawChild(uem::Transform* _trans);
 	void Draw();
+
 };

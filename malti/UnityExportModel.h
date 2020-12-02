@@ -38,7 +38,6 @@ public:
 	UnityExportModel();
 	~UnityExportModel();
 
-	void LoadAscii(string filename);
 	void LoadBinary(string filename);
 
 	void Draw();

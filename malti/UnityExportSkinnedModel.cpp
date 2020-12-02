@@ -19,9 +19,9 @@ UnityExportSkinnedModel::UnityExportSkinnedModel()
 	il.Attach(DirectX11Manager::CreateInputLayout(elem, 5, "assets/Shaders/UnityExportSkinnedModel.hlsl", "vsMain"));
 
 	DirectX11Manager::CreateConstantBuffer(sizeof(ConstantBufferMatrix), &cb);
-	DirectX11Manager::m_constantBuffer.proj = XMMatrixTranspose(
+	/*DirectX11Manager::m_constantBuffer.proj = XMMatrixTranspose(
 		XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f),
-			SCREEN_X / SCREEN_X, 0.5f, 4096.0f * 8.0f));
+			SCREEN_X / SCREEN_X, 0.5f, 4096.0f * 8.0f));*/
 
 	DirectX11Manager::CreateConstantBuffer(sizeof(XMMATRIX) * 200, &boneMtxCb);
 
@@ -44,28 +44,6 @@ UnityExportSkinnedModel::~UnityExportSkinnedModel()
 	{
 		itr.albedoTexture->Release();
 	}*/
-}
-
-void UnityExportSkinnedModel::LoadAscii(string filename)
-{
-	uemData.LoadAscii(filename);
-
-	//VertexBuffer IndexBufferì¬
-	for (auto& mesh : uemData.meshs)
-	{
-		ModelData tmpData;
-		tmpData.vb.Attach(DirectX11Manager::CreateVertexBuffer(mesh.vertexDatas.data(), (UINT)mesh.vertexDatas.size()));
-		tmpData.ib.Attach(DirectX11Manager::CreateIndexBuffer(mesh.indexs.data(), (UINT)mesh.indexs.size()));
-		models.push_back(tmpData);
-	}
-
-	//TextureLoad
-	for (auto& material : uemData.materials)
-	{
-		Material tmpMaterial;
-		tmpMaterial.albedoTexture.Attach(DirectX11Manager::CreateTextureFromFile(material.GetTexture("_MainTex")));
-		materials.push_back(tmpMaterial);
-	}
 }
 
 void UnityExportSkinnedModel::LoadBinary(string filename)
@@ -119,6 +97,27 @@ void UnityExportSkinnedModel::ImGuiDraw()
 		m_currentAnimationName = work_str;
 	}
 	ImGui::SliderFloat("AnimTime", &m_loopSplit, 0.0f, 200.f);
+	
+	DrawChild(uemData.root.get());
+	
+}
+
+void UnityExportSkinnedModel::DrawChild(uem::Transform* _trans)
+{
+	if (_trans->child.size() > 0)
+	{
+		for (auto itr = _trans->child.begin(); itr != _trans->child.end(); itr++)
+		{
+			if (ImGui::TreeNode((*itr)->name.c_str()))
+			{
+				auto mat = _trans->LocalToWorldMatrix();
+				ImGui::Text("x %.3f  y%.3f  z%.3f", mat.r[3].m128_f32[0], mat.r[3].m128_f32[1], mat.r[3].m128_f32[2]);
+				DrawChild(*itr);
+				ImGui::TreePop();
+			}
+		}
+
+	}
 }
 
 void UnityExportSkinnedModel::Draw()
@@ -151,7 +150,6 @@ void UnityExportSkinnedModel::Draw()
 		DirectX11Manager::UpdateConstantBuffer(boneMtxCb.Get(), boneMtx);
 		ID3D11Buffer* tmpCb[] = { boneMtxCb.Get() };
 		DirectX11Manager::m_pImContext->VSSetConstantBuffers(1, 1, tmpCb);
-
 
 		DirectX11Manager::SetVertexBuffer(models[j].vb.Get(), sizeof(VertexData));
 		DirectX11Manager::SetIndexBuffer(models[j].ib.Get());
