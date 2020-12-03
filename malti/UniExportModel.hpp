@@ -23,7 +23,7 @@ namespace uem
 
 		void Load(const char* filename)
 		{
-			FILE* fp;
+			FILE* fp=NULL;
 			assert(fopen_s(&fp, filename, "rb") == 0);
 			fpos_t pos = 0;
 			fseek(fp, 0L, SEEK_END);
@@ -398,6 +398,7 @@ namespace uem
 		std::unordered_map<size_t, std::unique_ptr<Transform>> transformMap;
 
 	private:
+		
 
 		void LoadHierarchyBinary(FileStream& fileStream)
 		{
@@ -419,6 +420,7 @@ namespace uem
 					DirectX::XMConvertToRadians(euler.y), DirectX::XMConvertToRadians(euler.z));
 				fileStream.Read(&active->scale, sizeof(float) * 3);
 			}
+
 			while (transformCount != 0)
 			{
 				std::string tmp;
@@ -432,9 +434,11 @@ namespace uem
 				}
 				else
 					transformCount++;
+
 				tmp.resize(tmpCount);
 				fileStream.Read(&tmp[0], sizeof(char) * tmpCount);
 
+				//=====================================activeの子供になる新しいtransformの作成=======================================
 				auto newTrans = std::unique_ptr<Transform>(new Transform());
 				newTrans->name = tmp;
 				newTrans->hash = std::hash<std::string>()(tmp);
@@ -445,10 +449,13 @@ namespace uem
 				newTrans->rotation = DirectX::XMQuaternionRotationRollPitchYaw(DirectX::XMConvertToRadians(euler.x),
 					DirectX::XMConvertToRadians(euler.y), DirectX::XMConvertToRadians(euler.z));
 				fileStream.Read(&newTrans->scale, sizeof(float) * 3);
+				//作成した子供の親を設定しactiveを作成した子供に変更する
 				newTrans->parent = active;
 				active->child.push_back(newTrans.get());
 				active = newTrans.get();
+
 				transformMap.insert(std::make_pair(newTrans->hash, std::move(newTrans)));
+				//===================================================================================================================
 			}
 		}
 	public:
@@ -501,8 +508,6 @@ namespace uem
 				//ベースポーズ読み込み
 				uint16_t basePoseCount;
 				fileStream.Read(&basePoseCount, sizeof(uint16_t));
-
-				
 				for (int j = 0; j < basePoseCount; j++)
 				{
 					std::string name;
@@ -632,39 +637,6 @@ namespace uem
 		std::vector<Animation> animationList;
 		float maxAnimationTime = 0;
 	public:
-		void LoadAscii(std::string filename, Transform* root)
-		{
-			std::ifstream ifs(filename);
-			auto lastSlash = filename.find_last_of('/');
-			filename.erase(lastSlash);
-			assert(ifs.is_open());
-
-			int animationCount;
-			ifs >> animationCount;
-			animationList.resize(animationCount);
-			for (int i = 0; i < animationCount; i++)
-			{
-				auto& anim = animationList[i];
-				std::string transformName;
-				ifs >> transformName;
-				anim.transform = root->Find(transformName);
-				for (int j = 0; j < 10; j++)
-				{
-					int keyCount;
-					ifs >> keyCount;
-					anim.curves[j].times.resize(keyCount);
-					anim.curves[j].keys.resize(keyCount);
-					for (int k = 0; k < keyCount; k++)
-					{
-						ifs >> anim.curves[j].times[k];
-						if (anim.curves[j].times[k] > maxAnimationTime)
-							maxAnimationTime = anim.curves[j].times[k];
-					}
-					for (int k = 0; k < keyCount; k++)
-						ifs >> anim.curves[j].keys[k];
-				}
-			}
-		}
 
 		void LoadBinary(std::string filename, Transform* root)
 		{

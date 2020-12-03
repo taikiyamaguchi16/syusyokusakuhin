@@ -1,8 +1,22 @@
-﻿  game.cpp
+﻿  CBox.cpp
+  CCollider.cpp
+  CSkineMeshRenderer.cpp
+  Camera.cpp
+  DirectX11Manager.cpp
+  ImGuiControl.cpp
+  MeshRenderer.cpp
+  Player.cpp
+  DynamicType.cpp
+  Scene.cpp
+  Sphere.cpp
+  Title.cpp
+  UnityExportModel.cpp
+  UnityExportSkinnedModel.cpp
+  game.cpp
+  main.cpp
+  object.cpp
   コード生成しています。
-  142 of 6707 functions ( 2.1%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    90 functions had inline decision re-evaluated but remain unchanged
+  All 6544 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   コード生成が終了しました。
 PhysXExtensions_static_64.lib(ExtCpuWorkerThread.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtCpuWorkerThread.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
 PhysXExtensions_static_64.lib(ExtDefaultCpuDispatcher.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtDefaultCpuDispatcher.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Release\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
