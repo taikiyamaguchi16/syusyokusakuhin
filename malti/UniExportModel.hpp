@@ -173,114 +173,7 @@ namespace uem
 		std::vector<Mesh> meshs;
 		std::vector<Material> materials;
 
-		void LoadAscii(std::string filename)
-		{
-			std::ifstream ifs(filename);
-			auto lastSlash = filename.find_last_of('/');
-			filename.erase(lastSlash);
-			assert(ifs.is_open());
-
-			//頂点フォーマットを読み込み
-			int vertexFormat;
-			ifs >> vertexFormat;
-
-			int modelCount;
-			ifs >> modelCount;
-
-			//フォーマットエラーチェック
-			std::vector<bool> formatFlg;
-			formatFlg.resize(12);
-			int totalByte = 0;
-			auto formatSizes = VertexFormatSizes();
-			for (int i = 0; i < formatSizes.size(); i++)
-				if (vertexFormat & formatSizes[i].first)
-					totalByte += formatSizes[i].second;
-			if (totalByte != sizeof(X))
-			{
-				std::string errorLog = std::string(typeid(X).name()) + " is " + std::to_string(sizeof(X)) + "\n " +
-					"The required size is " + std::to_string(totalByte) + " bytes";
-			}
-
-			for (int i = 0; i < modelCount; i++)
-			{
-				Mesh model;
-				//頂点情報読み込み
-				int vertexCount;
-				ifs >> vertexCount;
-				for (int j = 0; j < vertexCount; j++)
-				{
-					uint8_t* rawData = new uint8_t[sizeof(X)];
-					int rawCnt = 0;
-
-					for (int i = 0; i < formatSizes.size(); i++)
-					{
-						if (vertexFormat & formatSizes[i].first)
-						{
-							float tmpData[4];
-							int dataSize = formatSizes[i].second / 4;
-							for (int j = 0; j < dataSize; j++)
-								ifs >> tmpData[j];
-							memcpy(&rawData[rawCnt], tmpData, formatSizes[i].second);
-							rawCnt += formatSizes[i].second;
-						}
-					}
-
-					X data;
-					memcpy(&data, rawData, sizeof(X));
-					delete[] rawData;
-					model.vertexDatas.push_back(data);
-				}
-
-				//インデックス読み込み
-				int indexCount;
-				ifs >> indexCount;
-				model.indexs.resize(indexCount);
-				for (int j = 0; j < indexCount; j++)
-				{
-					ifs >> model.indexs[j];
-				}
-
-				//マテリアルの読み込み
-				Material material;
-				ifs >> material.name;
-				int colorCount;
-				ifs >> colorCount;
-				for (int i = 0; i < colorCount; i++)
-				{
-					std::string propertyName;
-					ifs >> propertyName;
-					DirectX::XMFLOAT4 color;
-					ifs >> color.x >> color.y >> color.z >> color.w;
-					material.AddColor(propertyName, color);
-				}
-
-				int textureCount;
-				ifs >> textureCount;
-				for (int i = 0; i < textureCount; i++)
-				{
-					std::string propertyName;
-					ifs >> propertyName;
-					std::string textureName;
-					ifs >> textureName;
-					material.AddTexture(propertyName, filename + "/" + textureName);
-				}
-
-				int materialNo = -1;
-				for (int j = 0; j < static_cast<int>(materials.size()); j++)
-				{
-					if (materials[j] == material.name)
-						materialNo = j;
-				}
-				if (materialNo == -1)
-				{
-					materialNo = static_cast<int>(materials.size());
-					materials.push_back(material);
-				}
-				model.materialNo = materialNo;
-				meshs.push_back(model);
-			}
-		}
-
+		
 		void LoadBinary(std::string filename)
 		{
 			FileStream fileStream(filename.c_str());
@@ -402,7 +295,7 @@ namespace uem
 		CModelObject* root;
 		//現状必要なし
 		//std::unordered_map<size_t, std::unique_ptr<Transform>> transformMap;
-
+		std::unordered_map<size_t, std::unique_ptr<CModelObject>> transformMap;
 	private:
 		
 		void LoadHierarchyBinary(FileStream& fileStream)
@@ -447,7 +340,8 @@ namespace uem
 				//=====================================activeの子供になる新しいtransformの作成=======================================
 				//auto newTrans = std::unique_ptr<Transform>(new Transform());
 				//auto newTrans = new Egliss::ComponentSystem::CTransform();
-				auto work_ptr = new CModelObject();
+				//auto work_ptr = new CModelObject();
+				auto work_ptr = std::unique_ptr<CModelObject>(new CModelObject);
 				auto newTrans = work_ptr->m_transform;
 
 				newTrans->Holder->m_name = tmp;
@@ -466,7 +360,7 @@ namespace uem
 				//active = newTrans.get();
 
 				//newTrans.release();
-				//transformMap.insert(std::make_pair(newTrans->hash, std::move(newTrans)));
+				transformMap.insert(std::make_pair(newTrans->hash, std::move(work_ptr)));
 				//===================================================================================================================
 			}
 		}

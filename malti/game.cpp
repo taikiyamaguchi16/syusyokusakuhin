@@ -204,7 +204,7 @@ void CGame::AddObjects()
 	AirPlane.SetPtr(new CObject);
 	AirPlane->m_transform->SetPos(XMFLOAT3(0.0f, 60.0f, 0.0f));
 	_rigid = AirPlane->AddComponentByNameAs<CRigidbody>(rigidName);
-	//AirPlane->AddComponent<CSkineMeshRenderer>();
+	AirPlane->AddComponent<CSkineMeshRenderer>();
 	AirPlane->m_transform->SetScale(XMFLOAT3(3.f, 3.f, 3.f));
 	_rigid->SetGeometryType(GEOMETRYTYPE::BOX);
 	_rigid->InitDynamic();
@@ -239,65 +239,6 @@ void CGame::AddObjects()
 	box->SetTag(std::string("Default"));
 	m_obj_list.emplace_back(box);
 
-
-
-	/*box2.SetPtr(new CObject);
-	_trans = box2->AddComponent<CTransform>();
-	_trans->SetPos(XMFLOAT3(_plane / 2.0f, _plane / 2.0f, .0f));
-	_rigid = box2->AddComponent<CRigidbody>();
-	_render = box2->AddComponent<CMeshRenderer>();
-	_render->BoxInit();
-	_trans->SetScale(XMFLOAT3(5.0f, _plane, _plane));
-	_render->SetColor(0.0f, 255.0f, 0.0f, 255.0f);
-	_rigid->InitStatic();
-	box2->SetName(std::string("box2"));
-	box2->SetTag(std::string("Default"));
-	m_obj_list.emplace_back(box2);
-
-
-	box3.SetPtr(new CObject);
-	_trans = box3->AddComponent<CTransform>();
-	_trans->SetPos(XMFLOAT3(-_plane / 2.0f, _plane / 2.0f, .0f));
-	_rigid = box3->AddComponent<CRigidbody>();
-	_render = box3->AddComponent<CMeshRenderer>();
-	_render->BoxInit();
-	_trans->SetScale(XMFLOAT3(5.0f, _plane, _plane));
-	_render->SetColor(0.0f, 0.0f, 255.0f, 255.0f);
-	_rigid->InitStatic();
-	box3->SetName(std::string("box3"));
-	box3->SetTag(std::string("Default"));
-	m_obj_list.emplace_back(box3);
-
-
-	box4.SetPtr(new CObject);
-	_trans = box4->AddComponent<CTransform>();
-	_trans->SetPos(XMFLOAT3(0.0f, _plane / 2.0f, _plane / 2.0f));
-	_rigid = box4->AddComponent<CRigidbody>();
-	_render = box4->AddComponent<CMeshRenderer>();
-	_render->BoxInit();
-	_trans->SetScale(XMFLOAT3(_plane, _plane, 5.0f));
-	_render->SetColor(255.0f, 255.0f, 0.0f, 255.0f);
-	_rigid->InitStatic();
-	box4->SetName(std::string("box4"));
-	box4->SetTag(std::string("Default"));
-	m_obj_list.emplace_back(box4);
-
-
-	box5.SetPtr(new CObject);
-	_trans = box5->AddComponent<CTransform>();
-	_trans->SetPos(XMFLOAT3(0.0f, _plane / 2.0f, -_plane / 2.0f));
-	_rigid = box5->AddComponent<CRigidbody>();
-	_render = box5->AddComponent<CMeshRenderer>();
-	_render->BoxInit();
-	_trans->SetScale(XMFLOAT3(_plane, _plane, 5.0f));
-	_render->SetColor(255.0f, 0.0f, 255.0f, 255.0f);
-	_rigid->InitStatic();
-	box5->SetName(std::string("box5"));
-	box5->SetTag(std::string("Default"));
-	m_obj_list.emplace_back(box5);*/
-
-	/*wp<CObject>wark_weak_ptr(AirPlane);
-	m_active_obj = wark_weak_ptr;*/
 
 	m_active_obj = AirPlane.GetPtr();
 }

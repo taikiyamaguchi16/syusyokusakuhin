@@ -181,9 +181,7 @@ namespace Egliss::ComponentSystem
 		inline void SetName()override {
 			m_name = "Rigidbody";
 		}
-		inline CComponent* CreateAdress()override {
-			return new CRigidbody();
-		}
+		
 		inline physx::PxRigidActor* GetActor() {
 			return  m_actor;
 		}
@@ -215,6 +213,8 @@ class CObject
 	unsigned int  m_currentLayer;
 	//sp<Egliss::ComponentSystem::CTransform> m_transform;
 public:
+	//親子関係の実装用の仮のフラグ
+	bool m_open = false;
 	sp<Egliss::ComponentSystem::CTransform> m_transform;
 	std::string m_name;
 	std::list<sp<Egliss::ComponentSystem::CComponent>> m_ComponentList;

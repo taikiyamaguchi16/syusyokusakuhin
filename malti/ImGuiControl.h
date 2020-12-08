@@ -161,12 +161,25 @@ public:
 		{
 			for (auto itr = _obj->m_transform->m_child.begin(); itr != _obj->m_transform->m_child.end(); itr++)
 			{
-				if (ImGui::TreeNodeEx((*itr)->Holder->m_name.c_str()),false)
+				if (ImGui::TreeNode((*itr)->Holder->m_name.c_str()))
 				{
 					ChildDraw((*itr)->Holder,scene_);
-					scene_->SetActiveObj((*itr)->Holder);
+					
 					ImGui::TreePop();
 				}
+				if (ImGui::IsItemClicked())
+				{
+					scene_->SetActiveObj((*itr)->Holder);
+				}
+				/*if (ImGui::Button((*itr)->Holder->m_name.c_str()))
+				{
+					(*itr)->Holder->m_open = !(*itr)->Holder->m_open;
+					scene_->SetActiveObj((*itr)->Holder);
+				}
+				if ((*itr)->Holder->m_open)
+				{
+					ChildDraw((*itr)->Holder, scene_);
+				}*/
 			}
 
 		}

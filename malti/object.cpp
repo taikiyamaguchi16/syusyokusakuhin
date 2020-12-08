@@ -270,7 +270,6 @@ CRigidbody::~CRigidbody()
 	CPhysx::DeleteActor(m_actor);
 	m_actor->release();
 	m_material->release();
-	
 }
 
 void CRigidbody::Start()
@@ -372,7 +371,6 @@ void CRigidbody::InitStatic()
 		m_actor = CPhysx::GetStaticActor();
 
 		Holder->AddComponent<CBoxCollider>();
-		//col->Init();
 		break;
 	case GEOMETRYTYPE::CAPSILE:
 
@@ -387,7 +385,6 @@ void CRigidbody::InitStatic()
 		m_actor = CPhysx::GetStaticActor();
 
 		Holder->AddComponent<CSphereCollider>();
-		//col->Init();
 		break;
 	default:
 		break;
