@@ -106,5 +106,5 @@ void Title::AddObjects()
 
 
 
-	m_active_obj = AirPlane;
+	m_active_obj = AirPlane.GetPtr();
 }

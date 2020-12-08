@@ -63,7 +63,8 @@ public:
 	}
 
 	void ImGuiDraw();
-	void DrawChild(uem::Transform* _trans);
 	void Draw();
+
+	void AddObject();
 
 };

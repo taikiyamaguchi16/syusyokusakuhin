@@ -87,11 +87,14 @@ public:
 			oss << "##"<<label;
 			std::string str = (*com).GetName() + oss.str();
 			const char* TitleName = str.c_str();
-			if (ImGui::Button(TitleName)) {
-				//クリックされたオブジェクトのアドレスを代入
-				scene_->SetActiveObj(com);	//一時しのぎ変える！！！！！！！！！！！！！！！！！！！
-			}
+			//if (ImGui::Button(TitleName)) {
+			//	//クリックされたオブジェクトのアドレスを代入
+			//	scene_->SetActiveObj(com);	//一時しのぎ変える！！！！！！！！！！！！！！！！！！！
+			//}
+			ChildDraw(com.GetPtr(),scene_);
 		}
+
+
 		for (auto com : camera_s) {
 			//同名が認識されないのでラベルを付与
 			label++;
@@ -100,7 +103,7 @@ public:
 			const char* TitleName = str.c_str();
 			if (ImGui::Button(TitleName)) {
 				//クリックされたオブジェクトのアドレスを代入
-				scene_->SetActiveObj(com);
+				scene_->SetActiveObj(com.GetPtr());
 			}
 		}
 		ImGui::EndChild();
@@ -151,8 +154,32 @@ public:
 		ImGui::End();
 		//======================================================================================================================================
 	}
+	template<typename T>
+	inline void ChildDraw(CObject* _obj, T* scene_)
+	{
+		if (_obj->m_transform->m_child.size() > 0)
+		{
+			for (auto itr = _obj->m_transform->m_child.begin(); itr != _obj->m_transform->m_child.end(); itr++)
+			{
+				if (ImGui::TreeNodeEx((*itr)->Holder->m_name.c_str()),false)
+				{
+					ChildDraw((*itr)->Holder,scene_);
+					scene_->SetActiveObj((*itr)->Holder);
+					ImGui::TreePop();
+				}
+			}
 
-	void InspectorDraw(wp<CObject> obj_, std::list<Egliss::ComponentSystem::CComponent*> coms_);
+		}
+		else
+		{
+			if (ImGui::Button(_obj->m_name.c_str())) {
+				scene_->SetActiveObj(_obj);
+			}
+		}
+		
+	}
+
+	void InspectorDraw(CObject* obj_, std::list<Egliss::ComponentSystem::CComponent*> coms_);
 
 	void ConsoleDraw();
 
@@ -164,7 +191,7 @@ public:
 	void Select3DGuizm();
 	std::string SelectDropDown(const char* _str[],int _size);
 	std::string SelectDropDown(std::vector<std::string>_str, std::string _current_str, std::string _title);
-	void DropDown(const char* _str[], int _size, wp<CObject> _obj);
+	void DropDown(const char* _str[], int _size, CObject* _obj);
 
 	void BeforeRender();
 	void AfterRebder();

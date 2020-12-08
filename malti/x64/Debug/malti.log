@@ -1,19 +1,2 @@
-﻿  CBox.cpp
-  CCollider.cpp
-  CSkineMeshRenderer.cpp
-  Camera.cpp
-  DirectX11Manager.cpp
-  ImGuiControl.cpp
-  MeshRenderer.cpp
-  Player.cpp
-  DynamicType.cpp
-  Scene.cpp
-  Sphere.cpp
-  Title.cpp
-  UnityExportModel.cpp
-  UnityExportSkinnedModel.cpp
-  game.cpp
-  main.cpp
-  object.cpp
-  コードを生成中...
+﻿  object.cpp
   malti.vcxproj -> C:\Users\ohs80200\Desktop\syusaku\x64\Debug\malti.exe

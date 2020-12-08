@@ -16,6 +16,7 @@ bool SceneManager::Init(HINSTANCE hinst, HWND hwnd, int width, int height, bool 
 	CPhysx::Init();
 
 	m_activeScene = sp<Scene>(new CGame());
+	m_activeScene->Init();
 	return	true;
 }
 

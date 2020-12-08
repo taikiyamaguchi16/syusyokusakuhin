@@ -43,9 +43,10 @@ void CSkineMeshRenderer::Start()
 				}
 			}
 			//========================================================================================================
+			
 		}
 
-
+		//m_skinnedModels[m_currentModelName]->AddObject();
 		m_onceInitFg = false;
 	}
 

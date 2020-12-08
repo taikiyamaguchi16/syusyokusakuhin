@@ -15,7 +15,7 @@ class CGame final:public Scene
 public:
 	//•p”É‚Éíœ‚ªs‚í‚ê‚é‚½‚ß
 	std::list<Egliss::ComponentSystem::CComponent*> m_Components;
-	CGame() { Init(); }
+	CGame() { /*Init();*/ }
 	~CGame() { UnInit(); }
 
 	bool Init()override;

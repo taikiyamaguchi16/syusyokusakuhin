@@ -1,5 +1,6 @@
 #include "UnityExportSkinnedModel.h"
 #include <filesystem>
+#include "Scene.h"
 
 namespace fs = std::filesystem;
 
@@ -66,6 +67,7 @@ void UnityExportSkinnedModel::LoadBinary(string filename)
 		tmpMaterial.albedoTexture.Attach(DirectX11Manager::CreateTextureFromFile(material.GetTexture("_MainTex")));
 		materials.push_back(tmpMaterial);
 	}
+	
 }
 
 void UnityExportSkinnedModel::LoadAnimation(string _pathname)
@@ -82,7 +84,8 @@ void UnityExportSkinnedModel::LoadAnimation(string _pathname)
 			//ƒ‚ƒfƒ‹‚ÌŠi”[‚³‚ê‚Ä‚¢‚éƒtƒHƒ‹ƒ_‚Ì–¼‘O‚Å“o˜^
 			std::string loadName = _pathname + "/" + s_ps.filename().string();
 			m_animation[s_ps.stem().string()] = new uem::SkinnedAnimation();
-			m_animation[s_ps.stem().string()]->LoadBinary(loadName, (*this).uemData.root.get());
+			//m_animation[s_ps.stem().string()]->LoadBinary(loadName, (*this).uemData.root.get());
+			m_animation[s_ps.stem().string()]->LoadBinary(loadName, (*this).uemData.root->m_transform.GetPtr());
 			m_AnimationNames.emplace_back(s_ps.stem().string());
 			m_currentAnimationName = s_ps.stem().string();
 		}
@@ -98,27 +101,9 @@ void UnityExportSkinnedModel::ImGuiDraw()
 	}
 	ImGui::SliderFloat("AnimTime", &m_loopSplit, 0.0f, 200.f);
 	
-	DrawChild(uemData.root.get());
 	
 }
 
-void UnityExportSkinnedModel::DrawChild(uem::Transform* _trans)
-{
-	if (_trans->child.size() > 0)
-	{
-		for (auto itr = _trans->child.begin(); itr != _trans->child.end(); itr++)
-		{
-			if (ImGui::TreeNode((*itr)->name.c_str()))
-			{
-				auto mat = _trans->LocalToWorldMatrix();
-				ImGui::Text("x %.3f  y%.3f  z%.3f", mat.r[3].m128_f32[0], mat.r[3].m128_f32[1], mat.r[3].m128_f32[2]);
-				DrawChild(*itr);
-				ImGui::TreePop();
-			}
-		}
-
-	}
-}
 
 void UnityExportSkinnedModel::Draw()
 {
@@ -159,4 +144,9 @@ void UnityExportSkinnedModel::Draw()
 		//DrawCall
 		DirectX11Manager::DrawIndexed(static_cast<UINT>(model.indexs.size()));
 	}
+}
+
+void UnityExportSkinnedModel::AddObject()
+{
+	SceneManager::GetInstance()->AddObject(uemData.root);
 }

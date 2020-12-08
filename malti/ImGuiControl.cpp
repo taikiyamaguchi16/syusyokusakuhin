@@ -18,7 +18,7 @@ ImGuiControl::~ImGuiControl()
 
 
 
-void ImGuiControl::InspectorDraw(wp<CObject> obj_, std::list<Egliss::ComponentSystem::CComponent*> coms_)
+void ImGuiControl::InspectorDraw(CObject* obj_, std::list<Egliss::ComponentSystem::CComponent*> coms_)
 {
 	ImGuiIO& io = ImGui::GetIO();
 	io.DisplaySize.x = SCREEN_X;
@@ -287,7 +287,7 @@ std::string ImGuiControl::SelectDropDown(std::vector<std::string>_str, std::stri
 	return _st;
 }
 
-void ImGuiControl::DropDown(const char * _str[], int _size, wp<CObject> _obj)
+void ImGuiControl::DropDown(const char * _str[], int _size, CObject* _obj)
 {
 	const char** items = _str;
 

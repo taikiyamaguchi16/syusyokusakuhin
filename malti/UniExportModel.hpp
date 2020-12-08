@@ -6,6 +6,7 @@
 #include <unordered_map>
 #include <memory>
 
+#include "object.h"
 namespace uem
 {
 	class FileStream
@@ -382,6 +383,7 @@ namespace uem
 		}
 	};
 
+	
 	template <class X>
 	struct SkinnedModel
 	{
@@ -389,20 +391,24 @@ namespace uem
 		{
 			std::vector<X> vertexDatas;
 			std::vector<uint32_t> indexs;
-			std::vector<std::pair<DirectX::XMMATRIX, Transform*>> bones;
+			//std::vector<std::pair<DirectX::XMMATRIX, Transform*>> bones;
+			std::vector<std::pair<DirectX::XMMATRIX,Egliss::ComponentSystem::CTransform*>> bones;
 			int materialNo;
 		};
 		std::vector<Mesh> meshs;
 		std::vector<Material> materials;
-		std::unique_ptr<Transform> root;
-		std::unordered_map<size_t, std::unique_ptr<Transform>> transformMap;
+		//std::unique_ptr<Transform> root;
+		//std::unique_ptr<CModelObject> root;
+		CModelObject* root;
+		//現状必要なし
+		//std::unordered_map<size_t, std::unique_ptr<Transform>> transformMap;
 
 	private:
 		
-
 		void LoadHierarchyBinary(FileStream& fileStream)
 		{
-			auto active = root.get();
+			//auto active = root.get();
+			auto active = root->m_transform.GetPtr();
 			int transformCount = 0;
 			{
 				std::string tmp;
@@ -411,7 +417,7 @@ namespace uem
 				tmp.resize(tmpCount);
 				fileStream.Read(&tmp[0], sizeof(char) * tmpCount);
 				transformCount++;
-				active->name = tmp;
+				active->Holder->m_name = tmp;
 				active->hash = std::hash<std::string>()(tmp);
 				fileStream.Read(&active->position, sizeof(float) * 3);
 				DirectX::XMFLOAT3 euler;
@@ -439,8 +445,12 @@ namespace uem
 				fileStream.Read(&tmp[0], sizeof(char) * tmpCount);
 
 				//=====================================activeの子供になる新しいtransformの作成=======================================
-				auto newTrans = std::unique_ptr<Transform>(new Transform());
-				newTrans->name = tmp;
+				//auto newTrans = std::unique_ptr<Transform>(new Transform());
+				//auto newTrans = new Egliss::ComponentSystem::CTransform();
+				auto work_ptr = new CModelObject();
+				auto newTrans = work_ptr->m_transform;
+
+				newTrans->Holder->m_name = tmp;
 				newTrans->hash = std::hash<std::string>()(tmp);
 
 				fileStream.Read(&newTrans->position, sizeof(float) * 3);
@@ -451,10 +461,12 @@ namespace uem
 				fileStream.Read(&newTrans->scale, sizeof(float) * 3);
 				//作成した子供の親を設定しactiveを作成した子供に変更する
 				newTrans->parent = active;
-				active->child.push_back(newTrans.get());
-				active = newTrans.get();
+				active->m_child.push_back(newTrans.GetPtr());
+				active = newTrans.GetPtr();
+				//active = newTrans.get();
 
-				transformMap.insert(std::make_pair(newTrans->hash, std::move(newTrans)));
+				//newTrans.release();
+				//transformMap.insert(std::make_pair(newTrans->hash, std::move(newTrans)));
 				//===================================================================================================================
 			}
 		}
@@ -462,7 +474,9 @@ namespace uem
 		
 		void LoadBinary(std::string filename)
 		{
-			root.reset(new Transform());
+			//root.reset(new Transform());
+			//root.reset(new CModelObject());
+			root = new CModelObject();
 
 			FileStream fileStream(filename.c_str());
 			auto lastSlash = filename.find_last_of('/');
@@ -519,7 +533,8 @@ namespace uem
 					DirectX::XMMATRIX tmp;
 					fileStream.Read(&tmp, sizeof(float) * 16);
 
-					auto trans = root->Find(name);
+					//auto trans = root->transform->Find(name);
+					auto trans = root->m_transform->Find(name);
 					model.bones.push_back(std::make_pair(XMMatrixTranspose(tmp), trans));
 				}
 
@@ -582,6 +597,7 @@ namespace uem
 				meshs.push_back(model);
 			}
 		}
+
 	};
 
 	struct SkinnedAnimation
@@ -619,7 +635,8 @@ namespace uem
 
 		struct Animation
 		{
-			uem::Transform* transform = nullptr;
+			//uem::Transform* transform = nullptr;
+			Egliss::ComponentSystem::CTransform* transform = nullptr;
 			Curve curves[10];
 
 			void SetTransform(float time)
@@ -638,7 +655,7 @@ namespace uem
 		float maxAnimationTime = 0;
 	public:
 
-		void LoadBinary(std::string filename, Transform* root)
+		void LoadBinary(std::string filename, Egliss::ComponentSystem::CTransform* root)
 		{
 			FileStream fileStream(filename.c_str());
 

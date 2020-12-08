@@ -156,12 +156,12 @@ void CGame::AddObjects()
 	sp<CObject> SubCamera;
 
 	sp<CObject> sphere;
-	sp<CObject> sphere2;
+
 	sp<CObject> box;
-	sp<CObject> box2;
-	sp<CObject> box3;
-	sp<CObject> box4;
-	sp<CObject> box5;
+	//sp<CObject> box2;
+	//sp<CObject> box3;
+	//sp<CObject> box4;
+	//sp<CObject> box5;
 
 	float _plane = 100.0f;
 	float _color[4] = { 255.0f,255.0f,255.0f,255.0f };
@@ -204,8 +204,7 @@ void CGame::AddObjects()
 	AirPlane.SetPtr(new CObject);
 	AirPlane->m_transform->SetPos(XMFLOAT3(0.0f, 60.0f, 0.0f));
 	_rigid = AirPlane->AddComponentByNameAs<CRigidbody>(rigidName);
-	_rigid->SetMass(10.f);
-	AirPlane->AddComponent<CSkineMeshRenderer>();
+	//AirPlane->AddComponent<CSkineMeshRenderer>();
 	AirPlane->m_transform->SetScale(XMFLOAT3(3.f, 3.f, 3.f));
 	_rigid->SetGeometryType(GEOMETRYTYPE::BOX);
 	_rigid->InitDynamic();
@@ -233,10 +232,8 @@ void CGame::AddObjects()
 	box->m_transform->SetPos(XMFLOAT3(0.0f, 0.0f, 0.0f));
 	_rigid = box->AddComponent<CRigidbody>();
 	_render = box->AddComponent<CMeshRenderer>();
-	//_rigid->SetBoxSize(XMFLOAT3(_plane, 5.0f, _plane));
 	_render->BoxInit();
 	box->m_transform->SetScale(XMFLOAT3(_plane, 5.0f, _plane));
-	_render->SetColor(255.0f, 0.0f, 0.0f, 255.0f);
 	_rigid->InitStatic();
 	box->SetName(std::string("box"));
 	box->SetTag(std::string("Default"));
@@ -299,6 +296,8 @@ void CGame::AddObjects()
 	box5->SetTag(std::string("Default"));
 	m_obj_list.emplace_back(box5);*/
 
-	wp<CObject>wark_weak_ptr(AirPlane);
-	m_active_obj = wark_weak_ptr;
+	/*wp<CObject>wark_weak_ptr(AirPlane);
+	m_active_obj = wark_weak_ptr;*/
+
+	m_active_obj = AirPlane.GetPtr();
 }

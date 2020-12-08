@@ -80,12 +80,34 @@ namespace Egliss::ComponentSystem
 		physx::PxTransform* m_trans = new physx::PxTransform();
 
 	public:
+		CTransform* parent = nullptr;
+		std::vector<CTransform*> m_child;
+
+		size_t hash;
+		DirectX::XMFLOAT3 position;
+		DirectX::XMVECTOR rotation;
+		DirectX::XMFLOAT3 scale;
+
 		~CTransform() { delete m_trans; }
 		XMFLOAT3 m_angle;
 		XMFLOAT4X4 m_mat;
 
 		CTransform* m_parent = nullptr;
-		std::list<CTransform*>m_child_list;
+
+		DirectX::XMMATRIX LocalToWorldMatrix()
+		{
+			auto localMtx = DirectX::XMMatrixScaling(scale.x, scale.y, scale.z) *
+				DirectX::XMMatrixRotationQuaternion(rotation) *
+				DirectX::XMMatrixTranslation(position.x, position.y, position.z);
+			if (parent == nullptr)
+				return localMtx;
+			else
+				return localMtx * parent->LocalToWorldMatrix();
+		}
+
+		CTransform* Find(std::string str);
+
+
 		inline void Start()override {
 			m_angle = XMFLOAT3(0.0f, 0.0f, 0.0f);
 			m_scale = XMFLOAT3(1.f, 1.f, 1.f);
@@ -125,17 +147,9 @@ namespace Egliss::ComponentSystem
 		void Rotation(XMFLOAT3 _angle);
 		void ImGuiDraw()override;
 
-		void SetParent(CTransform* parent_) {
-			m_parent = parent_;
-			parent_->SetChild(this);
-		}
-
-		void SetChild(CTransform* child_) {
-			m_child_list.emplace_back(child_);
-			//child_->SetParent(this)
-		};
-
 		void SetQuat(XMFLOAT4X4& rotateMat_);
+
+		
 	};
 
 	class CRigidbody final :public CComponent
@@ -192,7 +206,6 @@ namespace Egliss::ComponentSystem
 class CObject
 {
 	std::string m_tag;
-	std::string m_name;
 	//オブジェクト毎のFPS
 	int m_myFps = 60;
 	bool m_cameraObj = false;		//カメラの場合true;
@@ -200,12 +213,14 @@ class CObject
 	//現在のレイヤー
 	const char* m_currentItem;
 	unsigned int  m_currentLayer;
+	//sp<Egliss::ComponentSystem::CTransform> m_transform;
 public:
 	sp<Egliss::ComponentSystem::CTransform> m_transform;
-
+	std::string m_name;
 	std::list<sp<Egliss::ComponentSystem::CComponent>> m_ComponentList;
 	CObject() {
 		m_transform.SetPtr(new Egliss::ComponentSystem::CTransform());
+		m_transform->Holder = this;
 		m_transform->Start();
 	}
 	virtual ~CObject() {
@@ -385,5 +400,16 @@ public:
 	inline void SetCurrentLayer(unsigned int _work)
 	{
 		m_currentLayer = _work;
+	}
+};
+
+class CModelObject :public CObject
+{
+public:
+	CModelObject()
+	{
+		m_transform.SetPtr(new Egliss::ComponentSystem::CTransform());
+		m_transform->Holder = this;
+		m_transform->Start();
 	}
 };

@@ -64,8 +64,6 @@ void CPhysx::UnInit()
 
 	//m_controllerManager = nullptr;
 
-	
-
 	m_foundation->release();
 	m_foundation = nullptr;
 	

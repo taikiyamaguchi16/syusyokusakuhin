@@ -27,6 +27,19 @@ void CObject::Draw()
 		com->Draw();
 }
 
+CTransform * Egliss::ComponentSystem::CTransform::Find(std::string str)
+{
+	if (Holder->m_name == str)
+		return this;
+	for (auto t : m_child)
+	{
+		auto ret = t->Find(str);
+		if (ret != nullptr)
+			return ret;
+	}
+	return nullptr;
+}
+
 void CTransform::Update()
 {
 	DX11MtxIdentity(m_mat);
