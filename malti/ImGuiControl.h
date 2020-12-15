@@ -88,8 +88,8 @@ public:
 			std::string str = (*com).GetName() + oss.str();
 			const char* TitleName = str.c_str();
 			//if (ImGui::Button(TitleName)) {
-			//	//クリックされたオブジェクトのアドレスを代入
-			//	scene_->SetActiveObj(com);	//一時しのぎ変える！！！！！！！！！！！！！！！！！！！
+			//クリックされたオブジェクトのアドレスを代入
+			//	scene_->SetActiveObj(com);
 			//}
 			ChildDraw(com.GetPtr(),scene_);
 		}
@@ -167,26 +167,18 @@ public:
 					
 					ImGui::TreePop();
 				}
-				if (ImGui::IsItemClicked())
+				else if(ImGui::IsItemClicked())
 				{
 					scene_->SetActiveObj((*itr)->Holder);
 				}
-				/*if (ImGui::Button((*itr)->Holder->m_name.c_str()))
-				{
-					(*itr)->Holder->m_open = !(*itr)->Holder->m_open;
-					scene_->SetActiveObj((*itr)->Holder);
-				}
-				if ((*itr)->Holder->m_open)
-				{
-					ChildDraw((*itr)->Holder, scene_);
-				}*/
 			}
 
 		}
 		else
 		{
-			if (ImGui::Button(_obj->m_name.c_str())) {
+			if (ImGui::TreeNode(_obj->m_name.c_str())) {
 				scene_->SetActiveObj(_obj);
+				ImGui::TreePop();
 			}
 		}
 		

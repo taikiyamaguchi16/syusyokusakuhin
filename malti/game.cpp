@@ -83,7 +83,7 @@ void CGame::Update()
 		CCamera* caca = item2->GetComponent<CCamera>();
 		CTransform* tra1 = item2->m_transform.GetPtr();
 		CTransform* tra = m_active_obj->m_transform.GetPtr();
-
+		//3dguizmの表示
 		ImGuiControl::GetInstance()->Draw3DGuizm(tra1->m_mat,caca->GetProjectionMatrix(), tra->m_mat,tra->m_angle);
 
 		item2->Update();
@@ -95,7 +95,6 @@ void CGame::Update()
 	}
 	//=============================デバッグモード用のGUI表示====================================================
 	if(DirectX11Manager::input.Keyboard()->ChkKeyAction(DIK_Y))
-	//if (CDirectInput::GetInstance().CheckKeyBufferTrigger(DIK_Y))
 	{
 		ImGuiControl::GetInstance()->m_debugMode = !ImGuiControl::GetInstance()->m_debugMode;
 	}
@@ -117,7 +116,6 @@ void CGame::Update()
 		m_activeCamera = m_subCameras[0];
 	}
 
-
 	
 	CPhysx::StepPhysics(60.0f);
 
@@ -135,6 +133,7 @@ void CGame::Draw()
 	// イミィディエイトコンテキスト
 	ID3D11DeviceContext* devcontext = DirectX11Manager::m_pImContext.Get();
 	if (m_activeCamera.IsExist()) {
+
 		m_activeCamera->Draw();
 	}
 	for (auto item : m_obj_list) {
@@ -143,7 +142,6 @@ void CGame::Draw()
 	
 
 	// レンダリング後処理
-	//DX11AfterRender();
 	DirectX11Manager::DrawEnd();
 }
 
@@ -158,10 +156,6 @@ void CGame::AddObjects()
 	sp<CObject> sphere;
 
 	sp<CObject> box;
-	//sp<CObject> box2;
-	//sp<CObject> box3;
-	//sp<CObject> box4;
-	//sp<CObject> box5;
 
 	float _plane = 100.0f;
 	float _color[4] = { 255.0f,255.0f,255.0f,255.0f };

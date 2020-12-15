@@ -1,5 +1,7 @@
 ﻿  CBox.cpp
+  CCapsule.cpp
   CCollider.cpp
+  CPhysx.cpp
   CSkineMeshRenderer.cpp
   Camera.cpp
   DirectX11Manager.cpp
@@ -16,4 +18,19 @@
   main.cpp
   object.cpp
   コードを生成中...
+  LINK : 前回のインクリメンタル リンクで C:\Users\ohs80200\Desktop\syusaku\x64\Debug\malti.exe が見つからなかったか、ビルドされませんでした。フル リンクを行います。
+PhysXExtensions_static_64.lib(ExtCpuWorkerThread.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtCpuWorkerThread.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXExtensions_static_64.lib(ExtDefaultCpuDispatcher.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtDefaultCpuDispatcher.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXExtensions_static_64.lib(ExtDefaultErrorCallback.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtDefaultErrorCallback.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXExtensions_static_64.lib(ExtRigidBodyExt.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtRigidBodyExt.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXExtensions_static_64.lib(ExtSimpleFactory.obj) : warning LNK4099: PDB 'PhysXExtensions_static_64.pdb' が 'PhysXExtensions_static_64.lib(ExtSimpleFactory.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXExtensions_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxProfileEventImpl.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxProfileEventImpl.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvd.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvd.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdDataStream.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdDataStream.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdDefaultSocketTransport.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdDefaultSocketTransport.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdImpl.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdImpl.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdMemClient.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdMemClient.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdObjectModelMetaData.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdObjectModelMetaData.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdObjectRegistrar.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdObjectRegistrar.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
+PhysXPvdSDK_static_64.lib(PxPvdProfileZoneClient.obj) : warning LNK4099: PDB 'PhysXPvdSDK_static_64.pdb' が 'PhysXPvdSDK_static_64.lib(PxPvdProfileZoneClient.obj)' で、または 'C:\Users\ohs80200\Desktop\syusaku\x64\Debug\PhysXPvdSDK_static_64.pdb' に見つかりません。デバッグ情報がないものとして、オブジェクトにリンクします。
   malti.vcxproj -> C:\Users\ohs80200\Desktop\syusaku\x64\Debug\malti.exe

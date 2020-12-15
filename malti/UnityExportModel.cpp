@@ -23,27 +23,13 @@ UnityExportModel::UnityExportModel()
 
 UnityExportModel::~UnityExportModel()
 {
-	/*cb->Release();
-	il->Release();
-	vs->Release();
-	ps->Release();
-	
-	for (auto itr : models)
-	{
-		itr.ib->Release();
-		itr.vb->Release();
-	}
-	for (auto itr : materials)
-	{
-		itr.albedoTexture->Release();
-	}*/
+	cb.Reset();
 }
 
 
 void UnityExportModel::LoadBinary(string filename)
 {
 	uemData.LoadBinary(filename);
-	kari = DirectX11Manager::CreateTextureFromFile("assets/Models/DefaultShapes/white.jpg");
 
 	//VertexBuffer IndexBuffer作成
 	for (auto& mesh : uemData.meshs)
@@ -81,12 +67,7 @@ void UnityExportModel::Draw()
 		auto& model = uemData.meshs[i];
 		DirectX11Manager::SetVertexBuffer(models[i].vb.Get(), sizeof(VertexData));
 		DirectX11Manager::SetIndexBuffer(models[i].ib.Get());
-		if (materials[model.materialNo].albedoTexture.Get() != nullptr)
-			DirectX11Manager::SetTexture2D(0, materials[model.materialNo].albedoTexture.Get());
-		//あらかじめ生成しておいた真っ白なテクスチャなどを張る
-		else {
-			DirectX11Manager::SetTexture2D(0, kari);
-		}
+		DirectX11Manager::SetTexture2D(0, materials[model.materialNo].albedoTexture.Get());
 
 		//DrawCall
 		DirectX11Manager::DrawIndexed(static_cast<UINT>(model.indexs.size()));

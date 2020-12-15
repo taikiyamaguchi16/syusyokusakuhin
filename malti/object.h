@@ -107,7 +107,6 @@ namespace Egliss::ComponentSystem
 
 		CTransform* Find(std::string str);
 
-
 		inline void Start()override {
 			m_angle = XMFLOAT3(0.0f, 0.0f, 0.0f);
 			m_scale = XMFLOAT3(1.f, 1.f, 1.f);
@@ -149,7 +148,6 @@ namespace Egliss::ComponentSystem
 
 		void SetQuat(XMFLOAT4X4& rotateMat_);
 
-		
 	};
 
 	class CRigidbody final :public CComponent

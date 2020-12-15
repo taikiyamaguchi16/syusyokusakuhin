@@ -1,9 +1,25 @@
 #include "Sphere.h"
 
 
-void CSphere::Init(float r_)
+void CSphere::Init()
 {
-	Init(r_, 20, 20, DirectX11Manager::m_pDevice.Get());
+	Init(1.f, 10, 10);
+	vs.Attach(DirectX11Manager::CreateVertexShader("assets/Shaders/DefaultShape.hlsl", "vsMain"));
+	ps.Attach(DirectX11Manager::CreatePixelShader("assets/Shaders/DefaultShape.hlsl", "psMain"));
+
+	//InputLayoutの作成
+	D3D11_INPUT_ELEMENT_DESC elem[] = {
+		{ "POSITION",	0,	DXGI_FORMAT_R32G32B32_FLOAT,	0,	0,	D3D11_INPUT_PER_VERTEX_DATA,	0 },
+		{ "NORMAL"	,	0,	DXGI_FORMAT_R32G32B32_FLOAT,	0,	12,	D3D11_INPUT_PER_VERTEX_DATA,	0 },
+		{ "COLOR"	,	0,	DXGI_FORMAT_R32G32B32A32_FLOAT,	0,	24,	D3D11_INPUT_PER_VERTEX_DATA,	0 },
+	};
+	il.Attach(DirectX11Manager::CreateInputLayout(elem, 3, "assets/Shaders/DefaultShape.hlsl", "vsMain"));
+
+	//コンスタントバッファの作成
+	DirectX11Manager::CreateConstantBuffer(sizeof(ConstantBufferMatrix), &cb);
+	DirectX11Manager::CreateConstantBuffer(sizeof(Material), &cb2);
+
+	mate.df = XMFLOAT4(1, 1, 1, 1);
 }
 
 // 法線ベクトルを計算
@@ -22,30 +38,32 @@ void CSphere::CreateIndex() {
 	// 面数セット
 	m_facenum = m_divY * m_divX * 2;
 
-	m_face = new Face[m_facenum];
+	//m_face = new Face[m_facenum];
 
-	Face* pface = m_face;
-
+//	Face* pface = m_face;
+	int pface = 0;
 	// インデックス生成
 	for (unsigned int y = 0; y < m_divY; y++) {
 		for (unsigned int x = 0; x < m_divX; x++) {
 			int count = (m_divX + 1)*y + x;			// 左上座標のインデックス
 
 			// 上半分
-			pface->idx[0] = count;
-			pface->idx[1] = count + 1;
-			pface->idx[2] = count + 1 + (m_divX + 1);
+			m_face[pface].idx[0] = count;
+			m_face[pface].idx[1] = count + 1;
+			m_face[pface].idx[2] = count + 1 + (m_divX + 1);
 
 			pface++;
 
 			// 下半分
-			pface->idx[0] = count;
-			pface->idx[1] = count + (m_divX + 1) + 1;
-			pface->idx[2] = count + (m_divX + 1);
+			m_face[pface].idx[0] = count;
+			m_face[pface].idx[1] = count + (m_divX + 1) + 1;
+			m_face[pface].idx[2] = count + (m_divX + 1);
 
 			pface++;
 		}
 	}
+
+	ib.Attach(DirectX11Manager::CreateIndexBuffer(m_face->idx, (UINT)sizeof(m_face)));
 }
 
 // 頂点データを作成
@@ -54,8 +72,9 @@ void CSphere::CreateVertex() {
 	float azimuth = 0.0f;			// 方位角
 	float elevation = 0.0f;			// 仰角
 
-	m_vertex = new Vertex[(m_divX + 1) * (m_divY + 1)];
-	Vertex* pvtx = m_vertex;
+	//m_vertex = new Vertex[(m_divX + 1) * (m_divY + 1)];
+	//Vertex* pvtx = m_vertex;
+	int pvtx = 0;
 	XMFLOAT3	Normal;
 	// 方位角と仰角から球メッシュの頂点データを作成
 	for (unsigned int y = 0; y <= m_divY; y++) {
@@ -66,48 +85,40 @@ void CSphere::CreateVertex() {
 			azimuth = (float)(2.0f * PI * (float)x) / (float)m_divX;	// 方位角をセット
 
 			// 頂点座標セット
-			pvtx->Pos.x = r * cosf(azimuth);
-			pvtx->Pos.y = m_radius * cosf(elevation);
-			pvtx->Pos.z = r * sinf(azimuth);
+			m_vertex[pvtx].Pos.x = r * cosf(azimuth);
+			m_vertex[pvtx].Pos.y = m_radius * cosf(elevation);
+			m_vertex[pvtx].Pos.z = r * sinf(azimuth);
 
 			// 法線ベクトルセット
-			Normalize(pvtx->Pos, Normal);		// 法線を計算
-			pvtx->Normal = Normal;				// 法線をセット
+			Normalize(m_vertex[pvtx].Pos, Normal);		// 法線を計算
+			m_vertex[pvtx].Normal = Normal;				// 法線をセット
 			// 次へ
 			pvtx++;
 		}
 	}
-
+	vb.Attach(DirectX11Manager::CreateVertexBuffer(m_vertex, (UINT)sizeof(m_vertex)));
 }
 
 // 描画
 void CSphere::Draw() {
+	DirectX11Manager::SetVertexShader(vs.Get());
+	DirectX11Manager::SetPixelShader(ps.Get());
+	DirectX11Manager::SetInputLayout(il.Get());
 
-	// 定数バッファ書き換え
-	D3D11_MAPPED_SUBRESOURCE pData;
-	HRESULT hr = DirectX11Manager::m_pImContext->Map(m_cbuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &pData);
-	if (SUCCEEDED(hr)) {
-		memcpy_s(pData.pData, pData.RowPitch, (void*)(&m_material), sizeof(ConstantBufferMaterial));
-		DirectX11Manager::m_pImContext->Unmap(m_cbuffer, 0);
-	}
+	DirectX11Manager::UpdateConstantBuffer(cb.Get(), DirectX11Manager::m_constantBuffer);
+	ID3D11Buffer* tmpCb[] = { cb.Get() };
+	DirectX11Manager::m_pImContext->VSSetConstantBuffers(0, 1, tmpCb);
 
-	ID3D11DeviceContext* device = DirectX11Manager::m_pImContext.Get();
-	// 頂点バッファをセットする
-	unsigned int stride = sizeof(Vertex);
-	unsigned  offset = 0;
-	device->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
-
-	device->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R32_UINT, 0);			// インデックスバッファをセット
-	device->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);		// トポロジーをセット（旧プリミティブタイプ）
-	device->IASetInputLayout(m_pVertexLayout);					// 頂点レイアウトセット
-
-	device->VSSetShader(m_pVertexShader, nullptr, 0);			// 頂点シェーダーをセット
-	device->PSSetShader(m_pPixelShader, nullptr, 0);			// ピクセルシェーダーをセット
+	DirectX11Manager::SetVertexBuffer(vb.Get(), sizeof(Vertex));
+	DirectX11Manager::SetIndexBuffer(ib.Get());
 
 
-	device->PSSetConstantBuffers(3, 1, &m_cbuffer);
+	DirectX11Manager::UpdateConstantBuffer(cb2.Get(), mate);
+	ID3D11Buffer* tmpCb2[] = { cb2.Get() };
+	DirectX11Manager::m_pImContext->PSSetConstantBuffers(2, 1, tmpCb2);
 
-	device->DrawIndexed(m_facenum * 3,		// 描画するインデックス数（面数×３）
+
+	DirectX11Manager::m_pImContext->DrawIndexed(m_facenum * 3,		// 描画するインデックス数（面数×３）
 		0,									// 最初のインデックスバッファの位置
 		0);									// 頂点バッファの最初から使う
 }
@@ -116,8 +127,8 @@ void CSphere::Draw() {
 
 bool CSphere::Init(float r,				// 半径
 	int division_horizontal,			// 水平方向の分割数
-	int division_vertical,				// 垂直方向の分割数
-	ID3D11Device* device) {
+	int division_vertical				// 垂直方向の分割数
+	) {
 	// 分割数を保存
 	m_divX = division_horizontal;
 	m_divY = division_vertical;
@@ -131,112 +142,16 @@ bool CSphere::Init(float r,				// 半径
 	// 球の頂点データを作成
 	CreateVertex();
 
-	//// 頂点バッファ作成
-	//sts = CreateVertexBufferWrite(
-	//	device,
-	//	sizeof(Vertex),						// １頂点当たりバイト数
-	//	(m_divY + 1)*(m_divX + 1),			// 頂点数
-	//	m_vertex,							// 頂点データ格納メモリ先頭アドレス
-	//	&m_pVertexBuffer);					// 頂点バッファ
-	//if (!sts) {
-	//	MessageBox(NULL, "CreateBuffer(vertex buffer) error", "Error", MB_OK);
-	//	return false;
-	//}
-
-	//// インデックスバッファ作成
-	//sts = CreateIndexBuffer(
-	//	device,
-	//	(m_divY)*(m_divX) * 2 * 3,	// インデックス数
-	//	m_face,					// インデックスデータ先頭アドレス
-	//	&m_pIndexBuffer);		// インデックスバッファ
-	//if (!sts) {
-	//	MessageBox(NULL, "CreateBuffer(index buffer) error", "Error", MB_OK);
-	//	return false;
-	//}
-
-	//// 定数バッファ生成
-	//sts = CreateConstantBufferWrite(DirectX11Manager::m_pDevice.Get(), sizeof(ConstantBufferMaterial), &m_cbuffer);
-	//if (!sts) {
-	//	MessageBox(nullptr, "CreateConstantBufferWrite error", "error", MB_OK);
-	//	return false;
-	//}
-
-	//// 頂点データの定義
-	//D3D11_INPUT_ELEMENT_DESC layout[] =
-	//{
-	//	{ "POSITION",	0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	//	{ "NORMAL",		0, DXGI_FORMAT_R32G32B32_FLOAT,		0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-	//};
-	//unsigned int numElements = ARRAYSIZE(layout);
-
-	//// 頂点シェーダーオブジェクトを生成、同時に頂点レイアウトも生成
-	//sts = CreateVertexShader(device,
-	//	"shader/3dspherevs.fx",
-	//	"main",
-	//	"vs_5_0",
-	//	layout,
-	//	numElements,
-	//	&m_pVertexShader,
-	//	&m_pVertexLayout);
-	//if (!sts) {
-	//	MessageBox(nullptr, "CreateVertexShader error", "error", MB_OK);
-	//	return false;
-	//}
-
-	//// ピクセルシェーダーを生成
-	//sts = CreatePixelShader(			// ピクセルシェーダーオブジェクトを生成
-	//	device,							// デバイスオブジェクト
-	//	"shader/3dsphereps.fx",
-	//	"main",
-	//	"ps_5_0",
-	//	&m_pPixelShader);
-	//if (!sts) {
-	//	MessageBox(nullptr, "CreatePixelShader error", "error", MB_OK);
-	//	return false;
-	//}
-
 	return true;
 }
 
 void CSphere::Exit() {
 
-	if (m_vertex) {
-		delete[] m_vertex;
-	}
+	//if (m_vertex) {
+	//	delete[] m_vertex;
+	//}
 
-	if (m_face) {
-		delete[] m_face;
-	}
-
-	// ピクセルシェーダー解放
-	if (m_pPixelShader) {
-		m_pPixelShader->Release();
-		m_pPixelShader = nullptr;
-	}
-
-	// 頂点シェーダー解放
-	if (m_pVertexShader) {
-		m_pVertexShader->Release();
-		m_pVertexShader = nullptr;
-	}
-
-	if (m_pVertexLayout) {
-		m_pVertexLayout->Release();
-		m_pVertexLayout = nullptr;
-	}
-
-	if (m_pIndexBuffer) {
-		m_pIndexBuffer->Release();
-		m_pIndexBuffer = nullptr;
-	}
-
-	if (m_pVertexBuffer) {
-		m_pVertexBuffer->Release();
-		m_pVertexBuffer = nullptr;
-	}
-
-	if (m_cbuffer) {
-		m_cbuffer->Release();
-		m_cbuffer = nullptr;
-	}
+	//if (m_face) {
+	//	delete[] m_face;
+	//}
 }

@@ -16,6 +16,7 @@ void CObject::Update()
 
 void CObject::LateUpdate()
 {
+	m_transform->LateUpdate();
 	for (const auto& com : m_ComponentList)
 		com->LateUpdate();
 }
@@ -83,11 +84,6 @@ void CTransform::Update()
 		else {
 		}
 	}
-	//座標の仮決定
-	m_trans->p.x = m_mat._41;
-	m_trans->p.y = m_mat._42;
-	m_trans->p.z = m_mat._43;
-
 
 
 	//親がいた場合
@@ -139,11 +135,12 @@ void CTransform::MoveForward(XMFLOAT3 vec_)
 
 void CTransform::Draw()
 {
-
 	//座標の最終決定
 	m_trans->p.x = m_mat._41;
 	m_trans->p.y = m_mat._42;
 	m_trans->p.z = m_mat._43;
+
+	
 	// ワールド変換行列
 	DirectX11Manager::m_constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&m_mat));
 }
@@ -225,7 +222,6 @@ void CTransform::ImGuiDraw()
 {
 	ImGui::DragFloat3(u8"座標", &m_trans->p.x, true);
 	ImGui::DragFloat3(u8"角度", &m_angle.x, true);
-	//if (m_rb != nullptr) {
 	if(m_rb.IsExist()){
 		if (m_rb->GetRigidDynamic() != nullptr) {
 			XMFLOAT4X4 rot;
@@ -493,7 +489,7 @@ void CRigidbody::OnCollisionEnter(CObject * col)
 
 void CRigidbody::OnCollisionStay(CObject * col)
 {
-	PxVec3 work = m_rigidDynamic->getLinearVelocity();
+	/*PxVec3 work = m_rigidDynamic->getLinearVelocity();
 	PxVec3 work_a = m_rigidDynamic->getAngularVelocity();
 	PxVec3 work_ab = work_a.abs();
 
@@ -507,7 +503,7 @@ void CRigidbody::OnCollisionStay(CObject * col)
 	if (work_a.magnitude() < 0.5f)
 	{
 		m_rigidDynamic->clearTorque();
-	}
+	}*/
 }
 
 

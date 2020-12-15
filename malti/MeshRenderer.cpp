@@ -48,11 +48,11 @@ void CMeshRenderer::Start()
 
 		m_meshtype = GEOMETRYTYPE::BOX;
 		m_box = new CBox();
-		m_box->Init(XMFLOAT3(1.f, 1.f, 1.f));
+		//m_box->Init(XMFLOAT3(1.f, 1.f, 1.f));
 
 		m_sphere = new CSphere();
 		m_meshtype = GEOMETRYTYPE::SPHERE;
-		m_sphere->Init(1.f);
+		m_sphere->Init();
 
 		m_onceInitFg = false;
 	}
@@ -71,8 +71,8 @@ void CMeshRenderer::Draw(){
 			{
 			case GEOMETRYTYPE::BOX:
 				//m_box->SetDiffuseMaterial(m_color);
-				//m_box->Draw();
-				m_models["cube"]->Draw();
+				m_box->Draw();
+				//m_models["cube"]->Draw();
 				break;
 			case GEOMETRYTYPE::CAPSILE:
 
@@ -80,8 +80,8 @@ void CMeshRenderer::Draw(){
 
 			case GEOMETRYTYPE::SPHERE:
 				//m_sphere->SetDiffuseMaterial(m_color);
-				//m_sphere->Draw();
-				m_models["sphere"]->Draw();
+				m_sphere->Draw();
+				//m_models["sphere"]->Draw();
 				break;
 			default:
 				break;

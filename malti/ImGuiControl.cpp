@@ -39,7 +39,6 @@ void ImGuiControl::InspectorDraw(CObject* obj_, std::list<Egliss::ComponentSyste
 
 	ImGui::Begin(TitleName, &show_gui);
 
-	
 	std::string sss = (std::string)NAMEOF_ENUM(FilterGroup::eDEFAULT);
 	std::string sss2 = (std::string)NAMEOF_ENUM(FilterGroup::ePLAYER);
 	std::string sss3 = (std::string)NAMEOF_ENUM(FilterGroup::eENEMY);
@@ -170,7 +169,7 @@ void ImGuiControl::Draw3DGuizm(DirectX::XMFLOAT4X4 _view, DirectX::XMFLOAT4X4 _p
 	//–îˆó‚È‚Ç‚Ì•`‰æ
 	ImGuizmo::Manipulate(view, projection, mCurrentGizmoOperation, mCurrentGizmoMode, mat);
 	//‰Eã‚ÉŠp“x˜A“®‚µ‚½Cube•`‰æ
-	ImGuizmo::ViewManipulate(view, 1.f, ImVec2(io.DisplaySize.x - 300.f, 0), ImVec2(300.f, 300.f), 0x10101010);
+	//ImGuizmo::ViewManipulate(view, 1.f, ImVec2(io.DisplaySize.x - 300.f, 0), ImVec2(300.f, 300.f), 0x10101010);
 
 	_mat._11 = mat[0]; _mat._12 = mat[1]; _mat._13 = mat[2]; _mat._14 = mat[3];
 	_mat._21 = mat[4]; _mat._22 = mat[5]; _mat._23 = mat[6]; _mat._24 = mat[7];

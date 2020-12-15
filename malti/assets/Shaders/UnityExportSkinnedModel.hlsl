@@ -71,5 +71,5 @@ float4 psMain(PS_INPUT input) : SV_TARGET
     data.viewDirectionWS = input.ViewDirection;
 
     result = LightweightFragmentPBR(data, albedo.rgb, 0.0, 0.4, 1, half3(0, 0, 0), albedo.a);
-    return float4(result);
+    return result;
 }

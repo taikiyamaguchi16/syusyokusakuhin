@@ -234,16 +234,18 @@
   <ItemGroup>
     <FxCompile Include="assets\Shaders\2DPipeLine.hlsl" />
     <FxCompile Include="assets\Shaders\3DPipeLine.hlsl" />
+    <FxCompile Include="assets\Shaders\DefaultShape.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Geometry</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">4.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="assets\Shaders\UnityExportModel.hlsl" />
     <FxCompile Include="assets\Shaders\UnityExportSkinnedModel.hlsl" />
-    <FxCompile Include="shader\3dsphereps.fx" />
-    <FxCompile Include="shader\3dspherevs.fx" />
-    <FxCompile Include="shader\ps.fx" />
-    <FxCompile Include="shader\psline.fx" />
-    <FxCompile Include="shader\psskydome.fx" />
-    <FxCompile Include="shader\psvscommon.fx" />
-    <FxCompile Include="shader\vs.fx" />
-    <FxCompile Include="shader\vsline.fx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\Shaders\CorePBR.hlsli" />

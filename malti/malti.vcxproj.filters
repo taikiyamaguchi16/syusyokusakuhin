@@ -304,30 +304,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="shader\3dsphereps.fx">
-      <Filter>ソース ファイル\shader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\3dspherevs.fx">
-      <Filter>ソース ファイル\shader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\ps.fx">
-      <Filter>ソース ファイル\shader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\psline.fx">
-      <Filter>ソース ファイル\shader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\psskydome.fx">
-      <Filter>ソース ファイル\shader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\psvscommon.fx">
-      <Filter>ソース ファイル\shader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\vs.fx">
-      <Filter>ソース ファイル\shader</Filter>
-    </FxCompile>
-    <FxCompile Include="shader\vsline.fx">
-      <Filter>ソース ファイル\shader</Filter>
-    </FxCompile>
     <FxCompile Include="assets\Shaders\2DPipeLine.hlsl">
       <Filter>ソース ファイル\shader</Filter>
     </FxCompile>
@@ -339,6 +315,9 @@
     </FxCompile>
     <FxCompile Include="assets\Shaders\UnityExportSkinnedModel.hlsl">
       <Filter>ソース ファイル\shader</Filter>
+    </FxCompile>
+    <FxCompile Include="assets\Shaders\DefaultShape.hlsl">
+      <Filter>ソース ファイル\shader\myShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

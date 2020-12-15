@@ -51,13 +51,11 @@ void CBoxCollider::Draw()
 	//Žq‚Ìs—ñ‚ð¶¬
 	DX11MtxMultiply(m_mat, m_mat, objMatrix);
 
-	//DirectX11Manager::m_constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&_mat));
 	
 	DirectX11Manager::m_constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&m_mat));
 	DirectX11Manager::TurnWire();
 
-	//m_box->Draw();
-	CMeshRenderer::DrawModel("cube");
+	m_box->Draw();
 
 	DirectX11Manager::TurnSolid();
 }
@@ -85,8 +83,8 @@ void CBoxCollider::Init()
 	m_shape->setContactOffset(0.01f);
 	m_rb->GetActor()->attachShape(*m_shape);
 	m_box = new CBox();
-	m_box->Init(XMFLOAT3(1.f, 1.f, 1.f));
-	
+	//m_box->Init(XMFLOAT3(1.f, 1.f, 1.f));
+	m_box->mate.df = XMFLOAT4(0.f, 1.f, 0.f, 1.f);
 
 	m_shape->setFlag(PxShapeFlag::eVISUALIZATION, false);
 
@@ -94,7 +92,7 @@ void CBoxCollider::Init()
 
 CBoxCollider::~CBoxCollider()
 {
-	m_box->Exit();
+	delete m_box;
 	m_shape->release();
 }
 
@@ -117,12 +115,14 @@ void CSphereCollider::Init()
 	m_rb->GetActor()->attachShape(*m_shape);
 
 	m_sphere = new CSphere();
-	m_sphere->Init(1.f);
+	m_sphere->Init();
+
+	m_sphere->mate.df = XMFLOAT4(0.f, 1.f, 0.f, 1.f);
 }
 
 CSphereCollider::~CSphereCollider()
 {
-	m_sphere->Exit();
+	delete m_sphere;
 	m_shape->release();
 }
 
@@ -153,8 +153,7 @@ void CSphereCollider::Draw()
 	//=========================================================================================================================================
 	DirectX11Manager::m_constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&m_mat));
 	DirectX11Manager::TurnWire();
-	//m_sphere->Draw();
-	CMeshRenderer::DrawModel("sphere");
+	m_sphere->Draw();
 	DirectX11Manager::TurnSolid();
 }
 

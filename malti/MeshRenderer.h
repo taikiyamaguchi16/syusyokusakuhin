@@ -43,7 +43,6 @@ namespace Egliss::ComponentSystem
 					delete m_sphere;
 				}
 				if (m_box != nullptr) {
-					m_box->Exit();
 					delete m_box;
 				}	
 				CMeshRenderer::DeleteModel();
@@ -98,7 +97,7 @@ namespace Egliss::ComponentSystem
 
 			for (auto itr : m_models)
 			{
-				delete	(itr.second);
+				delete	itr.second;
 			}
 			m_models.clear();
 		}

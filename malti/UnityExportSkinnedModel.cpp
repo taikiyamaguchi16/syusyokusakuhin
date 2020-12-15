@@ -20,9 +20,7 @@ UnityExportSkinnedModel::UnityExportSkinnedModel()
 	il.Attach(DirectX11Manager::CreateInputLayout(elem, 5, "assets/Shaders/UnityExportSkinnedModel.hlsl", "vsMain"));
 
 	DirectX11Manager::CreateConstantBuffer(sizeof(ConstantBufferMatrix), &cb);
-	/*DirectX11Manager::m_constantBuffer.proj = XMMatrixTranspose(
-		XMMatrixPerspectiveFovLH(XMConvertToRadians(60.0f),
-			SCREEN_X / SCREEN_X, 0.5f, 4096.0f * 8.0f));*/
+
 
 	DirectX11Manager::CreateConstantBuffer(sizeof(XMMATRIX) * 200, &boneMtxCb);
 
@@ -30,21 +28,6 @@ UnityExportSkinnedModel::UnityExportSkinnedModel()
 
 UnityExportSkinnedModel::~UnityExportSkinnedModel()
 {
-	/*cb->Release();
-	boneMtxCb->Release();
-	il->Release();
-	vs->Release();
-	ps->Release();
-
-	for (auto itr : models)
-	{
-		itr.ib->Release();
-		itr.vb->Release();
-	}
-	for (auto itr : materials)
-	{
-		itr.albedoTexture->Release();
-	}*/
 }
 
 void UnityExportSkinnedModel::LoadBinary(string filename)
@@ -118,7 +101,6 @@ void UnityExportSkinnedModel::Draw()
 
 	DirectX11Manager::SetInputLayout(il.Get());
 
-	//DirectX11Manager::m_constantBuffer.world = XMMatrixTranspose(XMLoadFloat4x4(&_mat));
 	DirectX11Manager::UpdateConstantBuffer(cb.Get(), DirectX11Manager::m_constantBuffer);
 	ID3D11Buffer* tmpCb2[] = { cb.Get() };
 	DirectX11Manager::m_pImContext->VSSetConstantBuffers(0, 1, tmpCb2);

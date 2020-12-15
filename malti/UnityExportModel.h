@@ -11,7 +11,7 @@ class UnityExportModel
 	ConstantBuffer cb;
 public:
 	
-	static inline ID3D11ShaderResourceView* kari = nullptr;
+	//static inline ID3D11ShaderResourceView* kari = nullptr;
 
 	struct VertexData{
 		XMFLOAT3 position;

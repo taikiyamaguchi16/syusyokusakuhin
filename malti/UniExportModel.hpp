@@ -16,7 +16,8 @@ namespace uem
 		char* activeData = nullptr;
 	public:
 		FileStream() {}
-		FileStream(const char* filename) { Load(filename); }
+		FileStream(const char* filename) {
+			Load(filename); }
 		~FileStream() {
 			if (data != nullptr)
 				delete[] data;
@@ -24,8 +25,9 @@ namespace uem
 
 		void Load(const char* filename)
 		{
-			FILE* fp=NULL;
-			assert(fopen_s(&fp, filename, "rb") == 0);
+			FILE* fp;
+			//assert(fopen_s(&fp, filename, "rb") == 0);
+			fopen_s(&fp, filename, "rb");
 			fpos_t pos = 0;
 			fseek(fp, 0L, SEEK_END);
 			fgetpos(fp, &pos);
@@ -290,12 +292,10 @@ namespace uem
 		};
 		std::vector<Mesh> meshs;
 		std::vector<Material> materials;
-		//std::unique_ptr<Transform> root;
 		//std::unique_ptr<CModelObject> root;
 		CModelObject* root;
 		//現状必要なし
 		//std::unordered_map<size_t, std::unique_ptr<Transform>> transformMap;
-		std::unordered_map<size_t, std::unique_ptr<CModelObject>> transformMap;
 	private:
 		
 		void LoadHierarchyBinary(FileStream& fileStream)
@@ -339,9 +339,7 @@ namespace uem
 
 				//=====================================activeの子供になる新しいtransformの作成=======================================
 				//auto newTrans = std::unique_ptr<Transform>(new Transform());
-				//auto newTrans = new Egliss::ComponentSystem::CTransform();
-				//auto work_ptr = new CModelObject();
-				auto work_ptr = std::unique_ptr<CModelObject>(new CModelObject);
+				auto work_ptr = new CModelObject();
 				auto newTrans = work_ptr->m_transform;
 
 				newTrans->Holder->m_name = tmp;
@@ -360,7 +358,7 @@ namespace uem
 				//active = newTrans.get();
 
 				//newTrans.release();
-				transformMap.insert(std::make_pair(newTrans->hash, std::move(work_ptr)));
+				//transformMap.insert(std::make_pair(newTrans->hash, std::move(work_ptr)));
 				//===================================================================================================================
 			}
 		}
@@ -372,7 +370,8 @@ namespace uem
 			//root.reset(new CModelObject());
 			root = new CModelObject();
 
-			FileStream fileStream(filename.c_str());
+			const char* work = filename.c_str();
+			FileStream fileStream(work);
 			auto lastSlash = filename.find_last_of('/');
 			filename.erase(lastSlash);
 
